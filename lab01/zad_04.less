@@ -1,0 +1,51 @@
+@image: 'papier.gif';
+@yellow: yellow;
+@brown: brown;
+@green: green;
+@blue: blue;
+@name-border: thin solid @blue;
+
+.centered {
+  margin-left: auto;
+  margin-right: auto;
+};
+body {
+  background-image: url(@image);
+  div {
+    background-color: @yellow;
+    &.adres {
+      .centered;
+      width: 12em;
+      border: 3px solid;
+      margin-bottom: 20px;
+    }
+  }
+
+
+  span {
+    width: 90%;
+    .centered;
+    &.nazwisko {
+      display: block;
+      font-weight: bold;
+      border-bottom: @name-border;
+      border-top: @name-border;
+      color: @blue;
+    }
+    &.ulica {
+      display: block;
+      color: @green;
+    }
+
+    &.kod {
+      padding-left: 5%;
+      color: @brown;
+    }
+
+    &.telefon {
+      display: block;
+    }
+  }
+}
+
+
