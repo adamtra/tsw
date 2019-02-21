@@ -1,0 +1,17 @@
+@red: 'red4.gif';
+@green: 'green4.gif';
+@blue: 'blue4.gif';
+
+ul {
+  list-style-image: url(@red);
+  li {
+    ul {
+      list-style-image: url(@green);
+      li {
+        ul {
+          list-style-image: url(@blue);
+        }
+      }
+    }
+  }
+}
