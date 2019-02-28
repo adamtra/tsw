@@ -2,13 +2,17 @@
 @red: red;
 @blue: blue;
 @white: white;
+@height: 20vh;
+@width: 40%;
 div {
   position: absolute;
-  width: 30em;
-  height: 10em;
+  width: @width;
+  height: @height;
   border-style: solid;
   border-width: medium;
   text-align: center;
+  top: calc(50vh - (@height / 2));
+  left: calc(50vw - (@width / 2));
   &.A {
     background-color: @yellow;
     border-color: @red;
@@ -17,7 +21,7 @@ div {
   &.B {
     background-color: @white;
     border-color: @blue;
-    margin-left: 20em;
-    margin-top: 5em;
+    margin-left: 20vw;
+    margin-top: calc(@height / 2);
   }
 }
