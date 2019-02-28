@@ -1,0 +1,23 @@
+@yellow: yellow;
+@red: red;
+@blue: blue;
+@white: white;
+div {
+  position: absolute;
+  width: 30em;
+  height: 10em;
+  border-style: solid;
+  border-width: medium;
+  text-align: center;
+  &.A {
+    background-color: @yellow;
+    border-color: @red;
+  }
+
+  &.B {
+    background-color: @white;
+    border-color: @blue;
+    margin-left: 20em;
+    margin-top: 5em;
+  }
+}
