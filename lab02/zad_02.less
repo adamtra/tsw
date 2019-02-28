@@ -1,0 +1,35 @@
+@height: 2vh;
+div {
+  &#menu {
+    background-color: #EDEFEB;
+    border-style: solid;
+    border-color: #B1B3AF;
+    border-width: thick;
+    text-align: center;
+    padding: 1vh;
+    position: fixed;
+    width: 100%;
+    height: @height;
+  }
+  span {
+    &.el_menu {
+      border-style: solid;
+      border-width: thin;
+      color: brown;
+      padding: 0.2em;
+      &:hover {
+        background-color: white;
+      }
+      a {
+        color: maroon;
+        text-decoration: none;
+      }
+    }
+  }
+  &#tresc {
+    margin-top: 6vh;
+    position: fixed;
+    height: calc(100vh - @height);
+    overflow: auto;
+  }
+}
