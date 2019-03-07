@@ -1,6 +1,7 @@
 @font-size: 5vmin;
 @color-diff: 50;
 @box-size: calc(@font-size * 3);
+@initial-grey: 105;
 @flex-center: {
   display: flex;
   align-items: center;
@@ -23,13 +24,13 @@ body {
       font-weight: bold;
       font-size: @font-size;
       &:nth-child(1) {
-        background-color: rgb(105, 105, 105);
+        background-color: rgb(@initial-grey, @initial-grey, @initial-grey);
       }
       &:nth-child(2) {
-        background-color: rgb(105 + @color-diff, 105 + @color-diff, 105 + @color-diff);
+        background-color: rgb(@initial-grey + @color-diff, @initial-grey + @color-diff, @initial-grey + @color-diff);
       }
       &:nth-child(3) {
-        background-color: rgb(105 + (2 * @color-diff), 105+ (2 * @color-diff), 105+ (2 * @color-diff));
+        background-color: rgb(@initial-grey + (2 * @color-diff), @initial-grey+ (2 * @color-diff), @initial-grey+ (2 * @color-diff));
       }
     }
   }
