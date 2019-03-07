@@ -7,6 +7,7 @@
   align-items: center;
   justify-content: center;
 }
+@initial-color: grey;
 
 body {
   height: 100vh;
@@ -22,13 +23,13 @@ body {
       font-weight: bold;
       font-size: @font-size;
       &:nth-child(1) {
-        background-color: rgb(@initial-grey, @initial-grey, @initial-grey);
+        background-color: lighten(@initial-color, 0%);
       }
       &:nth-child(2) {
-        background-color: rgb(@initial-grey + @color-diff, @initial-grey + @color-diff, @initial-grey + @color-diff);
+        background-color: lighten(@initial-color, 15%);
       }
       &:nth-child(3) {
-        background-color: rgb(@initial-grey + (2 * @color-diff), @initial-grey+ (2 * @color-diff), @initial-grey+ (2 * @color-diff));
+        background-color: lighten(@initial-color, 35%);
       }
     }
   }
