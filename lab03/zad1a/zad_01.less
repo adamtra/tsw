@@ -1,0 +1,37 @@
+@font-size: 5vmin;
+@color-diff: 50;
+@box-size: calc(@font-size * 3);
+@flex-center: {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  margin: 0;
+  @flex-center();
+  #outer {
+    @flex-center();
+
+    div.box {
+      @flex-center();
+      width: @box-size;
+      height: @box-size;
+      color: white;
+      font-weight: bold;
+      font-size: @font-size;
+      &:nth-child(1) {
+        background-color: rgb(105, 105, 105);
+      }
+      &:nth-child(2) {
+        background-color: rgb(105 + @color-diff, 105 + @color-diff, 105 + @color-diff);
+      }
+      &:nth-child(3) {
+        background-color: rgb(105 + (2 * @color-diff), 105+ (2 * @color-diff), 105+ (2 * @color-diff));
+      }
+    }
+  }
+}
+
