@@ -21,18 +21,9 @@ body {
   #outer {
     height: 100vh;
     width: 100vw;
-    @flex-column();
+    display: flex;
+    justify-content: space-between;
     align-items: flex-start;
-    & > :nth-child(1) {
-      align-self: flex-start;
-    }
-    & > :nth-child(2) {
-      align-self: center;
-    }
-
-    & > :nth-child(3) {
-      align-self: flex-end;
-    }
     div.box {
       @flex-center();
       width: @box-size;
@@ -42,12 +33,15 @@ body {
       font-size: @font-size;
       &:nth-child(1) {
         background-color: lighten(@initial-color, 0%);
+        align-self: flex-start;
       }
       &:nth-child(2) {
         background-color: lighten(@initial-color, 15%);
+        align-self: center;
       }
       &:nth-child(3) {
         background-color: lighten(@initial-color, 35%);
+        align-self: flex-end;
       }
     }
   }
