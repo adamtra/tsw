@@ -13,7 +13,7 @@ const appFun = function (f) {
         f.typeConstr.forEach((v, i) => {
             if (typeof args[i] !== v) {
                 throw {
-                    typerr: "Podano złe argumenty"
+                    typerr: `Podano złe argumenty argument ${i + 1} miałbyć ${v}, a jest ${typeof args[i]}!`
                 }
             }
         });
