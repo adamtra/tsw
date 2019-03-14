@@ -4,10 +4,7 @@
 String.prototype.podstaw = function (dane) {
     let out = this;
     Object.keys(dane).forEach((key) => {
-        if(typeof dane[key] === 'string' || dane[key] === 'number') {
-            const reg = new RegExp('{' + key + '}', 'g');
-            out = out.replace(reg, dane[key]);
-        }
+        out = out.replace(new RegExp('{' + key + '}', 'g'), dane[key]);
     });
     return out;
 };
