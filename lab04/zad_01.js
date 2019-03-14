@@ -9,14 +9,14 @@ const defFun = function(fun, types) {
 const appFun = function (f) {
     let args = Array.from(arguments);
     if (f.hasOwnProperty('typeConstr')) {
+        args = args.slice(1);
         f.typeConstr.forEach((v, i) => {
-            if (typeof args[i + 1] !== v) {
+            if (typeof args[i] !== v) {
                 throw {
                     typerr: "Podano złe argumenty"
                 }
             }
         });
-        args = args.slice(1);
         return f.apply(this, args);
     } else {
         throw {
