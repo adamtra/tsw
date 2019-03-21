@@ -30,7 +30,7 @@ const ocena = (kod)  => {
                        set.delete(ruchIndex);
                    }
                });
-               response.biale = Math.min(kodValue.size, set.size);
+               response.biale += Math.min(kodValue.size, set.size);
            }
         });
         return response;
