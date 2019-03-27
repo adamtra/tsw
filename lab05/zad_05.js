@@ -13,20 +13,21 @@ const fib = (arg)  => {
 
 const memo = (cache, fun) => {
 
-    const addElement = () => {
-        const result = fun((x) => {
-            return cache[x];
-        }, cache.length);
-        cache.push(result);
+    const addElement = (n) => {
+        if(n > 0) {
+            const result = fun((x) => {
+                return cache[x];
+            }, cache.length);
+            cache.push(result);
+            return addElement(n - 1);
+        }
     };
 
     return (n) => {
         if(n <= 0) {
             return 0;
         }
-        for(let i = 1; i < n; i++) {
-            addElement();
-        }
+        addElement(n);
         return cache[n];
     }
 };
