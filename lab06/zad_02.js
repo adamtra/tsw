@@ -3,13 +3,18 @@
 
 const razem = (fun1, fun2, cb) => {
     let result = [];
+    const length = 2;
     fun1(5, (x) => {
         result.push(x);
-        cb(result);
+        if(result.length === length) {
+            cb(result);
+        }
     });
     fun2(6, (x) => {
         result.push(x);
-        cb(result);
+        if(result.length === length) {
+            cb(result);
+        }
     });
 };
 
@@ -26,9 +31,7 @@ const f2 = (x, cb) => {
 };
 
 const result = (wynik) => {
-    if (wynik.length === 2) {
-        console.log(wynik);
-    }
+    console.log(wynik);
 };
 
 razem(f1, f2, result);
