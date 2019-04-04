@@ -1,14 +1,14 @@
 //jshint node: true, esversion: 6
 'use strict';
 
-let games = [];
+let games = new Map();
 const toMap = (tab) => {
     const tabMap = new Map();
     tab.forEach((value, index) => {
         if(!tabMap.has(value)) {
             tabMap.set(value, new Set());
         }
-        tabMap.get(value).add(index)
+        tabMap.get(value).add(index);
     });
     return tabMap;
 };
@@ -61,15 +61,15 @@ router.route('/new').post((req, res) => {
             size: size,
             colors: colors,
         };
-        games[gameId] = {
+        games.set(gameId, {
             size: size,
             colors: colors,
             solution: generateSolution(size, colors),
             solved: false,
-        };
+        });
         if (req.body.hasOwnProperty('steps')) {
             response.steps = req.body.steps;
-            games[gameId].steps = req.body.steps;
+            games.get(gameId).steps = req.body.steps;
         }
         res.json(response);
     }
@@ -81,14 +81,14 @@ router.route('/status').post((req, res) => {
     const uid = req.body.game;
     const response = {
         game: uid,
-        solved: games[uid].solved,
+        solved: games.get(uid).solved,
     };
     res.json(response);
 });
 
 router.route('/move').post((req, res) => {
     const uid = req.body.game;
-    let game = games[uid];
+    let game = games.get(uid);
     const check = ocena(game.solution);
     if (game.hasOwnProperty('steps')) {
         if (game.steps === 0) {
@@ -96,11 +96,11 @@ router.route('/move').post((req, res) => {
                msg: "No more moves",
             });
         } else {
-            games[uid].steps = game.steps - 1;
+            game.steps--;
         }
     }
     const result = check(req.body.move);
-    games[uid].solved = result.black === game.size;
+    game.solved = result.black === game.size;
     res.json({
         game: uid,
         result: result,
