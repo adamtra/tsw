@@ -4,24 +4,31 @@
     <meta charset="UTF-8">
     <title>Mastermind</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="js/index.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
-    <h1>Witaj w grze Mastermind!</h1>
-    <label>
-        Rozmiar:
-        <input type="number" min="1" step="1" id="size" value="5">
-    </label>
-    <label>
-        Liczba kolorów:
-        <input type="number" min="1" step="1" id="colors" value="9">
-    </label>
-    <label>
-        Kroki (0 - bez limitu):
-        <input type="number" min="1" step="1" id="steps" value="20">
-    </label>
-    <button id="newGame">Rozpocznij nową grę</button>
-    <div id="gameArea"></div>
-    <div id="gameResult"></div>
+    <div class="game-container">
+        <h1>Witaj w grze Mastermind!</h1>
+        <div>
+            <div class="form-group">
+                <label for="size">Rozmiar:</label>
+                <input class="form-control" type="number" min="1" step="1" id="size" value="5">
+            </div>
+            <div class="form-group">
+                <label for="colors">Liczba kolorów:</label>
+                <input class="form-control" type="number" min="1" step="1" id="colors" value="9">
+            </div>
+            <div class="form-group">
+                <label for="steps">Kroki:</label>
+                <input class="form-control" type="number" min="1" step="1" id="steps" value="20">
+                <small class="form-text text-muted">0 - bez limitu</small>
+            </div>
+            <button id="newGame" class="btn btn-primary">Rozpocznij nową grę</button>
+        </div>
+        <div id="gameArea" class="ui-select"></div>
+        <div id="gameResult"></div>
+    </div>
 </body>
 </html>
