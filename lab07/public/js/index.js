@@ -73,7 +73,7 @@ const sendMove = (request) => {
                 renderGame();
             } else {
                 const data = getGameData();
-                if (Number.parseInt(data.size) === response.result.black) {
+                if (Number.parseInt(data.size) !== response.result.black) {
                     showResult({
                         msg: `Ilość białych: ${response.result.white} Ilość czarnych: ${response.result.black}`,
                     });
