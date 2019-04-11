@@ -79,6 +79,11 @@ router.route('/new').post((req, res) => {
 });
 router.route('/status').post((req, res) => {
     const uid = req.body.game;
+    if (games.get(uid) === undefined) {
+        res.json({
+            msg: "Game nie istnieje",
+        });
+    }
     const response = {
         game: uid,
         solved: games.get(uid).solved,
@@ -89,11 +94,16 @@ router.route('/status').post((req, res) => {
 router.route('/move').post((req, res) => {
     const uid = req.body.game;
     let game = games.get(uid);
+    if (game === undefined) {
+        res.json({
+            msg: "Gra nie istnieje",
+        });
+    }
     const check = ocena(game.solution);
     if (game.hasOwnProperty('steps')) {
         if (game.steps === 0) {
             res.json({
-               msg: "No more moves",
+               msg: "Brak ruchów",
             });
         } else {
             game.steps--;

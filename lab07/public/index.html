@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Mastermind</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/index.js"></script>
+</head>
+<body>
+    <h1>Witaj w grze Mastermind!</h1>
+    <label>
+        Rozmiar:
+        <input type="number" min="1" step="1" id="size" value="5">
+    </label>
+    <label>
+        Liczba kolorów:
+        <input type="number" min="1" step="1" id="colors" value="9">
+    </label>
+    <label>
+        Kroki (0 - bez limitu):
+        <input type="number" min="1" step="1" id="steps" value="20">
+    </label>
+    <button id="newGame">Rozpocznij nową grę</button>
+    <div id="gameArea"></div>
+    <div id="gameResult"></div>
+</body>
+</html>
