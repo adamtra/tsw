@@ -2,6 +2,15 @@
 'use strict';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const body = document.body;
+    body.addEventListener('click', () => {
+       const uls = document.querySelectorAll('ul');
+       uls.forEach(ul => {
+           if (ul.style.display !== 'none') {
+               ul.style.display = 'none';
+           }
+       });
+    }, true);
     const newGameBtn = document.getElementById('newGame');
     newGameBtn.addEventListener('click', () => {
         let size = document.getElementById('size').valueAsNumber;
@@ -116,7 +125,7 @@ const sendMove = (request) => {
 
 const getMoves = () => {
     const moves = [];
-    const inputs = document.querySelectorAll('.square-input');
+    const inputs = document.querySelectorAll('.square-div');
     inputs.forEach(input => {
         const move = Math.round(input.value);
         if (!isNaN(move) && move >= 1 && move <= Number.parseInt(localStorage.getItem('colors'))) {
@@ -188,7 +197,8 @@ const hsvToRGB = (h, s, v) => {
 
 
 const getColorArray = (size) => {
-    const colors = ['#ffffff'];
+    const colors = [];
+    // const colors = ['#ffffff'];
     const phi = (1 + Math.sqrt(5)) / 2;
     let h = 0;
     for (let i = 0; i < size; i++) {
@@ -210,22 +220,41 @@ const renderGame = () => {
     const lastMoves = data.lastMove === null ? [] : data.lastMove.split(',');
     const colorCodes = data.colorCodes === null ? [] : data.colorCodes.split(',');
     for (let i = 0; i < gameSize; i++) {
-        const newSelect = document.createElement('select');
-        newSelect.className = 'square-input';
-        colorCodes.forEach((color, key) => {
-           const option = document.createElement('option');
-           option.value = key;
-           option.style.backgroundColor = color;
-           newSelect.appendChild(option);
-        });
-        newSelect.addEventListener('change', (ev) => {
-            ev.target.style.backgroundColor = colorCodes[ev.target.value];
+        const selectContainer = document.createElement('div');
+        selectContainer.style.width = '40px';
+        selectContainer.style.height = '40px';
+        selectContainer.style.float = 'left';
+        selectContainer.style.marginRight = '10px';
+        const colorBox = document.createElement('div');
+        colorBox.className = 'square-div';
+        colorBox.style.width = '40px';
+        colorBox.style.height = '40px';
+        colorBox.style.border = '1px solid black';
+        colorBox.addEventListener('click', (ev) => {
+           selectContainer.querySelector('ul').style.display = 'block';
         });
         if (lastMoves.length === gameSize) {
-            newSelect.value = lastMoves[i];
-            newSelect.style.backgroundColor = colorCodes[newSelect.value];
+            colorBox.value = lastMoves[i];
+            colorBox.style.backgroundColor = colorCodes[colorBox.value - 1];
         }
-        gameArea.append(newSelect);
+        selectContainer.appendChild(colorBox);
+        const select = document.createElement('ul');
+        select.style.display = 'none';
+        colorCodes.forEach((color, key) => {
+            const option = document.createElement('li');
+            option.value = key + 1;
+            option.style.backgroundColor = color;
+            option.style.color = color;
+            option.addEventListener('click', (ev) => {
+              colorBox.value = ev.target.value;
+              colorBox.style.backgroundColor = colorCodes[ev.target.value - 1];
+              select.style.display = 'none';
+            });
+            select.appendChild(option);
+        });
+
+        selectContainer.appendChild(select);
+        gameArea.append(selectContainer);
     }
     if (data.game !== null) {
      const sendButton = document.createElement('button');
@@ -241,7 +270,7 @@ const renderGame = () => {
             } else {
                 swal({
                     title: 'Źle uzupełniono',
-                    text: `Uzupełnij wszystkie pola liczbami z zakresu 1 - ${data.colors}`,
+                    text: `Uzupełnij wszystkie pola`,
                     icon: 'error',
                 });
             }
