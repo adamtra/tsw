@@ -16,18 +16,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let size = document.getElementById('size').valueAsNumber;
         let colors = document.getElementById('colors').valueAsNumber;
         let steps = document.getElementById('steps').valueAsNumber;
-        if (isNaN(size) || isNaN(colors) || isNaN(steps)) {
+        if (isNaN(size) || isNaN(colors) || isNaN(steps) || size <= 0 || colors <= 0 || steps < 0) {
             swal({
                 title: 'Źle uzupełniono',
-                text: 'Wszystkie pola muszą być liczbami!',
-                icon: 'error',
-            });
-            return false;
-        }
-        if (size <= 0 || colors <= 0 || steps < 0) {
-            swal({
-                title: 'Źle uzupełniono',
-                text: 'Wszystkie pola muszą być liczbami naturalnymi!',
+                text: 'Wszystkie pola muszą być wybrane!',
                 icon: 'error',
             });
             return false;
@@ -40,9 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
             colors: colors,
         };
         if (steps > 0) {
-            Object.assign(request, {
-                steps: steps,
-            });
+            request.steps = steps;
         }
         startNewGame(request);
     });
@@ -69,8 +59,8 @@ const startNewGame = (request) => {
             localStorage.setItem('game', response.game);
             localStorage.setItem('size', response.size);
             localStorage.setItem('colors', response.colors);
-            localStorage.setItem('lastMove', '');
             localStorage.setItem('colorCodes', '');
+            localStorage.setItem('moveHistory', '');
             getColorArray(response.colors);
             renderGame();
         }
@@ -97,24 +87,21 @@ const sendMove = (request) => {
                     title: response.msg,
                     icon: 'error',
                 }).then(() => {
-                    showResult({
-                        won: false,
-                        msg: '',
-                    });
                     localStorage.clear();
                     renderGame();
                 });
             } else {
                 const data = getGameData();
-                if (Number.parseInt(data.size) !== response.result.black) {
-                    showResult({
-                        won: false,
-                        msg: `Ilość białych: ${response.result.white} Ilość czarnych: ${response.result.black}`,
-                    });
-                } else {
-                    showResult({
-                        msg: 'Wygrałeś!',
-                        won: true,
+                addToMoveHistory(request.move, response.result);
+                if (Number.parseInt(data.size) === response.result.black) {
+                    swal({
+                        title: 'Gratulacje',
+                        text: 'Wygrana!',
+                        icon: 'success',
+                    }).then(() => {
+                        const sendButton = document.getElementById('sendButton');
+                        sendButton.style.display = 'none';
+                        localStorage.clear();
                     });
                 }
             }
@@ -140,8 +127,8 @@ const getGameData = () => {
       game: localStorage.getItem('game'),
       size: localStorage.getItem('size'),
       colors: localStorage.getItem('colors'),
-      lastMove: localStorage.getItem('lastMove'),
       colorCodes: localStorage.getItem('colorCodes'),
+      moveHistory: localStorage.getItem('moveHistory'),
   };
 };
 
@@ -198,7 +185,6 @@ const hsvToRGB = (h, s, v) => {
 
 const getColorArray = (size) => {
     const colors = [];
-    // const colors = ['#ffffff'];
     const phi = (1 + Math.sqrt(5)) / 2;
     let h = 0;
     for (let i = 0; i < size; i++) {
@@ -211,32 +197,24 @@ const getColorArray = (size) => {
 };
 
 const renderGame = () => {
+    renderHistory();
     const gameArea = document.getElementById('gameArea');
     while (gameArea.firstChild) {
         gameArea.removeChild(gameArea.firstChild);
     }
     const data = getGameData();
     const gameSize = Number(data.size);
-    const lastMoves = data.lastMove === null ? [] : data.lastMove.split(',');
     const colorCodes = data.colorCodes === null ? [] : data.colorCodes.split(',');
     for (let i = 0; i < gameSize; i++) {
         const selectContainer = document.createElement('div');
-        selectContainer.style.width = '40px';
-        selectContainer.style.height = '40px';
-        selectContainer.style.float = 'left';
-        selectContainer.style.marginRight = '10px';
+        selectContainer.className = 'square-div select-container';
         const colorBox = document.createElement('div');
         colorBox.className = 'square-div';
-        colorBox.style.width = '40px';
-        colorBox.style.height = '40px';
         colorBox.style.border = '1px solid black';
+        colorBox.style.backgroundColor = 'white';
         colorBox.addEventListener('click', (ev) => {
            selectContainer.querySelector('ul').style.display = 'block';
         });
-        if (lastMoves.length === gameSize) {
-            colorBox.value = lastMoves[i];
-            colorBox.style.backgroundColor = colorCodes[colorBox.value - 1];
-        }
         selectContainer.appendChild(colorBox);
         const select = document.createElement('ul');
         select.style.display = 'none';
@@ -245,6 +223,7 @@ const renderGame = () => {
             option.value = key + 1;
             option.style.backgroundColor = color;
             option.style.color = color;
+            option.style.borderRadius = '100%';
             option.addEventListener('click', (ev) => {
               colorBox.value = ev.target.value;
               colorBox.style.backgroundColor = colorCodes[ev.target.value - 1];
@@ -252,52 +231,89 @@ const renderGame = () => {
             });
             select.appendChild(option);
         });
-
         selectContainer.appendChild(select);
         gameArea.append(selectContainer);
     }
-    if (data.game !== null) {
-     const sendButton = document.createElement('button');
-        sendButton.addEventListener('click', () => {
-            const moves = getMoves();
-            if (moves.length === gameSize) {
-                localStorage.setItem('lastMove', moves);
-                const request = {
-                    move: moves,
-                    game: data.game,
-                };
-                sendMove(request);
-            } else {
-                swal({
-                    title: 'Źle uzupełniono',
-                    text: `Uzupełnij wszystkie pola`,
-                    icon: 'error',
-                });
-            }
-        });
-        sendButton.textContent = 'Wyślij';
-        sendButton.className = 'btn btn-primary';
-        sendButton.style.display = 'block';
-        sendButton.style.marginTop = '20px';
-        gameArea.append(sendButton);
-    }
+    const sendButton = document.getElementById('sendButton');
+    sendButton.style.display = 'block';
 };
 
-const showResult = (result) => {
-    const gameResult = document.getElementById('gameResult');
-    while (gameResult.firstChild) {
-        gameResult.removeChild(gameResult.firstChild);
-    }
-    if (result.won) {
-        swal({
-            title: 'Gratulacje',
-            text: 'Wygrana!',
-            icon: 'success',
-        });
+const checkMove = () => {
+    const data = getGameData();
+    const gameSize = Number(data.size);
+    const moves = getMoves();
+    if (moves.length === gameSize) {
+        const request = {
+            move: moves,
+            game: data.game,
+        };
+        sendMove(request);
     } else {
-        const resultSpan = document.createElement('span');
-        resultSpan.textContent = result.msg;
-        gameResult.appendChild(resultSpan);
+        swal({
+            title: 'Źle uzupełniono',
+            text: `Uzupełnij wszystkie pola`,
+            icon: 'error',
+        });
     }
 };
 
+const renderHistory = () => {
+    const previous = document.getElementById('previous');
+    while (previous.firstChild) {
+        previous.removeChild(previous.firstChild);
+    }
+    const data = getGameData();
+    const gameSize = Number(data.size);
+    const colorCodes = data.colorCodes === null ? [] : data.colorCodes.split(',');
+    let history;
+    try {
+        history = JSON.parse(data.moveHistory);
+    } catch (e) {
+        history = [];
+    }
+    history.forEach( line => {
+        const historyLine = document.createElement('div');
+        historyLine.className = 'd-flex flex-row';
+        const colorLine = document.createElement('div');
+        colorLine.className = 'd-flex flex-row flex-wrap';
+        const dots = document.createElement('div');
+        dots.className = 'd-flex flex-row flex-wrap';
+        for (let i = 0; i < gameSize; i++) {
+            const colorBox = document.createElement('div');
+            colorBox.className = 'square-div select-container';
+            colorBox.style.border = '1px solid black';
+            colorBox.style.backgroundColor = colorCodes[line.move[i] - 1];
+            colorLine.appendChild(colorBox);
+            const dot = document.createElement('div');
+            dot.className = 'result-dot';
+            if (i < line.dots.black) {
+                dot.style.backgroundColor = 'black';
+            } else if (i < line.dots.white + line.dots.black) {
+                dot.style.backgroundColor = 'white';
+            } else {
+                dot.style.backgroundColor = 'lightgrey';
+            }
+            dots.appendChild(dot);
+        }
+        historyLine.appendChild(colorLine);
+        historyLine.appendChild(dots);
+        previous.appendChild(historyLine);
+    });
+};
+
+const addToMoveHistory = (move, dots) => {
+    const data = getGameData();
+    const colorCodes = data.colorCodes === null ? [] : data.colorCodes.split(',');
+    let history;
+    try {
+        history = JSON.parse(data.moveHistory);
+    } catch (e) {
+        history = [];
+    }
+    history.unshift({
+        move: move,
+        dots: dots,
+    });
+    localStorage.setItem('moveHistory', JSON.stringify(history));
+    renderHistory();
+};

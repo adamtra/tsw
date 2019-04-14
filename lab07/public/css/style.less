@@ -1,10 +1,14 @@
 @square-size: 40px;
 @border-radius: 30px;
 @game-background: #E1AD01;
+@border-style: 1px solid black;
+@margin-size: 10px;
+@margin-game-area: 20px;
 
-.square-input {
-  width: @square-size;
-  height: @square-size;
+
+.jumbotron {
+  height: 100vh;
+  margin-bottom: 0;
 }
 
 h1 {
@@ -15,28 +19,64 @@ label {
   display: block;
 }
 
-
-#gameArea {
-  margin-top: 20px;
-}
-
-.game-container {
-  margin: auto;
-  width: 50%;
-  border: 10px solid @game-background;
-  border-radius: @border-radius;
-  padding: @border-radius;
-  background-color: white;
-}
-
 body {
+  padding: 0!important;
+  margin: 0!important;
+  color: white!important;
   background-color: @game-background!important;
+
+  .game-container {
+    margin: auto;
+    border: @margin-size solid @game-background;
+    border-radius: @border-radius;
+    padding: @border-radius;
+    background-image: url('/assets/wood.jpg');
+    background-size: cover;
+
+
+    .input-container {
+      margin-top: @margin-game-area;
+      border-radius: @border-radius;
+      padding: @border-radius;
+      background-color: lightgoldenrodyellow;
+
+      .select-container {
+        float: left;
+        margin-right: @margin-size;
+        margin-bottom: @margin-size;
+      }
+
+      .square-div {
+        width: @square-size;
+        height: @square-size;
+        border-radius: 100%;
+      }
+
+      .result-dot {
+        //float: left;
+        border: @border-style;
+        margin-top: calc(@square-size / 4);
+        width: calc(@square-size / 2);
+        height: calc(@square-size / 2);
+        border-radius: 100%;
+      }
+
+      #gameArea, #previous {
+        margin-top: @margin-game-area;
+      }
+
+      #sendButton {
+        margin-top: @margin-game-area;
+        display: none;
+      }
+    }
+  }
 }
 
 ul {
   list-style-type: none;
   padding-left: 0;
-  height: calc(@square-size * 4);
+  height: calc(@square-size * 4.5);
   overflow: auto;
   width: @square-size;
   float: left;
@@ -47,5 +87,9 @@ ul {
   & li {
     cursor: pointer;
     height: @square-size;
+    border-left: @border-style;
+    border-right: @border-style;
+    border-bottom: @border-style;
   }
 }
+

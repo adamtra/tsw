@@ -3,12 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Mastermind</title>
+    <link rel='shortcut icon' type='image/x-icon' href='/assets/favicon.ico' />
+    <link rel="manifest" href="/manifest.webmanifest">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <script src="js/index.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="js/sweetalert.min.js"></script>
 </head>
-<body>
+<body class="jumbotron d-flex align-items-center">
     <div class="game-container">
         <h1>Witaj w grze Mastermind!</h1>
         <div>
@@ -23,12 +25,19 @@
             <div class="form-group">
                 <label for="steps">Kroki:</label>
                 <input class="form-control" type="number" min="1" step="1" id="steps" value="20">
-                <small class="form-text text-muted">0 - bez limitu</small>
+                <small class="form-text">0 - bez limitu</small>
             </div>
             <button id="newGame" class="btn btn-primary">Rozpocznij nową grę</button>
         </div>
-        <div id="gameArea"></div>
-        <div id="gameResult"></div>
+        <div class="input-container">
+            <div class="d-flex flex-column" id="previous"></div>
+            <div class="d-flex flex-row">
+                <div id="gameArea"></div>
+                <div>
+                    <button id="sendButton" class="btn btn-primary" onclick="checkMove()">Wyślij</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
