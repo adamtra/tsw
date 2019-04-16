@@ -45,6 +45,12 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+const finishGame = () => {
+    const sendButton = document.getElementById('sendButton');
+    sendButton.style.display = 'none';
+    localStorage.clear();
+};
+
 const startNewGame = (request) => {
     let sendRequest, handleResponse;
     sendRequest = () => {
@@ -90,8 +96,7 @@ const sendMove = (request) => {
                     title: response.msg,
                     icon: 'error',
                 }).then(() => {
-                    localStorage.clear();
-                    renderGame();
+                    finishGame();
                 });
             } else {
                 const data = getGameData();
@@ -102,9 +107,7 @@ const sendMove = (request) => {
                         text: 'Wygrana!',
                         icon: 'success',
                     }).then(() => {
-                        const sendButton = document.getElementById('sendButton');
-                        sendButton.style.display = 'none';
-                        localStorage.clear();
+                        finishGame();
                     });
                 }
             }
@@ -190,10 +193,13 @@ const getColorArray = (size) => {
     const colors = [];
     const phi = (1 + Math.sqrt(5)) / 2;
     let h = 0;
+    let v = 1;
     for (let i = 0; i < size; i++) {
         h += phi;
+        v += phi * 3;
         h %= 1;
-        const color = hsvToRGB(h, 0.99, 0.99);
+        v %= 1;
+        const color = hsvToRGB(h, 0.99, v);
         colors.push(color);
     }
     localStorage.setItem('colorCodes', colors);
