@@ -109,6 +109,9 @@ const sendMove = (request) => {
                     }).then(() => {
                         finishGame();
                     });
+                } else {
+                    const sendButton = document.getElementById('sendButton');
+                    sendButton.scrollIntoView();
                 }
             }
         }
