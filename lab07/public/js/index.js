@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (isNaN(size) || isNaN(colors) || isNaN(steps) || size <= 0 || colors <= 0 || steps < 0) {
             swal({
                 title: 'Źle uzupełniono',
-                text: 'Wszystkie pola muszą być wybrane!',
+                text: 'Wszystkie pola muszą być liczbami dodatnimi!',
                 icon: 'error',
             });
             return false;
@@ -39,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameData = getGameData();
     if (gameData.game !== null && gameData.size !== null && gameData.colors !== null) {
         renderGame();
+    } else {
+        const inputContainer = document.querySelector('.input-container');
+        inputContainer.style.display = 'none';
     }
 });
 
@@ -197,6 +200,8 @@ const getColorArray = (size) => {
 };
 
 const renderGame = () => {
+    const inputContainer = document.querySelector('.input-container');
+    inputContainer.style.display = 'block';
     renderHistory();
     const gameArea = document.getElementById('gameArea');
     while (gameArea.firstChild) {

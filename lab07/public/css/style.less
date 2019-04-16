@@ -1,9 +1,10 @@
-@square-size: 3em;
+@dot-size: 3em;
 @border-radius: 2em;
 @game-background: #E1AD01;
 @border-style: 1px solid black;
 @margin-size: 10px;
 @margin-game-area: 20px;
+@dot-margin: calc(@dot-size / 2);
 
 
 .jumbotron {
@@ -47,16 +48,16 @@ body {
       }
 
       .square-div {
-        width: @square-size;
-        height: @square-size;
+        width: @dot-size;
+        height: @dot-size;
         border-radius: 100%;
       }
 
       .result-dot {
         border: @border-style;
-        margin-top: calc(@square-size / 4);
-        width: calc(@square-size / 2);
-        height: calc(@square-size / 2);
+        margin-top: calc(@dot-margin / 2);
+        width: @dot-margin;
+        height: @dot-margin;
         border-radius: 100%;
       }
 
@@ -65,7 +66,7 @@ body {
       }
 
       #sendButton {
-        margin-top: @margin-game-area;
+        margin-top: @dot-margin;
         display: none;
       }
     }
@@ -75,9 +76,9 @@ body {
 ul {
   list-style-type: none;
   padding-left: 0;
-  height: calc(@square-size * 4.5);
+  max-height: calc(@dot-size * 4.5);
   overflow: auto;
-  width: @square-size;
+  width: @dot-size;
   float: left;
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -85,7 +86,7 @@ ul {
   }
   & li {
     cursor: pointer;
-    height: @square-size;
+    height: @dot-size;
     border-left: @border-style;
     border-right: @border-style;
     border-bottom: @border-style;
