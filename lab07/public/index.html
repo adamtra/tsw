@@ -15,20 +15,22 @@
     <div class="game-container">
         <h1>Witaj w grze Mastermind!</h1>
         <div>
-            <div class="form-group">
-                <label for="size">Rozmiar:</label>
-                <input class="form-control" type="number" min="1" step="1" id="size" value="5">
+            <div class="d-flex flex-row">
+                <div class="form-group p-2 flex-fill">
+                    <label for="size">Rozmiar:</label>
+                    <input class="form-control" type="number" min="1" step="1" id="size" value="5">
+                </div>
+                <div class="form-group p-2 flex-fill">
+                    <label for="colors">Liczba kolorów:</label>
+                    <input class="form-control" type="number" min="1" step="1" id="colors" value="9">
+                </div>
+                <div class="form-group p-2 flex-fill">
+                    <label for="steps">Kroki:</label>
+                    <input class="form-control" type="number" min="1" step="1" id="steps" value="20">
+                    <small class="form-text">0 - bez limitu</small>
+                </div>
             </div>
-            <div class="form-group">
-                <label for="colors">Liczba kolorów:</label>
-                <input class="form-control" type="number" min="1" step="1" id="colors" value="9">
-            </div>
-            <div class="form-group">
-                <label for="steps">Kroki:</label>
-                <input class="form-control" type="number" min="1" step="1" id="steps" value="20">
-                <small class="form-text">0 - bez limitu</small>
-            </div>
-            <button id="newGame" class="btn btn-primary">Rozpocznij nową grę</button>
+            <button id="newGame" class="btn btn-success">Rozpocznij nową grę</button>
         </div>
         <div class="input-container">
             <div class="d-flex flex-column" id="previous"></div>

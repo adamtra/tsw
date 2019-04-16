@@ -3,8 +3,8 @@
   "short_name": "Mastermind",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#E1AD01",
-  "theme_color": "#E1AD01",
+  "background_color": "#F4A35F",
+  "theme_color": "#F4A35F",
   "orientation": "any",
   "icons": [{
     "src": "assets/favicon.ico",

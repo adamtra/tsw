@@ -282,6 +282,7 @@ const renderHistory = () => {
     } catch (e) {
         history = [];
     }
+    history = history.reverse();
     history.forEach( line => {
         const historyLine = document.createElement('div');
         historyLine.className = 'd-flex flex-row';
