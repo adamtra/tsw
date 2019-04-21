@@ -6,22 +6,17 @@ document.addEventListener('DOMContentLoaded', () => {
    headers.forEach(el => {
       el.style.cursor = 'pointer';
       el.currentVisibility = '';
+      const content = el.nextElementSibling;
       el.addEventListener('click', (ev) => {
-         const header = ev.target;
-         const content = header.nextElementSibling;
-         const visibility = header.currentVisibility === 'none' ? '' : 'none';
-         header.currentVisibility = visibility;
+         const visibility = el.currentVisibility === 'none' ? '' : 'none';
+         el.currentVisibility = visibility;
          content.style.display = visibility;
       });
       el.addEventListener('mouseenter', (ev) => {
-         const header = ev.target;
-         const content = header.nextElementSibling;
          content.style.display = '';
       });
       el.addEventListener('mouseleave', (ev) => {
-         const header = ev.target;
-         const content = header.nextElementSibling;
-         content.style.display = header.currentVisibility;
+         content.style.display = el.currentVisibility;
       });
    });
 });
