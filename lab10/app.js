@@ -24,7 +24,8 @@ db.defaults({
 
 app.use(serveStatic('public'));
 
-io.of('chat').on('connection', socket => {
+const chat = io.of('chat');
+chat.on('connection', socket => {
     let previousId;
     const changeRoom = currentId => {
         socket.leave(previousId);
@@ -59,12 +60,12 @@ io.of('chat').on('connection', socket => {
             name: room.name,
         }).write();
         const rooms = db.get('rooms').value();
-        socket.emit('rooms', rooms);
+        chat.emit('rooms', rooms);
         const roomData = getRoom(room.id);
         changeRoom(room.id);
-        socket.emit('room', room);
+        socket.emit('room', roomData);
     });
-    socket.emit('rooms', db.get('rooms').value());
+    chat.emit('rooms', db.get('rooms').value());
 });
 
 const getRoom = (id) => {
