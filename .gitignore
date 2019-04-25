@@ -2,3 +2,4 @@
 /.idea
 *.css.map
 node_modules
+db.json
