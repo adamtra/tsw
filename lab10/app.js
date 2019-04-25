@@ -72,14 +72,16 @@ const getRoom = (id) => {
         id: id,
     }).value();
     if (room) {
-        room.message = db.get('messages')
+        let response = {};
+        Object.assign(response, room);
+        response.message = db.get('messages')
             .filter({
                 room_id: room.id,
             })
             .sortBy('created_at', 'desc')
             .take(5)
             .value();
-        return room;
+        return response;
     }
     return null;
 };
