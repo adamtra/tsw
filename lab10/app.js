@@ -55,11 +55,17 @@ chat.on('connection', socket => {
             id: previousId,
         }).value();
         if (room) {
-            db.get('messages').push({
-                text: message,
+            const user = db.get('users').find({
+                id: socket.id,
+            }).value();
+            const newMessage = {
+                user: user.username,
+                text: message.trim(),
                 room_id: room.id,
                 created_at: getNow(),
-            });
+            };
+            db.get('messages').push(newMessage).write();
+            socket.to(previousId).emit('new-message', newMessage);
         }
     });
 
@@ -108,11 +114,11 @@ const getRoom = (id) => {
     if (room) {
         let response = {};
         Object.assign(response, room);
-        response.message = db.get('messages')
+        response.messages = db.get('messages')
             .filter({
                 room_id: room.id,
             })
-            .sortBy('created_at', 'desc')
+            .orderBy('created_at', 'desc')
             .take(5)
             .value();
         return response;
@@ -122,6 +128,7 @@ const getRoom = (id) => {
 
 const getNow = () => {
     const today = new Date();
+    today.setTime(today.getTime() - today.getTimezoneOffset() * 60 * 1000);
     let dd = today.getDate();
     let mm = today.getMonth() + 1;
     let hour = today.getUTCHours();

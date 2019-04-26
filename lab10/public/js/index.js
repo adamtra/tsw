@@ -83,7 +83,7 @@ const login = () => {
     const usernameInput = document.getElementById('username');
     if (usernameInput.value) {
         chat.emit('login', usernameInput.value);
-        usernameInput.value = "";
+        usernameInput.value = '';
     }
 };
 
@@ -96,14 +96,22 @@ const addRoom = () => {
             name: roomNameInput.value,
             icon: icons[iconBox.value],
         });
-        roomNameInput.value = "";
-        iconBox.value = "";
-        iconBox.innerHTML = "";
+        roomNameInput.value = '';
+        iconBox.value = '';
+        iconBox.innerHTML = '';
     } else {
         swal({
             title: 'Uzupełnij wszystkie pola',
             icon: 'error',
         });
+    }
+};
+
+const sendMessage = () => {
+    const textBoxInput = document.getElementById('textBox');
+    if (textBoxInput.value) {
+        chat.emit('send-message', textBoxInput.value);
+        textBoxInput.value = '';
     }
 };
 
@@ -140,11 +148,11 @@ const createIconsSelect = () => {
     icons.forEach((icon, key) => {
         const option = document.createElement('li');
         option.value = key;
-        option.innerHTML = `<i class="${icon}" value="${key}"></i>`;
+        option.innerHTML = `<i class='${icon}' value='${key}'></i>`;
         option.addEventListener('click', (ev) => {
             const value = ev.target.getAttribute('value');
             iconBox.value = value;
-            iconBox.innerHTML = `<i class="${icons[value]}"></i>`;
+            iconBox.innerHTML = `<i class='${icons[value]}'></i>`;
             select.style.display = 'none';
         });
         select.appendChild(option);
