@@ -24,12 +24,17 @@ document.onreadystatechange = () => {
     });
 
 
-    window.onbeforeunload = (event) => {
-        event.preventDefault();
-        alert('HAHA');
-        chat.emit('disconnect');
-    };
+    window.addEventListener('beforeunload', () => {
+        chat.emit('close-connection');
+    });
+};
 
+const login = () => {
+    const usernameInput = document.getElementById('username');
+    if (usernameInput.value) {
+        chat.emit('login', usernameInput.value);
+        usernameInput.value = "";
+    }
 };
 
 const addRoom = () => {

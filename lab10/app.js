@@ -33,6 +33,22 @@ chat.on('connection', socket => {
         previousId = currentId;
     };
 
+    socket.on('login', username => {
+        username = username.trim();
+        const user  = db.get('users').find({
+            username: username,
+        }).value();
+        if (user) {
+            socket.emit('error', 'Nazwa jest zajęta');
+        } else {
+            db.get('users').push({
+                id: socket.id,
+                username: username,
+            }).write();
+            chat.emit('rooms', db.get('rooms').value());
+        }
+    });
+
     socket.on('send-message', message => {
         const room = db.get('rooms').find({
             id: previousId,
@@ -55,6 +71,7 @@ chat.on('connection', socket => {
     });
 
     socket.on('add-room', room => {
+        room = room.trim();
         db.get('rooms').push({
             id: room.id,
             name: room.name,
@@ -66,13 +83,14 @@ chat.on('connection', socket => {
         socket.emit('room', roomData);
     });
 
-    chat.on('disconnect', () => {
-        socket.leaveAll();
-        console.log('Rozłączono');
+    socket.on('close-connection', () => {
+       socket.leaveAll();
+       db.get('users').remove({
+           id: socket.id,
+       }).write();
     });
-
-    chat.emit('rooms', db.get('rooms').value());
 });
+
 
 const getRoom = (id) => {
     const room = db.get('rooms').find({
