@@ -22,17 +22,39 @@ document.onreadystatechange = () => {
     chat.on('room', room => {
         console.log(room);
     });
+
+
+    window.onbeforeunload = (event) => {
+        event.preventDefault();
+        alert('HAHA');
+        chat.emit('disconnect');
+    };
+
 };
 
 const addRoom = () => {
     const roomNameInput = document.getElementById('room_name');
-    chat.emit('add-room', {
-        id: generateId(),
-        name: roomNameInput.value,
-    });
-    roomNameInput.value = "";
+    if (roomNameInput.value) {
+        chat.emit('add-room', {
+            id: generateId(),
+            name: roomNameInput.value,
+        });
+        roomNameInput.value = "";
+    }
 };
 
 const generateId = () => {
     return '_' + Math.random().toString(36).substr(2, 9);
+};
+
+const openNav = () => {
+    const sideNavStyle = document.getElementById('mySidenav').style;
+    sideNavStyle.width = '250px';
+    sideNavStyle.padding = '.5rem 1rem';
+};
+
+const closeNav = () => {
+    const sideNavStyle = document.getElementById('mySidenav').style;
+    sideNavStyle.width = '0';
+    sideNavStyle.padding = '0';
 };

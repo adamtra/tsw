@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>Czat</title>
+    <link rel='shortcut icon' type='image/x-icon' href='assets/favicon.ico' />
     <script src="/socket.io/socket.io.js"></script>
     <script src="js/index.js"></script>
+    <script src="js/sweetalert.min.js"></script>
     <link rel="stylesheet" href="css/index.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
 </head>
 <body>
-<input id="room_name" type="text">
-<button onclick="addRoom()">Dodaj pokój</button>
-<ul id="room_list">
-
-</ul>
-<div id="messages">
-
+<nav class="navbar navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" onclick="openNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div id="mySidenav" class="sidenav navbar-dark bg-dark">
+    <button class="navbar-toggler" type="button" onclick="closeNav()">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="d-flex flex-row p-3">
+        <input class="form-control" type="text" id="room_name" placeholder="Nazwa pokoju">
+        <button class="btn btn-success" onclick="addRoom()">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+    <ul id="room_list"></ul>
+</div>
+<div id="main" onclick="closeNav()">
+    <div id="messages"></div>
 </div>
 </body>
 </html>

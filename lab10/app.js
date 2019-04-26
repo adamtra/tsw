@@ -65,6 +65,12 @@ chat.on('connection', socket => {
         changeRoom(room.id);
         socket.emit('room', roomData);
     });
+
+    chat.on('disconnect', () => {
+        socket.leaveAll();
+        console.log('Rozłączono');
+    });
+
     chat.emit('rooms', db.get('rooms').value());
 });
 
