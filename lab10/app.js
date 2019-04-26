@@ -82,6 +82,7 @@ chat.on('connection', socket => {
             db.get('rooms').push({
                 id: room.id,
                 name: room.name,
+                icon: room.icon,
             }).write();
             const rooms = db.get('rooms').value();
             chat.emit('rooms', rooms);

@@ -1,4 +1,14 @@
 @background-color: lightskyblue;
+@border-style: 1px solid black;
+@square-size: 38px;
+@scrollbar-width: 17px;
+@option-style: {
+  background-color: #343a40;
+  color: white;
+  text-align: center;
+}
+@icon-margin: 10px;
+
 .sidenav {
   height: 100%;
   width: 0;
@@ -9,17 +19,21 @@
   overflow-x: hidden;
   transition: 0.5s;
 
-  & li {
+  & p {
     padding: 8px 8px 8px 32px;
-    text-decoration: none;
     font-size: 25px;
     color: white;
     display: block;
     transition: 0.3s;
 
+    & i {
+      margin-right: @icon-margin;
+    }
+
     &:hover {
       cursor: pointer;
       color: #f1f1f1;
+      border: 1px solid white;
     }
   }
 
@@ -51,7 +65,7 @@
 
 .fas {
   & span {
-    margin-left: 10px;
+    margin-left: @icon-margin;
   }
 }
 
@@ -62,4 +76,56 @@
       font-size: 18px;
     }
   }
+}
+
+.square-div {
+  width: @square-size;
+  height: @square-size;
+  @option-style();
+  & i {
+    margin-top: calc(@square-size / 4);
+  }
+}
+
+#iconList {
+  list-style-type: none;
+  padding-left: 0;
+  max-height: calc(@square-size * 4.5);
+  overflow: auto;
+  @option-style();
+  width: calc(@square-size + @scrollbar-width);
+  & li {
+    width: @square-size;
+    cursor: pointer;
+    height: @square-size;
+    border-left: @border-style;
+    border-right: @border-style;
+    border-bottom: @border-style;
+    & i {
+      margin-top: calc(@square-size / 4);
+    }
+  }
+}
+#selectIcon {
+  margin-right: 5px;
+}
+
+:root{
+  scrollbar-face-color: rgb(210,210,210); /* Firefox 63 compatibility */
+  scrollbar-track-color: rgb(46,54,69); /* Firefox 63 compatibility */
+  scrollbar-color: rgb(210,210,210) rgb(46,54,69);
+  scrollbar-width: thin;
+
+}
+
+::-webkit-scrollbar {
+  width: @scrollbar-width;
+}
+
+::-webkit-scrollbar-track {
+  background: rgb(46,54,69);
+}
+
+::-webkit-scrollbar-thumb {
+  background:rgb(210,210,210);
 }
