@@ -39,13 +39,14 @@ chat.on('connection', socket => {
             username: username,
         }).value();
         if (user) {
-            socket.emit('error', 'Nazwa jest zajęta');
+            socket.emit('error-message', 'Nazwa jest zajęta');
         } else {
             db.get('users').push({
                 id: socket.id,
                 username: username,
             }).write();
-            chat.emit('rooms', db.get('rooms').value());
+            socket.emit('logged', username);
+            socket.emit('rooms', db.get('rooms').value());
         }
     });
 
@@ -71,16 +72,23 @@ chat.on('connection', socket => {
     });
 
     socket.on('add-room', room => {
-        room = room.trim();
-        db.get('rooms').push({
-            id: room.id,
+        room.name = room.name.trim();
+        const roomCheck = db.get('rooms').find({
             name: room.name,
-        }).write();
-        const rooms = db.get('rooms').value();
-        chat.emit('rooms', rooms);
-        const roomData = getRoom(room.id);
-        changeRoom(room.id);
-        socket.emit('room', roomData);
+        }).value();
+        if (roomCheck) {
+            socket.emit('error-message', 'Taki pokój już instnieje');
+        } else {
+            db.get('rooms').push({
+                id: room.id,
+                name: room.name,
+            }).write();
+            const rooms = db.get('rooms').value();
+            chat.emit('rooms', rooms);
+            const roomData = getRoom(room.id);
+            changeRoom(room.id);
+            socket.emit('room', roomData);
+        }
     });
 
     socket.on('close-connection', () => {

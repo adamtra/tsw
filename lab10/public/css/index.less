@@ -1,3 +1,4 @@
+@background-color: lightskyblue;
 .sidenav {
   height: 100%;
   width: 0;
@@ -12,7 +13,7 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: white;
     display: block;
     transition: 0.3s;
 
@@ -34,7 +35,24 @@
 #main {
   height: calc(100vh - 56px);
   overflow: auto;
-  background-color: red;
+  background-color: @background-color;
+}
+
+#loginWrapper {
+  height: 100vh;
+  background-color: @background-color!important;
+  padding: 0!important;
+  margin: 0!important;
+}
+
+#loginContainer {
+  margin: auto;
+}
+
+.fas {
+  & span {
+    margin-left: 10px;
+  }
 }
 
 @media screen and (max-height: 450px) {
