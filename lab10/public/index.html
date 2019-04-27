@@ -33,7 +33,7 @@
     <div id="roomList" class="d-flex flex-column"></div>
 </div>
 <div id="loginWrapper" class="jumbotron d-flex align-items-center">
-    <div id="loginContainer" class="d-flex flex-column p-3">
+    <div id="loginContainer" class="d-flex col-xl-4 col-12 flex-column p-5">
         <input class="form-control" type="text" id="username" placeholder="Nazwa użytkownika">
         <button class="btn btn-success" onclick="login()">
             <i class="fas fa-sign-in-alt"><span>Zaloguj</span></i>
@@ -41,12 +41,17 @@
     </div>
 </div>
 <div id="main" onclick="closeNav()">
+    <h1 id="roomTitle">
+        Witaj w aplikacji czatu. Wybierz pokój i zacznij pisać.
+    </h1>
     <div id="messages"></div>
-    <div class="d-flex flex-row p-2">
-        <input class="form-control" type="text" id="textBox" placeholder="Napisz wiadomość">
-        <button class="btn btn-success" onclick="sendMessage()">
-            <i class="fas fa-plus"></i>
-        </button>
+    <div id="messageContainer">
+        <div class="d-flex flex-row p-2">
+            <textarea class="form-control" type="text" id="textBox" placeholder="Napisz wiadomość"></textarea>
+            <button class="btn btn-primary" onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
     </div>
 </div>
 </body>

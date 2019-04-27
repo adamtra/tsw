@@ -23,7 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const main = document.getElementById('main');
     const loginWrapper = document.getElementById('loginWrapper');
     const roomListElement = document.getElementById('roomList');
+    const roomTitleElement = document.getElementById('roomTitle');
+    const messageContainer = document.getElementById('messageContainer');
 
+    messageContainer.style.display = 'none';
     topNav.style.display = 'none';
     main.style.display = 'none';
 
@@ -45,6 +48,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     chat.on('room', room => {
         console.log(room);
+        roomTitleElement.innerHTML = `Jesteś w pokoju: <i class="fas fa-${room.icon}"><span>${room.name}</span></i>`;
+        messageContainer.style.display = '';
     });
 
     chat.on('error-message', err => {
