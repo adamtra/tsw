@@ -9,6 +9,8 @@
   text-align: center;
 }
 @icon-margin: 10px;
+@scrollbar-track: rgb(46,54,69);
+@scrollbar-thumb: rgb(210,210,210);
 
 .sidenav {
   height: 100%;
@@ -45,6 +47,31 @@
     font-size: 36px;
     margin-left: 50px;
   }
+
+
+  #iconList {
+    list-style-type: none;
+    padding-left: 0;
+    max-height: calc(@square-size * 4.5);
+    overflow: auto;
+    @option-style();
+    width: calc(@square-size + @scrollbar-width);
+    & li {
+      width: @square-size;
+      cursor: pointer;
+      height: @square-size;
+      border-left: @border-style;
+      border-right: @border-style;
+      border-bottom: @border-style;
+      & i {
+        margin-top: calc(@square-size / 4);
+      }
+    }
+  }
+
+  #selectIcon {
+    margin-right: 5px;
+  }
 }
 
 #main {
@@ -52,6 +79,23 @@
   height: calc(100vh - 56px);
   overflow: auto;
   background-color: @background-color;
+
+  #roomTitle {
+    text-align: center;
+  }
+
+  #messages {
+    .messageLine {
+      margin-bottom: 10px;
+      border: 1px solid black;
+      background-color: @scrollbar-track;
+      & span {
+        min-width: 1px;
+        word-wrap:break-word;
+        white-space: pre-line;
+      }
+    }
+  }
 }
 
 #loginWrapper {
@@ -59,13 +103,15 @@
   background-color: @background-color!important;
   padding: 0!important;
   margin: 0!important;
+
+  #loginContainer {
+    margin: auto;
+    background-color: @scrollbar-track;
+    border-radius: .25rem;
+  }
 }
 
-#loginContainer {
-  margin: auto;
-  background-color: @menu-background-color;
-  border-radius: .25rem;
-}
+
 
 .fas {
   & span {
@@ -91,37 +137,12 @@
   }
 }
 
-#iconList {
-  list-style-type: none;
-  padding-left: 0;
-  max-height: calc(@square-size * 4.5);
-  overflow: auto;
-  @option-style();
-  width: calc(@square-size + @scrollbar-width);
-  & li {
-    width: @square-size;
-    cursor: pointer;
-    height: @square-size;
-    border-left: @border-style;
-    border-right: @border-style;
-    border-bottom: @border-style;
-    & i {
-      margin-top: calc(@square-size / 4);
-    }
-  }
-}
-#selectIcon {
-  margin-right: 5px;
-}
 
-#roomTitle {
-  text-align: center;
-}
 
 :root{
-  scrollbar-face-color: rgb(210,210,210); /* Firefox 63 compatibility */
-  scrollbar-track-color: rgb(46,54,69); /* Firefox 63 compatibility */
-  scrollbar-color: rgb(210,210,210) rgb(46,54,69);
+  scrollbar-face-color: @scrollbar-thumb;
+  scrollbar-track-color: @scrollbar-track;
+  scrollbar-color: @scrollbar-thumb @scrollbar-track;
   scrollbar-width: thin;
 
 }
@@ -131,9 +152,9 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: rgb(46,54,69);
+  background: @scrollbar-track;
 }
 
 ::-webkit-scrollbar-thumb {
-  background:rgb(210,210,210);
+  background: @scrollbar-thumb;
 }

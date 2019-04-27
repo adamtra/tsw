@@ -65,7 +65,7 @@ chat.on('connection', socket => {
                 created_at: getNow(),
             };
             db.get('messages').push(newMessage).write();
-            socket.to(previousId).emit('new-message', newMessage);
+            chat.to(previousId).emit('new-message', newMessage);
         }
     });
 
@@ -120,7 +120,7 @@ const getRoom = (id) => {
             })
             .orderBy('created_at', 'desc')
             .take(5)
-            .value();
+            .value().reverse();
         return response;
     }
     return null;
@@ -128,26 +128,22 @@ const getRoom = (id) => {
 
 const getNow = () => {
     const today = new Date();
-    today.setTime(today.getTime() - today.getTimezoneOffset() * 60 * 1000);
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
-    let hour = today.getUTCHours();
-    let minutes = today.getMinutes();
+    let dd = doubleDigitDate(today.getDate());
+    let mm = doubleDigitDate(today.getMonth() + 1);
+    let hour = doubleDigitDate(today.getHours ());
+    let minutes = doubleDigitDate(today.getMinutes());
+    let seconds = doubleDigitDate(today.getSeconds());
 
     const yyyy = today.getFullYear();
-    if (dd < 10) {
-        dd = '0' + dd;
+
+    return `${yyyy}-${mm}-${dd} ${hour}:${minutes}:${seconds}`;
+};
+
+const doubleDigitDate = (value) => {
+    if (value < 10) {
+        value = '0' + value;
     }
-    if (mm < 10) {
-        mm = '0' + mm;
-    }
-    if (hour < 10) {
-        hour = '0' + hour;
-    }
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    }
-    return `${yyyy}-${mm}-${dd} ${hour}:${minutes}`;
+    return value;
 };
 
 httpServer.listen(3000, () => {

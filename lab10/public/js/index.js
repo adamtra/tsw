@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const roomListElement = document.getElementById('roomList');
     const roomTitleElement = document.getElementById('roomTitle');
     const messageContainer = document.getElementById('messageContainer');
+    const messagesContainer = document.getElementById('messages');
 
     messageContainer.style.display = 'none';
     topNav.style.display = 'none';
@@ -47,9 +48,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     chat.on('room', room => {
-        console.log(room);
         roomTitleElement.innerHTML = `Jesteś w pokoju: <i class="fas fa-${room.icon}"><span>${room.name}</span></i>`;
         messageContainer.style.display = '';
+        while (messagesContainer.firstChild) {
+            messagesContainer.removeChild(messagesContainer.firstChild);
+        }
+        room.messages.forEach(message => {
+            showMessage(message);
+        });
+    });
+
+    chat.on('new-message', message => {
+        showMessage(message);
     });
 
     chat.on('error-message', err => {
@@ -74,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
         logOutIcon.className = 'fas fa-sign-out-alt';
         logOutButton.appendChild(logOutIcon);
         logOutButton.addEventListener('click', () => {
+            chat.emit('close-connection');
             window.location.reload();
         });
         userData.appendChild(welcome);
@@ -136,6 +147,34 @@ const closeNav = () => {
     const sideNavStyle = document.getElementById('mySidenav').style;
     sideNavStyle.width = '0';
     sideNavStyle.padding = '0';
+};
+
+const showMessage = (message) => {
+    const messagesContainer = document.getElementById('messages');
+    if (messagesContainer.childElementCount === 5) {
+        messagesContainer.removeChild(messagesContainer.firstChild);
+    }
+    const messageLine = document.createElement('div');
+    messageLine.className = 'messageLine d-flex flex-row p-2';
+    const messageInfo = document.createElement('div');
+    messageInfo.className = 'd-flex flex-column  p-2';
+    const messageDate = document.createElement('span');
+    const dateArray = message.created_at.split(' ');
+    messageDate.textContent = dateArray[0] + '\n' + dateArray[1];
+    const messageAuthor = document.createElement('span');
+    messageAuthor.textContent = message.user;
+    messageInfo.appendChild(messageDate);
+    messageInfo.appendChild(messageAuthor);
+    messageLine.appendChild(messageInfo);
+
+    const messageText = document.createElement('span');
+    messageText.className = 'p-2';
+    messageText.textContent = message.text;
+    messageLine.appendChild(messageText);
+    messagesContainer.appendChild(messageLine);
+
+    const textBox = document.getElementById('textBox');
+    textBox.scrollIntoView();
 };
 
 const createIconsSelect = () => {
