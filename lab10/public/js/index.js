@@ -3,12 +3,12 @@
 'use strict';
 let chat = io(`http://${location.host}/chat`);
 const icons = [
-    'fas fa-umbrella-beach',
-    'fas fa-robot',
-    'fas fa-hamburger',
-    'fas fa-american-sign-language-interpreting',
-    'fas fa-handshake',
-    'fas fa-fist-raised',
+    'umbrella-beach',
+    'robot',
+    'hamburger',
+    'american-sign-language-interpreting',
+    'handshake',
+    'fist-raised',
 ];
 document.addEventListener('DOMContentLoaded', () => {
     createIconsSelect();
@@ -33,10 +33,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         rooms.forEach(room => {
             const roomElement = document.createElement('p');
-            roomElement.innerHTML = `<i class="${room.icon}"></i>${room.name}`;
+            roomElement.innerHTML = `<i class="fas fa-${room.icon}"></i>${room.name}`;
             roomElement.value = room.id;
             roomElement.addEventListener('click', () => {
                 chat.emit('get-room', room.id);
+                closeNav();
             });
             roomListElement.appendChild(roomElement);
         });
@@ -99,6 +100,7 @@ const addRoom = () => {
         roomNameInput.value = '';
         iconBox.value = '';
         iconBox.innerHTML = '';
+        closeNav();
     } else {
         swal({
             title: 'Uzupełnij wszystkie pola',
@@ -148,11 +150,11 @@ const createIconsSelect = () => {
     icons.forEach((icon, key) => {
         const option = document.createElement('li');
         option.value = key;
-        option.innerHTML = `<i class='${icon}' value='${key}'></i>`;
+        option.innerHTML = `<i class='fas fa-${icon}' value='${key}'></i>`;
         option.addEventListener('click', (ev) => {
             const value = ev.target.getAttribute('value');
             iconBox.value = value;
-            iconBox.innerHTML = `<i class='${icons[value]}'></i>`;
+            iconBox.innerHTML = `<i class='fas fa-${icons[value]}'></i>`;
             select.style.display = 'none';
         });
         select.appendChild(option);
