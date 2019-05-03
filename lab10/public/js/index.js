@@ -9,6 +9,13 @@ const icons = [
     'american-sign-language-interpreting',
     'handshake',
     'fist-raised',
+    'baby',
+    'award',
+    'bell',
+    'bicycle',
+    'car',
+    'cannabis',
+    'cat',
 ];
 document.addEventListener('DOMContentLoaded', () => {
     createIconsSelect();
@@ -94,6 +101,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', () => {
         chat.emit('close-connection');
     });
+    chat.emit('login', 'Adam');
 });
 
 const login = () => {

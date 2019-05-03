@@ -33,14 +33,14 @@
     </div>
     <div id="roomList" class="d-flex flex-column"></div>
 </div>
-<div id="loginWrapper" class="jumbotron d-flex align-items-center">
+<form onsubmit="return false" id="loginWrapper" class="jumbotron d-flex align-items-center">
     <div id="loginContainer" class="d-flex col-xl-4 col-12 flex-column p-5">
         <input class="form-control" type="text" id="username" placeholder="Nazwa użytkownika">
         <button class="btn btn-success" onclick="login()">
             <i class="fas fa-sign-in-alt"><span>Zaloguj</span></i>
         </button>
     </div>
-</div>
+</form>
 <div id="main" onclick="closeNav()">
     <h1 id="roomTitle">
         Witaj w aplikacji czatu. Wybierz pokój i zacznij pisać.
