@@ -28,9 +28,11 @@ const chat = io.of('chat');
 chat.on('connection', socket => {
     let previousId;
     const changeRoom = currentId => {
-        socket.leave(previousId);
-        socket.join(currentId);
-        previousId = currentId;
+        if (currentId !== previousId) {
+            socket.leave(previousId);
+            socket.join(currentId);
+            previousId = currentId;
+        }
     };
 
     socket.on('login', username => {
@@ -99,6 +101,7 @@ chat.on('connection', socket => {
     });
 
     socket.on('close-connection', () => {
+        console.log('disconect');
        socket.leaveAll();
        db.get('users').remove({
            id: socket.id,

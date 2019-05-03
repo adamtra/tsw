@@ -91,15 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
         logOutIcon.className = 'fas fa-sign-out-alt';
         logOutButton.appendChild(logOutIcon);
         logOutButton.addEventListener('click', () => {
-            chat.emit('close-connection');
-            window.location.reload();
+            logout().then(() => {
+                window.location.reload();
+            });
         });
         userData.appendChild(welcome);
         userData.appendChild(logOutButton);
     });
 
     window.addEventListener('beforeunload', () => {
-        chat.emit('close-connection');
+        logout();
     });
 });
 
@@ -207,4 +208,11 @@ const createIconsSelect = () => {
         select.appendChild(option);
     });
     selectContainer.appendChild(select);
+};
+
+const logout = () => {
+    return new Promise(function(resolve, reject) {
+        chat.emit('close-connection');
+        resolve();
+    });
 };
