@@ -44,6 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         rooms.forEach(room => {
             const roomElement = document.createElement('p');
+            roomElement.className = 'text-wrap';
             roomElement.innerHTML = `<i class="fas fa-${room.icon}"></i>${room.name}`;
             roomElement.value = room.id;
             roomElement.addEventListener('click', () => {
@@ -174,6 +175,7 @@ const showMessage = (message) => {
     chatBubble.appendChild(messageInfo);
     const textContainer = document.createElement('div');
     const messageText = document.createElement('span');
+    messageText.className = 'text-wrap';
     messageText.textContent = message.text;
     textContainer.appendChild(messageText);
     chatBubble.appendChild(textContainer);

@@ -74,6 +74,12 @@
   }
 }
 
+.text-wrap {
+  min-width: 1px;
+  word-wrap:break-word;
+  white-space: pre-line;
+}
+
 #main {
   color: white;
   height: calc(100vh - 56px);
@@ -90,12 +96,6 @@
       background-color: @scrollbar-track;
       border-radius: 25px;
       border: 3px solid @menu-background-color;
-
-      & span {
-        min-width: 1px;
-        word-wrap:break-word;
-        white-space: pre-line;
-      }
     }
   }
 }
