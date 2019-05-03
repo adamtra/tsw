@@ -17,6 +17,8 @@ const icons = [
     'cannabis',
     'cat',
 ];
+let currentUser;
+
 document.addEventListener('DOMContentLoaded', () => {
     createIconsSelect();
     const body = document.body;
@@ -88,7 +90,9 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+
     chat.on('logged', username => {
+        currentUser = username;
         topNav.style.display = '';
         main.style.display = '';
         loginWrapper.className = '';
@@ -193,6 +197,13 @@ const showMessage = (message) => {
     messageLine.className = 'd-flex my-2 p-2';
     const chatBubble = document.createElement('div');
     chatBubble.className = 'chat-bubble p-3';
+    if (message.user === currentUser) {
+        messageLine.classList.add('justify-content-end');
+        chatBubble.classList.add('right-bubble');
+    } else {
+        messageLine.classList.add('justify-content-start');
+        chatBubble.classList.add('left-bubble');
+    }
     const messageInfo = document.createElement('div');
     messageInfo.style.fontWeight = 'bold';
     messageInfo.textContent = `${message.created_at} ${message.user}`;
