@@ -106,8 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
 const login = () => {
     const usernameInput = document.getElementById('username');
-    if (usernameInput.value) {
-        chat.emit('login', usernameInput.value);
+    const username = usernameInput.value.trim();
+    if (username) {
+        chat.emit('login', username);
         usernameInput.value = '';
     }
 };
@@ -115,10 +116,11 @@ const login = () => {
 const addRoom = () => {
     const roomNameInput = document.getElementById('roomName');
     const iconBox = document.getElementById('iconBox');
-    if (roomNameInput.value && iconBox.value) {
+    const roomName = roomNameInput.value.trim();
+    if (roomName && iconBox.value) {
         chat.emit('add-room', {
             id: generateId(),
-            name: roomNameInput.value,
+            name: roomName,
             icon: icons[iconBox.value],
         });
         roomNameInput.value = '';
@@ -135,8 +137,9 @@ const addRoom = () => {
 
 const sendMessage = () => {
     const textBoxInput = document.getElementById('textBox');
-    if (textBoxInput.value) {
-        chat.emit('send-message', textBoxInput.value);
+    const message = textBoxInput.value.trim();
+    if (message) {
+        chat.emit('send-message', message);
         textBoxInput.value = '';
     }
 };

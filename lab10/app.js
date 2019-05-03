@@ -37,7 +37,7 @@ chat.on('connection', socket => {
 
     socket.on('login', username => {
         username = username.trim();
-        const user  = db.get('users').find({
+        const user = db.get('users').find({
             username: username,
         }).value();
         if (user) {
@@ -101,11 +101,10 @@ chat.on('connection', socket => {
     });
 
     socket.on('close-connection', () => {
-        console.log('disconect');
-       socket.leaveAll();
-       db.get('users').remove({
-           id: socket.id,
-       }).write();
+        socket.leaveAll();
+        db.get('users').remove({
+            id: socket.id,
+        }).write();
     });
 });
 
@@ -133,7 +132,7 @@ const getNow = () => {
     const today = new Date();
     let dd = doubleDigitDate(today.getDate());
     let mm = doubleDigitDate(today.getMonth() + 1);
-    let hour = doubleDigitDate(today.getHours ());
+    let hour = doubleDigitDate(today.getHours());
     let minutes = doubleDigitDate(today.getMinutes());
     let seconds = doubleDigitDate(today.getSeconds());
 
