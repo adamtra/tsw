@@ -39,13 +39,16 @@ document.addEventListener('DOMContentLoaded', () => {
     main.style.display = 'none';
 
     chat.on('rooms', rooms => {
-        while (roomListElement.firstChild) {
-            roomListElement.removeChild(roomListElement.firstChild);
-        }
+        roomListElement.textContent = '';
         rooms.forEach(room => {
             const roomElement = document.createElement('p');
             roomElement.className = 'wrap-text';
-            roomElement.innerHTML = `<i class="fas fa-${room.icon}"></i>${room.name}`;
+            const roomIcon = document.createElement('i');
+            roomIcon.className = `fas fa-${room.icon}`;
+            roomElement.appendChild(roomIcon);
+            const roomName = document.createElement('span');
+            roomName.textContent = room.name;
+            roomElement.appendChild(roomName);
             roomElement.value = room.id;
             roomElement.addEventListener('click', () => {
                 chat.emit('get-room', room.id);
@@ -56,11 +59,19 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     chat.on('room', room => {
-        roomTitleElement.innerHTML = `Jesteś w pokoju: <i class="fas fa-${room.icon}"><span>${room.name}</span></i>`;
+        roomTitleElement.textContent = '';
+        const title = document.createElement('span');
+        title.textContent = 'Jesteś w pokoju: ';
+        const icon = document.createElement('i');
+        icon.className = `mx-2 fas fa-${room.icon}`;
+        const name = document.createElement('span');
+        name.textContent = room.name;
+        name.className = 'mx-2';
+        roomTitleElement.appendChild(title);
+        roomTitleElement.appendChild(icon);
+        roomTitleElement.appendChild(name);
         messageContainer.style.display = '';
-        while (messagesContainer.firstChild) {
-            messagesContainer.removeChild(messagesContainer.firstChild);
-        }
+        messagesContainer.textContent = '';
         room.messages.forEach(message => {
             showMessage(message);
         });
@@ -163,19 +174,19 @@ const generateId = () => {
 
 const openNav = () => {
     const sideNavStyle = document.getElementById('mySidenav').style;
-    sideNavStyle.width = '300px';
+    sideNavStyle.left = '0';
     sideNavStyle.padding = '.5rem 1rem';
 };
 
 const closeNav = () => {
     const sideNavStyle = document.getElementById('mySidenav').style;
-    sideNavStyle.width = '0';
+    sideNavStyle.left = '-300px';
     sideNavStyle.padding = '0';
 };
 
 const showMessage = (message) => {
     const messagesContainer = document.getElementById('messages');
-    if (messagesContainer.childElementCount === 5) {
+    while (messagesContainer.childElementCount >= 5) {
         messagesContainer.removeChild(messagesContainer.firstChild);
     }
     const messageLine = document.createElement('div');
