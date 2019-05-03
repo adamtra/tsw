@@ -48,8 +48,8 @@
     <div id="messages" class="p-2"></div>
     <div id="messageContainer">
         <div class="d-flex flex-row p-2">
-            <textarea class="form-control" type="text" id="textBox" placeholder="Napisz wiadomość"></textarea>
-            <button class="btn btn-primary" onclick="sendMessage()">
+            <textarea onkeydown="checkKey()" class="form-control" type="text" id="textBox" placeholder="Napisz wiadomość"></textarea>
+            <button class="btn btn-primary col-md-1 col-auto" onclick="sendMessage()">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>

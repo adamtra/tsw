@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         rooms.forEach(room => {
             const roomElement = document.createElement('p');
-            roomElement.className = 'text-wrap';
+            roomElement.className = 'wrap-text';
             roomElement.innerHTML = `<i class="fas fa-${room.icon}"></i>${room.name}`;
             roomElement.value = room.id;
             roomElement.addEventListener('click', () => {
@@ -136,6 +136,18 @@ const addRoom = () => {
     }
 };
 
+const checkKey = () => {
+  if (event.key === 'Enter') {
+    if (event.ctrlKey) {
+        const textBoxInput = document.getElementById('textBox');
+        textBoxInput.value += '\n';
+    } else if(!event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+  }
+};
+
 const sendMessage = () => {
     const textBoxInput = document.getElementById('textBox');
     const message = textBoxInput.value.trim();
@@ -171,11 +183,12 @@ const showMessage = (message) => {
     const chatBubble = document.createElement('div');
     chatBubble.className = 'chat-bubble p-3';
     const messageInfo = document.createElement('div');
+    messageInfo.style.fontWeight = 'bold';
     messageInfo.textContent = `${message.created_at} ${message.user}`;
     chatBubble.appendChild(messageInfo);
     const textContainer = document.createElement('div');
     const messageText = document.createElement('span');
-    messageText.className = 'text-wrap';
+    messageText.className = 'wrap-text';
     messageText.textContent = message.text;
     textContainer.appendChild(messageText);
     chatBubble.appendChild(textContainer);
