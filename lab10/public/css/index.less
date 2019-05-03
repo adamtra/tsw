@@ -85,10 +85,12 @@
   }
 
   #messages {
-    .messageLine {
-      margin-bottom: 10px;
-      border: 1px solid black;
+    .chat-bubble {
+      max-width: 100%;
       background-color: @scrollbar-track;
+      border-radius: 25px;
+      border: 3px solid @menu-background-color;
+
       & span {
         min-width: 1px;
         word-wrap:break-word;

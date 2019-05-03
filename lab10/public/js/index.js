@@ -101,7 +101,6 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', () => {
         chat.emit('close-connection');
     });
-    chat.emit('login', 'Adam');
 });
 
 const login = () => {
@@ -163,22 +162,18 @@ const showMessage = (message) => {
         messagesContainer.removeChild(messagesContainer.firstChild);
     }
     const messageLine = document.createElement('div');
-    messageLine.className = 'messageLine d-flex flex-row p-2';
+    messageLine.className = 'd-flex my-2 p-2';
+    const chatBubble = document.createElement('div');
+    chatBubble.className = 'chat-bubble p-3';
     const messageInfo = document.createElement('div');
-    messageInfo.className = 'd-flex flex-column  p-2';
-    const messageDate = document.createElement('span');
-    const dateArray = message.created_at.split(' ');
-    messageDate.textContent = dateArray[0] + '\n' + dateArray[1];
-    const messageAuthor = document.createElement('span');
-    messageAuthor.textContent = message.user;
-    messageInfo.appendChild(messageDate);
-    messageInfo.appendChild(messageAuthor);
-    messageLine.appendChild(messageInfo);
-
+    messageInfo.textContent = `${message.created_at} ${message.user}`;
+    chatBubble.appendChild(messageInfo);
+    const textContainer = document.createElement('div');
     const messageText = document.createElement('span');
-    messageText.className = 'p-2';
     messageText.textContent = message.text;
-    messageLine.appendChild(messageText);
+    textContainer.appendChild(messageText);
+    chatBubble.appendChild(textContainer);
+    messageLine.appendChild(chatBubble);
     messagesContainer.appendChild(messageLine);
 
     const textBox = document.getElementById('textBox');
