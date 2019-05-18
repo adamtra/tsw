@@ -3,4 +3,5 @@ interface Judge {
     sedzia: string;
     kraj: string;
 }
+
 export default Judge;

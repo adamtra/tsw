@@ -7,18 +7,18 @@ import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.min.css';
 
 Vue.use(Vuetify, {
-  theme: {
-    primary: colors.lightGreen,
-    secondary: colors.grey.darken1,
-    accent: colors.shades.black,
-    error: colors.red.accent3,
-  },
-  iconfont: 'fa',
+    theme: {
+        primary: colors.lightGreen,
+        secondary: colors.grey.darken1,
+        accent: colors.shades.black,
+        error: colors.red.accent3,
+    },
+    iconfont: 'fa',
 });
 Vue.config.productionTip = false;
 
 new Vue({
-  router,
-  store,
-  render: (h) => h(App),
+    router,
+    store,
+    render: (h) => h(App),
 }).$mount('#app');

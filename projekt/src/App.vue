@@ -1,5 +1,5 @@
 <template>
-    <v-app dark id="app">
+    <v-app dark>
         <v-navigation-drawer v-model="drawer" fixed app :clipped="$vuetify.breakpoint.lgAndUp">
             <v-list dense>
                 <v-list-tile :to="'/'">
@@ -16,7 +16,7 @@
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title>Strona główna</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-btn icon large>
+            <v-btn icon large @click="showLogin = true">
                 <i class="fas fa-sign-in-alt"></i>
             </v-btn>
         </v-toolbar>
@@ -25,6 +25,7 @@
                 <router-view></router-view>
             </v-container>
         </v-content>
+        <LoginDialog v-model="showLogin"></LoginDialog>
     </v-app>
 </template>
 
@@ -33,16 +34,16 @@
 </style>
 
 <script lang="ts">
-import {Component, Vue} from 'vue-property-decorator';
+    import {Component, Vue} from 'vue-property-decorator';
+    import LoginDialog from "@/components/LoginDialog.vue";
 
-@Component({
-    name: 'App'
-})
-export default class App extends Vue {
-    data() {
-        return {
-            drawer: null
+    @Component({
+        components: {
+            LoginDialog
         }
+    })
+    export default class App extends Vue {
+        drawer = null;
+        showLogin = false;
     }
-}
 </script>

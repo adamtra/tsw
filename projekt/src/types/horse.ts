@@ -11,13 +11,14 @@ interface Horse {
     plec: string;
     hodowca: Detail;
     rodowod: {
-      o: Detail;
-      m: Detail;
-      om: Detail;
+        o: Detail;
+        m: Detail;
+        om: Detail;
     };
     wynik: {
         rozjemca: number | undefined;
         noty: Note[];
     };
 }
+
 export default Horse;

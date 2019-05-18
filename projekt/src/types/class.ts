@@ -5,4 +5,5 @@ interface Class {
     czempionat: number;
     komisja: number[];
 }
+
 export default Class;

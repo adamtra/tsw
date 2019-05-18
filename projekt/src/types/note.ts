@@ -5,4 +5,5 @@ interface Note {
     nogi: number;
     ruch: number;
 }
+
 export default Note;
