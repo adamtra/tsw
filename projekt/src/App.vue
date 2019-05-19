@@ -33,17 +33,4 @@
 
 </style>
 
-<script lang="ts">
-    import {Component, Vue} from 'vue-property-decorator';
-    import LoginDialog from "@/components/LoginDialog.vue";
-
-    @Component({
-        components: {
-            LoginDialog
-        }
-    })
-    export default class App extends Vue {
-        drawer = null;
-        showLogin = false;
-    }
-</script>
+<script lang="ts" src="./App.ts"></script>
