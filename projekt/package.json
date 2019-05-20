@@ -18,7 +18,8 @@
     "vuetify": "^1.5.14",
     "vuex": "^3.0.1",
     "webpack-stream": "^5.2.1",
-    "vuelidate": "latest"
+    "vuelidate": "latest",
+    "vuex-class": "latest"
   },
   "devDependencies": {
     "@types/vuelidate": "^0.7.5",
