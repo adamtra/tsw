@@ -1,12 +1,16 @@
 import {ActionTree} from 'vuex';
-import Judge from '@/types/judge';
 import {JudgeService} from '@/services/judge-service';
 import State from '@/types/state';
 
 export const actions: ActionTree<State, State> = {
-    getDefaultJudges({commit}) {
-        JudgeService.get().then((res) => {
+    getExternalJudges({commit}) {
+        JudgeService.getExternal().then((res) => {
             commit('judgesLoaded', res.data);
         });
+    },
+    getJudges({commit}) {
+      JudgeService.getAll().then((res) => {
+          commit('judgesLoaded', res.data);
+      });
     },
 };

@@ -11,8 +11,7 @@ const emptyJudge: Judge = {
 export const getters: GetterTree<State, State> = {
     getJudge(state: State): (id: number) => Judge {
         return (id: number) => {
-            const {judges} = state;
-            return judges.find((judge) => judge.id === id) || emptyJudge;
+            return state.judges.find((judge) => judge.id === id) || emptyJudge;
         };
     },
 };
