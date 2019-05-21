@@ -2,6 +2,7 @@
 'use strict';
 
 const express = require('express');
+var cors = require('cors');
 const app = express();
 
 const port = 4000;
@@ -10,6 +11,7 @@ const logger = require('morgan');
 const errorHandler = require('errorhandler');
 const bodyParser = require('body-parser');
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
