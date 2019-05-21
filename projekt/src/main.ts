@@ -5,10 +5,13 @@ import store from './store/';
 import Vuetify from 'vuetify';
 import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.min.css';
-import {setup} from '@/helpers/interceptors';
+import {token, errors} from '@/helpers/interceptors';
+import VueSweetalert2 from 'vue-sweetalert2';
 
-setup();
+token();
+errors();
 
+Vue.use(VueSweetalert2);
 Vue.use(Vuetify, {
     theme: {
         primary: colors.lightGreen,
