@@ -11,6 +11,7 @@ export const state: State = {
     judges: [],
     horses: [],
     classes: [],
+    token: null,
 };
 
 export default new Vuex.Store<State>({

@@ -9,9 +9,12 @@ const emptyJudge: Judge = {
 };
 
 export const getters: GetterTree<State, State> = {
-    getJudge(state: State): (id: number) => Judge {
+    judgeById(state: State): (id: number) => Judge {
         return (id: number) => {
             return state.judges.find((judge) => judge.id === id) || emptyJudge;
         };
+    },
+    token(state: State): string | null {
+      return state.token;
     },
 };

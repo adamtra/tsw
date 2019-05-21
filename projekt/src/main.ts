@@ -5,6 +5,9 @@ import store from './store/';
 import Vuetify from 'vuetify';
 import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.min.css';
+import {setup} from '@/helpers/interceptors';
+
+setup();
 
 Vue.use(Vuetify, {
     theme: {

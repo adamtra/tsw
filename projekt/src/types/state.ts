@@ -6,5 +6,6 @@ interface State {
     judges: Judge[];
     horses: Horse[];
     classes: Class[];
+    token: string | null;
 }
 export default State;
