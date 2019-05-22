@@ -16,7 +16,7 @@ interface Horse {
         om: Detail;
     };
     wynik: {
-        rozjemca: number | undefined;
+        rozjemca?: number;
         noty: Note[];
     };
 }

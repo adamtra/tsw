@@ -2,7 +2,7 @@ interface Class {
     id: number;
     numer: number;
     kat: string;
-    czempionat: number;
+    czempionat?: number;
     komisja: number[];
 }
 
