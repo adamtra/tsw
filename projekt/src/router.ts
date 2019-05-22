@@ -17,6 +17,16 @@ export default new Router({
             component: () => import('./views/Judge.vue'),
         },
         {
+            path: '/horses',
+            name: 'horse',
+            component: () => import('./views/Horse.vue'),
+        },
+        {
+            path: '/classes',
+            name: 'class',
+            component: () => import('./views/Class.vue'),
+        },
+        {
             path: '**',
             redirect: '/',
         },

@@ -1,7 +1,11 @@
 <template>
     <div>
         <h1>Sędziowie</h1>
-        <h3>Sędzia o id {{id}}: {{judge}}</h3>
+        <ul>
+            <li v-for="judge in judges">
+                {{judge.sedzia}}
+            </li>
+        </ul>
     </div>
 </template>
 
