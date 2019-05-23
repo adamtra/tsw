@@ -7,6 +7,7 @@ import colors from 'vuetify/es5/util/colors';
 import 'vuetify/dist/vuetify.min.css';
 import {token, errors} from '@/helpers/interceptors';
 import VueSweetalert2 from 'vue-sweetalert2';
+import pl from 'vuetify/src/locale/pl';
 
 token();
 errors();
@@ -20,6 +21,10 @@ Vue.use(Vuetify, {
         error: colors.red.accent3,
     },
     iconfont: 'fa',
+    lang: {
+        locales: { pl },
+        current: 'pl',
+    },
 });
 Vue.config.productionTip = false;
 

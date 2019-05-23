@@ -1,12 +1,8 @@
 <template>
-    <div>
-        <h1>Sędziowie</h1>
-        <ul>
-            <li v-for="judge in judges">
-                {{judge.sedzia}}
-            </li>
-        </ul>
-    </div>
+    <DataTable
+            :title="title"
+            :items="judges"
+            :headers="headers"></DataTable>
 </template>
 
 <script lang="ts" src="./Judge.ts"></script>
