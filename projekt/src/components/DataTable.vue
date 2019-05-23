@@ -21,8 +21,12 @@
                 </v-alert>
             </template>
             <template v-slot:items="props">
-                <td v-for="cols in headers">
+                <td v-for="cols in headers" v-if="cols.value !== 'opcje'">
                     {{ props.item[cols.value] }}
+                </td>
+                <td v-else>
+                    <v-btn class="primary">Szczegóły</v-btn>
+                    <v-btn class="error">Usuń</v-btn>
                 </td>
             </template>
         </v-data-table>

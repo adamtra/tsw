@@ -13,6 +13,7 @@ export default class Judge extends Vue {
     public headers = [
         { text: 'Imię i nazwisko', value: 'sedzia' },
         { text: 'Kraj', value: 'kraj' },
+        { text: 'Opcje', value: 'opcje' },
         ];
     public title = 'Sędziowie';
     public loading = true;
