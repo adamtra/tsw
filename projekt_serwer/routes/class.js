@@ -12,6 +12,9 @@ router.route('/:id').get((req, res) => {
         id: Number(req.params.id),
     }).value();
     if (classEl) {
+        classEl.horses = db.get('horses').filter({
+            klasa: classEl.id,
+        }).value();
         res.json(classEl);
     } else {
         res.status(404).json('Nie znaleziono');

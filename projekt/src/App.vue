@@ -4,10 +4,10 @@
             <v-list>
                 <v-list-tile :to="'/'">
                     <v-list-tile-action>
-                        <i class="fas fa-home fa-2x"></i>
+                        <i class="fas fa-chalkboard-teacher fa-2x"></i>
                     </v-list-tile-action>
                     <v-list-tile-content>
-                        <v-list-tile-title>Strona główna</v-list-tile-title>
+                        <v-list-tile-title>Panel kibica</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
                 <v-list-group>
@@ -50,6 +50,21 @@
 </template>
 
 <style lang="less">
+    .breadcrumb {
+        span {
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+        .disabled {
+            color: grey;
+            cursor: default;
+        }
+
+        a {
+            text-decoration: none;
+        }
+    }
+
 
 </style>
 

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
+import FanPanel from '@/views/FanPanel';
 
 Vue.use(Router);
 
@@ -8,7 +8,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            component: Home,
+            component: FanPanel,
         },
         {
             path: '/judges',

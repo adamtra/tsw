@@ -1,6 +1,7 @@
 import axios from 'axios';
 import store from '@/store/';
 import {Vue} from 'vue-property-decorator';
+import router from '@/router';
 
 export function token() {
     axios.interceptors.request.use((config) => {
@@ -25,6 +26,8 @@ export function errors() {
                     title: 'Nie znaleziono',
                     type: 'error',
                     showConfirmButton: false,
+                }).then(() => {
+                    router.push('/');
                 });
             } else if (status === 500) {
                 Vue.swal({
