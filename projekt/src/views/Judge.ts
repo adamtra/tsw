@@ -3,7 +3,6 @@ import {JudgeService} from '@/services/judge-service';
 import DataTable from '@/components/DataTable';
 import UiLoader from '@/components/UiLoader';
 @Component({
-    name: 'Judge',
     components: {
         DataTable,
         UiLoader,
@@ -18,8 +17,13 @@ export default class Judge extends Vue {
     public title = 'Sędziowie';
     public loading = true;
     public mounted() {
+        this.getJudges();
+    }
+
+    public getJudges() {
+        this.loading = true;
         JudgeService.getAll().then((res) => {
-            this.loading = true;
+            this.loading = false;
             this.judges = res.data;
         });
     }

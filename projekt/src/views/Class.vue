@@ -1,5 +1,7 @@
 <template>
+    <UiLoader v-if="loading"></UiLoader>
     <DataTable
+            v-else
             :title="title"
             :items="classes"
             :headers="headers"></DataTable>

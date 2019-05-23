@@ -33,9 +33,10 @@
     @color: #8BC34A;
     @colorRight: darken(@color, 15%);
     @colorLeft: darken(@color, 5%);
-    @shadow: #DBE3F4;
+    @shadow: #424242;
 
     .boxes {
+        margin: 35vh auto 0;
         --size: 32px;
         --duration: 800ms;
         height: calc(var(--size) * 2);
@@ -43,7 +44,6 @@
         position: relative;
         transform-style: preserve-3d;
         transform-origin: 50% 50%;
-        margin-top: calc(var(--size) * 1.5 * -1);
         transform: rotateX(60deg) rotateZ(45deg) rotateY(0deg) translateZ(0px);
         .box {
             width: var(--size);

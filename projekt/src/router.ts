@@ -13,7 +13,7 @@ export default new Router({
         },
         {
             path: '/judges',
-            name: 'Judge',
+            name: 'judge',
             component: () => import('./views/Judge.vue'),
         },
         {
