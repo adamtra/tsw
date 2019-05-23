@@ -1,12 +1,8 @@
 <template>
-    <div>
-        <h1>Klasy</h1>
-        <ul>
-            <li v-for="classEl in classes">
-                {{classEl.numer}} - {{classEl.kat}}
-            </li>
-        </ul>
-    </div>
+    <DataTable
+            :title="title"
+            :items="classes"
+            :headers="headers"></DataTable>
 </template>
 
 <script lang="ts" src="./Class.ts"></script>
