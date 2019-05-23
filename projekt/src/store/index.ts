@@ -8,9 +8,6 @@ import State from '@/types/state';
 Vue.use(Vuex);
 
 export const state: State = {
-    judges: [],
-    horses: [],
-    classes: [],
     token: null,
 };
 
