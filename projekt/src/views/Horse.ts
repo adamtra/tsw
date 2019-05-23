@@ -1,10 +1,11 @@
 import {Component, Vue} from 'vue-property-decorator';
-import {State, Action, Getter} from 'vuex-class';
+import {HorseService} from '@/services/horse-service';
 @Component
 export default class Horse extends Vue {
-    @Action('getHorses') public getHorses: any;
-    @Getter('horses') public horses: any;
+    public horses: Horse[] = [];
     public mounted() {
-        this.getHorses();
+        HorseService.getAll().then((res) => {
+           this.horses = res.data;
+        });
     }
 }

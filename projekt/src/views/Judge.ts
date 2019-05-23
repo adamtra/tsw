@@ -1,10 +1,11 @@
 import {Component, Vue} from 'vue-property-decorator';
-import {State, Action, Getter} from 'vuex-class';
+import {JudgeService} from '@/services/judge-service';
 @Component
 export default class Judge extends Vue {
-    @Action('getJudges') public getJudges: any;
-    @Getter('judges') public judges: any;
+    public judges: Judge[] = [];
     public mounted() {
-        this.getJudges();
+        JudgeService.getAll().then((res) => {
+           this.judges = res.data;
+        });
     }
 }

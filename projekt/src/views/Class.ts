@@ -1,10 +1,11 @@
 import {Component, Vue} from 'vue-property-decorator';
-import {State, Action, Getter} from 'vuex-class';
+import {ClassService} from '@/services/class-service';
 @Component
 export default class Class extends Vue {
-    @Action('getClasses') public getClasses: any;
-    @Getter('classes') public classes: any;
+    public classes: Class[] = [];
     public mounted() {
-        this.getClasses();
+        ClassService.getAll().then((res) => {
+           this.classes = res.data;
+        });
     }
 }
