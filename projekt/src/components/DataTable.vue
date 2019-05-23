@@ -8,8 +8,7 @@
                     append-icon="search"
                     label="Wyszukaj"
                     single-line
-                    hide-details
-            ></v-text-field>
+                    hide-details></v-text-field>
         </v-card-title>
         <v-data-table
                 :search="search"
@@ -25,7 +24,7 @@
                     {{ props.item[cols.value] }}
                 </td>
                 <td v-else>
-                    <v-btn class="primary">Szczegóły</v-btn>
+                    <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Szczegóły</v-btn>
                     <v-btn class="error">Usuń</v-btn>
                 </td>
             </template>

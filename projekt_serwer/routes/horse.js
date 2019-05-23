@@ -7,4 +7,15 @@ router.route('/').get((_r, res) => {
     res.json(horses);
 });
 
+router.route('/:id').get((req, res) => {
+    const horse = db.get('horses').find({
+        id: Number(req.params.id),
+    }).value();
+    if (horse) {
+        res.json(horse);
+    } else {
+        res.status(404).json('Nie znaleziono');
+    }
+});
+
 module.exports = router;

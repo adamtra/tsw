@@ -9,6 +9,17 @@ router.route('/').get((_r, res) => {
     res.json(judges);
 });
 
+router.route('/:id').get((req, res) => {
+    const judge = db.get('judges').find({
+        id: Number(req.params.id),
+    }).value();
+    if (judge) {
+        res.json(judge);
+    } else {
+        res.status(404).json('Nie znaleziono');
+    }
+});
+
 router.route('/').post((req, res) => {
     const v = new Validator();
     const validation = v.validate(req.body, schemas.judge).errors.length === 0;

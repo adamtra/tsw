@@ -8,23 +8,31 @@ export default new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
             component: Home,
         },
         {
             path: '/judges',
-            name: 'judge',
             component: () => import('./views/Judge.vue'),
         },
         {
+            path: '/judges/:id',
+            component: () => import('./views/JudgeDetails.vue'),
+        },
+        {
             path: '/horses',
-            name: 'horse',
             component: () => import('./views/Horse.vue'),
         },
         {
+            path: '/horses/:id',
+            component: () => import('./views/HorseDetails.vue'),
+        },
+        {
             path: '/classes',
-            name: 'class',
             component: () => import('./views/Class.vue'),
+        },
+        {
+            path: '/classes/:id',
+            component: () => import('./views/ClassDetails.vue'),
         },
         {
             path: '**',

@@ -2,6 +2,7 @@
     <UiLoader v-if="loading"></UiLoader>
     <DataTable
             v-else
+            url="classes"
             :title="title"
             :items="classes"
             :headers="headers"></DataTable>
