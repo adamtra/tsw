@@ -50,6 +50,7 @@ export default class JudgeDetails extends Vue {
     public judgeData = {} as Judge;
     public loading = false;
     public saving = false;
+    public deleting = false;
     public isNew = true;
     public created() {
         this.getDetails();
@@ -69,16 +70,30 @@ export default class JudgeDetails extends Vue {
     public save() {
         if (this.$v.judgeData) {
             if (!this.$v.judgeData.$invalid) {
+                this.saving = true;
                 if (this.isNew) {
                     JudgeService.add(this.judgeData).then(() => {
                         router.push('/judges');
+                    }, () => {
+                        this.saving = false;
                     });
                 } else {
                     JudgeService.edit(this.judgeData).then(() => {
                         router.push('/judges');
+                    }, () => {
+                        this.saving = false;
                     });
                 }
             }
         }
+    }
+
+    public remove() {
+        this.deleting = true;
+        JudgeService.delete(this.judgeData.id).then(() => {
+            router.push('/judges');
+        }, () => {
+            this.deleting = false;
+        });
     }
 }

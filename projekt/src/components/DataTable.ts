@@ -8,4 +8,8 @@ export default class DataTable extends Vue {
     @Prop() public url: any;
     public search = '';
     public showDelete = false;
+
+    public remove(id: number) {
+        this.$emit('remove', id);
+    }
 }

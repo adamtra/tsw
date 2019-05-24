@@ -36,4 +36,40 @@ router.route('/').post((req, res) => {
     }
 });
 
+router.route('/:id').put((req, res) => {
+    const id = Number(req.params.id);
+    const judge = db.get('judges').find({
+        id: id,
+    }).value();
+    if (judge) {
+        const v = new Validator();
+        const validation = v.validate(req.body, schemas.judge).errors.length === 0;
+        if (validation) {
+            db.get('judges').find({
+                id: id,
+            }).assign(req.body).value();
+            res.json('OK');
+        } else {
+            res.status(400).json('Złe dane');
+        }
+    } else {
+        res.status(404).json('Nie znaleziono');
+    }
+});
+
+router.route('/:id').delete((req, res) => {
+    const id = Number(req.params.id);
+    const judge = db.get('judges').find({
+        id: id,
+    }).value();
+    if (judge) {
+        db.get('judges').remove({
+            id: id,
+        }).write();
+        res.json('OK');
+    } else {
+        res.status(404).json('Nie znaleziono');
+    }
+});
+
 module.exports = router;

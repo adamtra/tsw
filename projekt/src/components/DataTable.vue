@@ -25,7 +25,7 @@
                 </td>
                 <td v-else>
                     <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Szczegóły</v-btn>
-                    <v-btn class="error">Usuń</v-btn>
+                    <v-btn class="error" @click="remove(props.item.id)">Usuń</v-btn>
                 </td>
             </template>
         </v-data-table>

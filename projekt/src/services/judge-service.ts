@@ -12,6 +12,9 @@ export class JudgeService {
         return axios.post(`${process.env.VUE_APP_API_URL}/judge/`, data);
     }
     public static edit(data: Judge) {
-        return axios.post(`${process.env.VUE_APP_API_URL}/judge/${data.id}`, data);
+        return axios.put(`${process.env.VUE_APP_API_URL}/judge/${data.id}`, data);
+    }
+    public static delete(id: number) {
+        return axios.delete(`${process.env.VUE_APP_API_URL}/judge/${id}`);
     }
 }

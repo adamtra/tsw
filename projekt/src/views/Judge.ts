@@ -28,4 +28,10 @@ export default class Judge extends Vue {
             this.judges = res.data;
         });
     }
+
+    public remove(id: number) {
+        JudgeService.delete(id).then(() => {
+           this.getJudges();
+        });
+    }
 }

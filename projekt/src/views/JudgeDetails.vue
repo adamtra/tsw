@@ -42,8 +42,11 @@
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="error darken-1" raised v-if="!isNew">Usuń</v-btn>
-                <v-btn color="primary darken-1" raised @click="save()">
+                <v-btn color="error darken-1" raised v-if="!isNew" @click="remove()" :disabled="deleting">
+                    <span v-if="!deleting">Usuń</span>
+                    <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
+                </v-btn>
+                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>

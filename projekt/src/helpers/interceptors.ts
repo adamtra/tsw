@@ -35,7 +35,14 @@ export function errors() {
                     type: 'error',
                     showConfirmButton: false,
                 });
+            } else if (status === 400) {
+                Vue.swal({
+                    title: error.response.data,
+                    type: 'error',
+                    showConfirmButton: false,
+                });
             }
         }
+        return Promise.reject(error);
     });
 }
