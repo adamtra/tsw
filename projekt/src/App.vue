@@ -10,7 +10,7 @@
                         <v-list-tile-title>Panel kibica</v-list-tile-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-list-group>
+                <v-list-group v-if="isAuthorized">
                     <template v-slot:activator>
                         <v-list-tile>
                             <v-list-tile-action>
@@ -36,10 +36,28 @@
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title>Pokazy koni</v-toolbar-title>
             <v-spacer></v-spacer>
-            <v-switch v-model="theme" label="Ciemny motyw"></v-switch>
-            <v-btn icon large @click="showLogin = true">
-                <i class="fas fa-sign-in-alt"></i>
-            </v-btn>
+            <v-menu bottom left :close-on-content-click="false">
+                <template v-slot:activator="{ on }">
+                    <v-btn icon v-on="on">
+                        <v-icon>more_vert</v-icon>
+                    </v-btn>
+                </template>
+                <v-list>
+                    <v-list-tile>
+                        <v-switch v-model="theme" label="Ciemny motyw"></v-switch>
+                    </v-list-tile>
+                    <v-list-tile>
+                        <v-btn v-if="isAuthorized" color="primary" @click="showLogin = true">
+                            <v-icon left>input</v-icon>
+                            <span>Zaloguj</span>
+                        </v-btn>
+                        <v-btn v-else color="primary">
+                            <v-icon left>power_settings_new</v-icon>
+                            <span>Wyloguj</span>
+                        </v-btn>
+                    </v-list-tile>
+                </v-list>
+            </v-menu>
         </v-toolbar>
         <v-content>
             <v-container fluid>
