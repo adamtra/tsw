@@ -9,6 +9,7 @@ Vue.use(Vuex);
 
 export const state: State = {
     token: null,
+    darkTheme: localStorage.getItem('darkTheme') ? (localStorage.getItem('darkTheme') === 'true') : true,
 };
 
 export default new Vuex.Store<State>({

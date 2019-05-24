@@ -1,5 +1,6 @@
 import {Component, Vue} from 'vue-property-decorator';
 import LoginDialog from '@/components/LoginDialog';
+import {Action, Getter} from 'vuex-class';
 
 @Component({
     components: {
@@ -7,10 +8,11 @@ import LoginDialog from '@/components/LoginDialog';
     },
 })
 export default class App extends Vue {
+    @Action('setTheme') public setTheme: any;
+    @Getter('darkTheme') public darkTheme: any;
     public drawer: boolean | null = null;
     public showLogin: boolean = false;
     public isAuthorized: boolean = true;
-    public darkTheme = true;
     public adminOptions: MenuOptions[] = [{
         icon: 'fas fa-gavel fa-2x',
         name: 'Sędziowie',
@@ -24,6 +26,14 @@ export default class App extends Vue {
         name: 'Klasy',
         router: '/classes',
     }];
+
+    get theme() {
+        return this.darkTheme;
+    }
+
+    set theme(value) {
+        this.setTheme(value);
+    }
 }
 
 interface MenuOptions {

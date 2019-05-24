@@ -1,5 +1,5 @@
 <template>
-    <v-app :dark="darkTheme">
+    <v-app :dark="theme">
         <v-navigation-drawer v-model="drawer" fixed app :clipped="$vuetify.breakpoint.lgAndUp">
             <v-list>
                 <v-list-tile :to="'/'">
@@ -36,6 +36,7 @@
             <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
             <v-toolbar-title>Pokazy koni</v-toolbar-title>
             <v-spacer></v-spacer>
+            <v-switch v-model="theme" label="Ciemny motyw"></v-switch>
             <v-btn icon large @click="showLogin = true">
                 <i class="fas fa-sign-in-alt"></i>
             </v-btn>
