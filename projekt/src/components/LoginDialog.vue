@@ -38,7 +38,7 @@
                     <v-btn color="error darken-1" raised @click="show = false">Zamknij</v-btn>
                     <v-btn color="primary darken-1" raised @click="login()">
                         <span v-if="!loading">Zaloguj</span>
-                        <v-progress-circular indeterminate color="accent" v-if="loading"></v-progress-circular>
+                        <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                     </v-btn>
                 </v-card-actions>
             </v-card>

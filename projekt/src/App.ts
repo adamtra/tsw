@@ -10,6 +10,7 @@ export default class App extends Vue {
     public drawer: boolean | null = null;
     public showLogin: boolean = false;
     public isAuthorized: boolean = true;
+    public darkTheme = true;
     public adminOptions: MenuOptions[] = [{
         icon: 'fas fa-gavel fa-2x',
         name: 'Sędziowie',

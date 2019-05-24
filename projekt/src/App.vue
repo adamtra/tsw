@@ -1,5 +1,5 @@
 <template>
-    <v-app dark>
+    <v-app :dark="darkTheme">
         <v-navigation-drawer v-model="drawer" fixed app :clipped="$vuetify.breakpoint.lgAndUp">
             <v-list>
                 <v-list-tile :to="'/'">
