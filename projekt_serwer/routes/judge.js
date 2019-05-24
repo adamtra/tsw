@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../lib/db');
+const db_operations = require('../lib/db_operations');
 const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
 
@@ -24,6 +25,11 @@ router.route('/').post((req, res) => {
     const v = new Validator();
     const validation = v.validate(req.body, schemas.judge).errors.length === 0;
     if (validation) {
+        db.get('judges').push({
+            id: db_operations.getId('judges'),
+            sedzia: req.body.sedzia,
+            kraj: req.body.kraj,
+        }).write();
         res.json('OK');
     } else {
         res.status(400).json('Złe dane');
