@@ -2,10 +2,12 @@ import {Component, Vue} from 'vue-property-decorator';
 import {JudgeService} from '@/services/judge-service';
 import DataTable from '@/components/DataTable';
 import UiLoader from '@/components/UiLoader';
+import ImportButton from '@/components/ImportButton';
 @Component({
     components: {
         DataTable,
         UiLoader,
+        ImportButton,
     },
 })
 export default class Judge extends Vue {
@@ -33,5 +35,9 @@ export default class Judge extends Vue {
         JudgeService.delete(id).then(() => {
            this.getJudges();
         });
+    }
+
+    public imported() {
+        this.getJudges();
     }
 }

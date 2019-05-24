@@ -2,10 +2,12 @@ import {Component, Vue} from 'vue-property-decorator';
 import {ClassService} from '@/services/class-service';
 import DataTable from '@/components/DataTable';
 import UiLoader from '@/components/UiLoader';
+import ImportButton from '@/components/ImportButton';
 @Component({
     components: {
         DataTable,
         UiLoader,
+        ImportButton,
     },
 })
 export default class Class extends Vue {
@@ -26,5 +28,13 @@ export default class Class extends Vue {
             this.classes = res.data;
             this.loading = false;
         });
+    }
+
+    public remove(id: number) {
+
+    }
+
+    public imported() {
+        this.getClasses();
     }
 }

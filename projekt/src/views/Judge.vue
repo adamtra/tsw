@@ -1,9 +1,8 @@
 <template>
     <UiLoader v-if="loading"></UiLoader>
     <div v-else>
-
+    <ImportButton @imported="imported()"></ImportButton>
     <DataTable
-
             @remove="remove"
             url="judges"
             :title="title"
