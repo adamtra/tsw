@@ -8,6 +8,9 @@ export class ClassService {
     public static getOpened() {
         return axios.get(`${process.env.VUE_APP_API_URL}/class/opened`);
     }
+    public static getOpenedChampion() {
+        return axios.get(`${process.env.VUE_APP_API_URL}/class/opened/champion`);
+    }
     public static getAll() {
         return axios.get(`${process.env.VUE_APP_API_URL}/class`);
     }

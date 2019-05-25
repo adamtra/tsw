@@ -25,11 +25,10 @@ router.route('/').post((req, res) => {
     const v = new Validator();
     const validation = v.validate(req.body, schemas.judge).errors.length === 0;
     if (validation) {
-        db.get('judges').push({
-            id: db_operations.getId('judges'),
-            sedzia: req.body.sedzia,
-            kraj: req.body.kraj,
-        }).write();
+        const newElement = {};
+        Object.assign(newElement, req.body);
+        newElement.id = db_operations.getId('judges');
+        db.get('judges').push(newElement).write();
         res.json('OK');
     } else {
         res.status(400).json('Złe dane');

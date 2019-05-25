@@ -31,7 +31,9 @@ export default class Class extends Vue {
     }
 
     public remove(id: number) {
-
+        ClassService.delete(id).then(() => {
+           this.getClasses();
+        });
     }
 
     public imported() {
