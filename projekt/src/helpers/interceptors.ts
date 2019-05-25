@@ -35,6 +35,12 @@ export function errors() {
                     type: 'error',
                     showConfirmButton: false,
                 });
+            } else if (status === 501) {
+                Vue.swal({
+                    title: 'Metoda nie jest obsługiwana',
+                    type: 'error',
+                    showConfirmButton: false,
+                });
             } else if (status === 400) {
                 Vue.swal({
                     title: error.response.data,

@@ -70,6 +70,9 @@ app.route('/import').get((_req, response) => {
     });
 });
 
+const defaultRouts = require('./routes/default');
+app.use(defaultRouts);
+
 app.listen(port, () => {
     console.log('serwer uruchomiony na porcie: ' + port);
 });
