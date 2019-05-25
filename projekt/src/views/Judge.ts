@@ -19,7 +19,7 @@ export default class Judge extends Vue {
         ];
     public title = 'Sędziowie';
     public loading = true;
-    public mounted() {
+    public created() {
         this.getJudges();
     }
 

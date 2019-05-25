@@ -6,6 +6,8 @@ import Horse from '@/types/horse';
 import router from '@/router';
 import {validationMixin} from 'vuelidate';
 import {numeric, required} from 'vuelidate/lib/validators';
+import Class from '@/types/class';
+import {ClassService} from '@/services/class-service';
 
 const validations = {
     horseData: {
@@ -51,12 +53,16 @@ const validations = {
 export default class HorseDetails extends Vue {
     public $route!: Route;
     public horseData = {} as Horse;
+    public classes: Class[] = [];
     public loading = false;
     public saving = false;
     public deleting = false;
     public isNew = true;
     public created() {
         this.getDetails();
+        ClassService.getOpened().then((res) => {
+           this.classes = res.data;
+        });
     }
 
     public getDetails() {
@@ -67,6 +73,37 @@ export default class HorseDetails extends Vue {
                 this.horseData = res.data;
                 this.loading = false;
             });
+        } else {
+            Object.assign(this.horseData, {
+                hodowca: {},
+                rodowod: {
+                    m: {},
+                    o: {},
+                    om: {},
+                },
+                wlasciciel: {},
+            });
+        }
+    }
+
+    public save() {
+        if (this.$v.horseData) {
+            if (!this.$v.horseData.$invalid) {
+                this.saving = true;
+                if (this.isNew) {
+                    HorseService.add(this.horseData).then(() => {
+                        router.push('/horses');
+                    }, () => {
+                        this.saving = false;
+                    });
+                } else {
+                    HorseService.edit(this.horseData).then(() => {
+                        router.push('/horses');
+                    }, () => {
+                        this.saving = false;
+                    });
+                }
+            }
         }
     }
 

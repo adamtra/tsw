@@ -19,7 +19,7 @@ export default class Class extends Vue {
     public title = 'Klasy';
     public classes: Class[] = [];
     public loading = true;
-    public mounted() {
+    public created() {
         this.getClasses();
     }
     public getClasses() {

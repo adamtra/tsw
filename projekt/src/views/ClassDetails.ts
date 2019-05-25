@@ -23,7 +23,7 @@ export default class ClassDetails extends Vue {
         {text: 'Rocznik', value: 'rocznik'},
     ];
 
-    public mounted() {
+    public created() {
         this.getDetails();
     }
 

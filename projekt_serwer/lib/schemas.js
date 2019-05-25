@@ -50,7 +50,10 @@ const horseSchema = {
             type: 'object',
             properties: {
                 rozjemca: {type: 'number'},
-                noty: {'$ref': '/Note'},
+                noty: {
+                    type: 'array',
+                    items: {'$ref': '/Note'},
+                },
             },
             required: ['noty'],
         }

@@ -88,13 +88,16 @@
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
-                                        <v-text-field
+                                        <v-autocomplete
                                                 label="Klasa*"
                                                 v-model="horseData.klasa"
+                                                :items="classes"
+                                                item-text="option"
+                                                item-value="id"
                                                 :error-messages="checkError('klasa')"
                                                 @input="$v.horseData.klasa.$touch()"
                                                 @blur="$v.horseData.klasa.$touch()"
-                                                required></v-text-field>
+                                                required></v-autocomplete>
                                     </v-flex>
                                 </v-layout>
                             </v-container>
@@ -228,7 +231,7 @@
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving">
+                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || $v.horseData.$invalid">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>

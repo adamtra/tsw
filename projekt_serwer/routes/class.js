@@ -7,6 +7,22 @@ router.route('/').get((_r, res) => {
     res.json(classes);
 });
 
+router.route('/opened').get((_r, res) => {
+    const classes = db.get('classes').filter({
+        zamknieta: false,
+    }).value();
+    const response = [];
+    classes.forEach(el => {
+        if (el.hasOwnProperty('czempionat')) {
+            const newEl = {};
+            Object.assign(newEl, el);
+            newEl.option = `${el.numer} - ${el.kat}`;
+            response.push(newEl);
+        }
+    });
+    res.json(response);
+});
+
 router.route('/:id').get((req, res) => {
     const classEl = db.get('classes').find({
         id: Number(req.params.id),

@@ -22,7 +22,7 @@ export default class Horse extends Vue {
     public title = 'Konie';
     public horses: Horse[] = [];
     public loading = true;
-    public mounted() {
+    public created() {
         this.getHorses();
     }
     public getHorses() {
@@ -34,7 +34,9 @@ export default class Horse extends Vue {
     }
 
     public remove(id: number) {
-
+        HorseService.delete(id).then(() => {
+            this.getHorses();
+        });
     }
 
     public imported() {
