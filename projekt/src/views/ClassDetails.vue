@@ -12,7 +12,8 @@
                         <a>Klasy</a>
                     </router-link>
                     <span> > </span>
-                    <a class="disabled">Szczegóły</a>
+                    <a class="disabled" v-if="isNew">Nowy</a>
+                    <a class="disabled" v-else>Szczegóły</a>
                 </div>
                 <v-tabs slider-color="primary">
                     <v-tab>

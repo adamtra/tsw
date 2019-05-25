@@ -58,6 +58,32 @@ router.route('/:id').get((req, res) => {
     }
 });
 
+router.route('/:id/horse/:hid').get((req, res) => {
+    const id = Number(req.params.id);
+    const classEl = db.get('classes').find({
+        id: id,
+    }).value();
+    const horse = db.get('horses').find({
+       id: Number(req.params.hid),
+       klasa: id,
+    }).value();
+    if (classEl && horse) {
+        const response = {};
+        Object.assign(response, classEl);
+        response.komisja = [];
+        classEl.komisja.forEach((el) => {
+            const judge = db.get('judges').find({
+                id: el,
+            }).value();
+            response.komisja.push(judge);
+        });
+        response.horse = horse;
+        res.json(response);
+    } else {
+        res.status(404).json('Nie znaleziono');
+    }
+});
+
 router.route('/').post((req, res) => {
     const v = new Validator();
     const validation = v.validate(req.body, schemas.class).errors.length === 0;
@@ -81,6 +107,8 @@ router.route('/:id').put((req, res) => {
         const v = new Validator();
         const validation = v.validate(req.body, schemas.class).errors.length === 0;
         if (validation) {
+            delete req.body.horses;
+            req.body.komisja.sort();
             db.get('classes').find({
                 id: id,
             }).assign(req.body).value();

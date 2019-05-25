@@ -20,12 +20,15 @@
                 </v-alert>
             </template>
             <template v-slot:items="props">
-                <td v-for="cols in headers" v-if="cols.value !== 'opcje'">
-                    {{ props.item[cols.value] }}
-                </td>
-                <td v-else>
+                <td v-for="cols in headers" v-if="cols.value === 'opcje'">
                     <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Szczegóły</v-btn>
                     <v-btn class="error" @click="remove(props.item.id)">Usuń</v-btn>
+                </td>
+                <td v-else-if="cols.value === 'ocena'">
+                    <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Oceń</v-btn>
+                </td>
+                <td v-else>
+                    {{ props.item[cols.value] }}
                 </td>
             </template>
         </v-data-table>

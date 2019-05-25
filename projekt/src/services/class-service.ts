@@ -14,6 +14,9 @@ export class ClassService {
     public static getAll() {
         return axios.get(`${process.env.VUE_APP_API_URL}/class`);
     }
+    public static getHorseScore(id: number, hid: number) {
+        return axios.get(`${process.env.VUE_APP_API_URL}/class/${id}/horse/${hid}`);
+    }
     public static add(data: Class) {
         return axios.post(`${process.env.VUE_APP_API_URL}/class/`, data);
     }

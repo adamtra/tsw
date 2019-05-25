@@ -35,6 +35,10 @@ export default new Router({
             component: () => import('./views/ClassDetails.vue'),
         },
         {
+            path: '/classes/:id/:hid',
+            component: () => import('./views/HorseScore.vue'),
+        },
+        {
             path: '**',
             redirect: '/',
         },
