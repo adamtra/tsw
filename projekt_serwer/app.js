@@ -6,7 +6,6 @@ var cors = require('cors');
 const app = express();
 
 const port = 4000;
-const externalApi = 'http://localhost:3000';
 
 const logger = require('morgan');
 const errorHandler = require('errorhandler');
@@ -28,50 +27,21 @@ db.defaults({
     judges: [],
     horses: [],
     classes: [],
+    tokens: [],
 }).write();
 
 const judgeRoute = require('./routes/judge');
 const horseRoute = require('./routes/horse');
 const classRoute = require('./routes/class');
+const userRoute = require('./routes/user');
+const importRoute = require('./routes/import');
+const defaultRoute = require('./routes/default');
 app.use('/judge', judgeRoute);
 app.use('/horse', horseRoute);
 app.use('/class', classRoute);
-
-const axios = require('axios');
-app.route('/import').get((_req, response) => {
-    let finished = 0;
-    const requests = 3;
-    axios.get(`${externalApi}/sedziowie`).then((res) => {
-        db.set('judges', res.data).write();
-        finished++;
-        if (finished === requests) {
-            response.json('imported');
-        }
-    }, () => {
-        response.status(500).json('NOK');
-    });
-    axios.get(`${externalApi}/konie`).then((res) => {
-        db.set('horses', res.data).write();
-        finished++;
-        if (finished === requests) {
-            response.json('imported');
-        }
-    }, () => {
-        response.status(500).json('NOK');
-    });
-    axios.get(`${externalApi}/klasy`).then((res) => {
-        db.set('classes', res.data).write();
-        finished++;
-        if (finished === requests) {
-            response.json('imported');
-        }
-    }, () => {
-        response.status(500).json('NOK');
-    });
-});
-
-const defaultRouts = require('./routes/default');
-app.use(defaultRouts);
+app.use('/user', userRoute);
+app.use('/import', importRoute);
+app.use(defaultRoute);
 
 app.listen(port, () => {
     console.log('serwer uruchomiony na porcie: ' + port);

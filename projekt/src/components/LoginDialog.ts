@@ -1,6 +1,8 @@
 import {Component, Prop, Vue} from 'vue-property-decorator';
 import {validationMixin} from 'vuelidate';
 import {required, email} from 'vuelidate/lib/validators';
+import {UserService} from '@/services/user-service';
+import {Action} from 'vuex-class';
 
 const validations = {
     email: {required, email},
@@ -45,6 +47,7 @@ export default class LoginDialog extends Vue {
         return errors;
     }
 
+    @Action('setToken') public setToken: any;
     public email = '';
     public password = '';
 
@@ -54,6 +57,15 @@ export default class LoginDialog extends Vue {
     private login() {
         if (!this.$v.$invalid) {
             this.loading = true;
+            UserService.login({email: this.email, password: this.password}).then((res) => {
+               this.loading = false;
+               this.email = '';
+               this.password = '';
+               this.setToken(res.data);
+               this.$emit('logged', true);
+            }, () => {
+                this.loading = false;
+            });
         }
     }
 }

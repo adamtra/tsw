@@ -4,10 +4,13 @@ const db = require('../lib/db');
 const db_operations = require('../lib/db_operations');
 const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
+const isAuthenticated = require('../lib/authMiddleware');
+
+router.use(isAuthenticated);
 
 router.route('/').get((_r, res) => {
     const horses = db.get('horses').value();
-    res.json(horses);
+    return res.json(horses);
 });
 
 router.route('/:id').get((req, res) => {
@@ -15,9 +18,9 @@ router.route('/:id').get((req, res) => {
         id: Number(req.params.id),
     }).value();
     if (horse) {
-        res.json(horse);
+        return res.json(horse);
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -31,9 +34,9 @@ router.route('/').post((req, res) => {
         Object.assign(newElement, req.body);
         newElement.id = db_operations.getId('horses');
         db.get('horses').push(newElement).write();
-        res.json('OK');
+        return res.json('OK');
     } else {
-        res.status(400).json('Złe dane');
+        return res.status(400).json('Złe dane');
     }
 });
 
@@ -51,12 +54,12 @@ router.route('/:id').put((req, res) => {
             db.get('horses').find({
                 id: id,
             }).assign(req.body).value();
-            res.json('OK');
+            return res.json('OK');
         } else {
-            res.status(400).json('Złe dane');
+            return res.status(400).json('Złe dane');
         }
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -69,9 +72,9 @@ router.route('/:id').delete((req, res) => {
         db.get('horses').remove({
             id: id,
         }).write();
-        res.json('OK');
+        return res.json('OK');
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 

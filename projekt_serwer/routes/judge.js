@@ -4,10 +4,13 @@ const db = require('../lib/db');
 const db_operations = require('../lib/db_operations');
 const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
+const isAuthenticated = require('../lib/authMiddleware');
+
+router.use(isAuthenticated);
 
 router.route('/').get((_r, res) => {
     const judges = db.get('judges').value();
-    res.json(judges);
+    return res.json(judges);
 });
 
 router.route('/:id').get((req, res) => {
@@ -15,9 +18,9 @@ router.route('/:id').get((req, res) => {
         id: Number(req.params.id),
     }).value();
     if (judge) {
-        res.json(judge);
+        return res.json(judge);
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -29,9 +32,9 @@ router.route('/').post((req, res) => {
         Object.assign(newElement, req.body);
         newElement.id = db_operations.getId('judges');
         db.get('judges').push(newElement).write();
-        res.json('OK');
+        return res.json('OK');
     } else {
-        res.status(400).json('Złe dane');
+        return res.status(400).json('Złe dane');
     }
 });
 
@@ -47,12 +50,12 @@ router.route('/:id').put((req, res) => {
             db.get('judges').find({
                 id: id,
             }).assign(req.body).value();
-            res.json('OK');
+            return res.json('OK');
         } else {
-            res.status(400).json('Złe dane');
+            return res.status(400).json('Złe dane');
         }
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -65,9 +68,9 @@ router.route('/:id').delete((req, res) => {
         db.get('judges').remove({
             id: id,
         }).write();
-        res.json('OK');
+        return res.json('OK');
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 

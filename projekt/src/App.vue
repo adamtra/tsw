@@ -47,11 +47,11 @@
                         <v-switch v-model="theme" label="Ciemny motyw"></v-switch>
                     </v-list-tile>
                     <v-list-tile>
-                        <v-btn v-if="isAuthorized" color="primary" @click="showLogin = true">
+                        <v-btn v-if="!isAuthorized" color="primary" @click="showLogin = true">
                             <v-icon left>input</v-icon>
                             <span>Zaloguj</span>
                         </v-btn>
-                        <v-btn v-else color="primary">
+                        <v-btn v-else color="primary" @click="logout">
                             <v-icon left>power_settings_new</v-icon>
                             <span>Wyloguj</span>
                         </v-btn>
@@ -64,7 +64,7 @@
                 <router-view></router-view>
             </v-container>
         </v-content>
-        <LoginDialog v-model="showLogin"></LoginDialog>
+        <LoginDialog v-model="showLogin" @logged="dialogClosed"></LoginDialog>
     </v-app>
 </template>
 

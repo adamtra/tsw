@@ -8,7 +8,7 @@ import State from '@/types/state';
 Vue.use(Vuex);
 
 export const state: State = {
-    token: null,
+    token: localStorage.getItem('token') ? localStorage.getItem('token') : null,
     darkTheme: localStorage.getItem('darkTheme') ? (localStorage.getItem('darkTheme') === 'true') : true,
 };
 

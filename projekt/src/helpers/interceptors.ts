@@ -47,6 +47,21 @@ export function errors() {
                     type: 'error',
                     showConfirmButton: false,
                 });
+            } else if (status === 401) {
+                Vue.swal({
+                    title: 'Zły login lub hasło',
+                    type: 'error',
+                    showConfirmButton: false,
+                });
+            } else if (status === 403) {
+                Vue.swal({
+                    title: 'Brak dostępu',
+                    type: 'error',
+                    showConfirmButton: false,
+                }).then(() => {
+                    store.dispatch('deleteToken');
+                    router.push('/');
+                });
             }
         }
         return Promise.reject(error);

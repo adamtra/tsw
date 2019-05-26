@@ -4,10 +4,13 @@ const db = require('../lib/db');
 const db_operations = require('../lib/db_operations');
 const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
+const isAuthenticated = require('../lib/authMiddleware');
+
+router.use(isAuthenticated);
 
 router.route('/').get((_r, res) => {
     const classes = db.get('classes').value();
-    res.json(classes);
+    return res.json(classes);
 });
 
 router.route('/opened').get((_r, res) => {
@@ -23,7 +26,7 @@ router.route('/opened').get((_r, res) => {
             response.push(newEl);
         }
     });
-    res.json(response);
+    return res.json(response);
 });
 
 router.route('/opened/champion').get((_r, res) => {
@@ -39,7 +42,7 @@ router.route('/opened/champion').get((_r, res) => {
             response.push(newEl);
         }
     });
-    res.json(response);
+    return res.json(response);
 });
 
 router.route('/:id').get((req, res) => {
@@ -52,9 +55,9 @@ router.route('/:id').get((req, res) => {
         response.horses = db.get('horses').filter({
             klasa: classEl.id,
         }).value();
-        res.json(response);
+        return res.json(response);
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -78,9 +81,9 @@ router.route('/:id/horse/:hid').get((req, res) => {
             response.komisja.push(judge);
         });
         response.horse = horse;
-        res.json(response);
+        return res.json(response);
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -92,9 +95,9 @@ router.route('/').post((req, res) => {
         Object.assign(newElement, req.body);
         newElement.id = db_operations.getId('classes');
         db.get('classes').push(newElement).write();
-        res.json('OK');
+        return res.json('OK');
     } else {
-        res.status(400).json('Złe dane');
+        return res.status(400).json('Złe dane');
     }
 });
 
@@ -112,12 +115,12 @@ router.route('/:id').put((req, res) => {
             db.get('classes').find({
                 id: id,
             }).assign(req.body).value();
-            res.json('OK');
+            return res.json('OK');
         } else {
-            res.status(400).json('Złe dane');
+            return res.status(400).json('Złe dane');
         }
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
@@ -130,9 +133,9 @@ router.route('/:id').delete((req, res) => {
         db.get('classes').remove({
             id: id,
         }).write();
-        res.json('OK');
+        return res.json('OK');
     } else {
-        res.status(404).json('Nie znaleziono');
+        return res.status(404).json('Nie znaleziono');
     }
 });
 
