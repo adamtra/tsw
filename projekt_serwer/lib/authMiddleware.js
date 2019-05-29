@@ -10,6 +10,13 @@ const isAuthenticated = (req, res, next) => {
         if (tokenCheck) {
             const now = new Date();
             if (now.getTime() < tokenCheck.expiration) {
+                const newExpiration = new Date();
+                newExpiration.setTime(newExpiration.getTime() + 15 * 6e4);
+                db.get('tokens').find({
+                    value: token,
+                }).assign({
+                    expiration: newExpiration.getTime(),
+                }).value();
                 req.token = token;
                 return next();
             } else {
