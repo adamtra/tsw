@@ -28,11 +28,61 @@
                     <th>Sędzia</th>
                 </tr>
                 <tr v-for="(score, key) of scoreData.horse.wynik.noty">
-                    <td>{{score.glowa}}</td>
-                    <td>{{score.kloda}}</td>
-                    <td>{{score.nogi}}</td>
-                    <td>{{score.ruch}}</td>
-                    <td>{{score.typ}}</td>
+                    <td>
+                        <v-text-field
+                                max="20"
+                                min="0"
+                                step="0.5"
+                                @keydown="nextRow(key, 0, $event)"
+                                type="number"
+                                v-model="score.glowa"
+                                solo>
+                        </v-text-field>
+                    </td>
+                    <td>
+                        <v-text-field
+                                max="20"
+                                min="0"
+                                step="0.5"
+                                @keydown="nextRow(key, 1, $event)"
+                                type="number"
+                                v-model="score.kloda"
+                                solo>
+                        </v-text-field>
+                    </td>
+                    <td>
+                        <v-text-field
+                                max="20"
+                                min="0"
+                                step="0.5"
+                                @keydown="nextRow(key, 2, $event)"
+                                type="number"
+                                v-model="score.nogi"
+                                solo>
+                        </v-text-field>
+                    </td>
+                    <td>
+                        <v-text-field
+                                max="20"
+                                min="0"
+                                step="0.5"
+                                @keydown="nextRow(key, 3, $event)"
+                                type="number"
+                                v-model="score.ruch"
+                                solo>
+                        </v-text-field>
+                    </td>
+                    <td>
+                        <v-text-field
+                                max="20"
+                                min="0"
+                                step="0.5"
+                                @keydown="nextRow(key, 4, $event)"
+                                type="number"
+                                v-model="score.typ"
+                                solo>
+                        </v-text-field>
+                    </td>
                     <td>{{scoreData.komisja[key].sedzia}}</td>
                 </tr>
             </table>

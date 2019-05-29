@@ -61,6 +61,7 @@ export function errors() {
                 }).then(() => {
                     store.dispatch('deleteToken');
                     router.push('/');
+                    window.location.reload();
                 });
             }
         }
