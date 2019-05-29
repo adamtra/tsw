@@ -39,6 +39,7 @@ export default class ClassDetails extends Vue {
         {text: 'Maść', value: 'masc'},
         {text: 'Kraj', value: 'kraj'},
         {text: 'Rocznik', value: 'rocznik'},
+        {text: 'Oceniono', value: 'oceniono'},
         {text: 'Ocena', value: 'ocena'},
     ];
     public judges: Judge[] = [];

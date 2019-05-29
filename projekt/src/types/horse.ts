@@ -18,6 +18,7 @@ interface Horse {
     wynik: {
         rozjemca?: number;
         noty: Note[];
+        oceniono: boolean;
     };
 }
 

@@ -170,7 +170,8 @@ module.exports = () => {
                             "nogi": faker.random.arrayElement(noty),
                             "ruch": faker.random.arrayElement(noty)
                         }
-                    })
+                    }),
+                    oceniono: true
                 }
 
             }
