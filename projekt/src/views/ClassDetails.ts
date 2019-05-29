@@ -9,6 +9,7 @@ import {validationMixin} from 'vuelidate';
 import {required, numeric} from 'vuelidate/lib/validators';
 import Judge from '@/types/judge';
 import {JudgeService} from '@/services/judge-service';
+import ClassScore from '@/components/ClassScore';
 
 const validations = {
     classData: {
@@ -22,6 +23,7 @@ const validations = {
     components: {
         UiLoader,
         DataTable,
+        ClassScore,
     },
     mixins: [validationMixin],
     validations,

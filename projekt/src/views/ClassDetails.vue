@@ -22,6 +22,9 @@
                     <v-tab>
                         Konie
                     </v-tab>
+                    <v-tab>
+                        Wyniki
+                    </v-tab>
 
                     <v-tab-item>
                         <form>
@@ -82,6 +85,9 @@
                                 :items="classData.horses"
                                 :headers="headers">
                         </DataTable>
+                    </v-tab-item>
+                    <v-tab-item>
+                        <ClassScore :horses="classData.horses"></ClassScore>
                     </v-tab-item>
                 </v-tabs>
             </v-card-text>

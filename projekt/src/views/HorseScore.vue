@@ -35,7 +35,7 @@
                                 step="0.5"
                                 @keydown="nextRow(key, 0, $event)"
                                 type="number"
-                                v-model="score.glowa"
+                                v-model="score.typ"
                                 solo>
                         </v-text-field>
                     </td>
@@ -46,7 +46,7 @@
                                 step="0.5"
                                 @keydown="nextRow(key, 1, $event)"
                                 type="number"
-                                v-model="score.kloda"
+                                v-model="score.glowa"
                                 solo>
                         </v-text-field>
                     </td>
@@ -57,7 +57,7 @@
                                 step="0.5"
                                 @keydown="nextRow(key, 2, $event)"
                                 type="number"
-                                v-model="score.nogi"
+                                v-model="score.kloda"
                                 solo>
                         </v-text-field>
                     </td>
@@ -68,7 +68,7 @@
                                 step="0.5"
                                 @keydown="nextRow(key, 3, $event)"
                                 type="number"
-                                v-model="score.ruch"
+                                v-model="score.nogi"
                                 solo>
                         </v-text-field>
                     </td>
@@ -79,7 +79,7 @@
                                 step="0.5"
                                 @keydown="nextRow(key, 4, $event)"
                                 type="number"
-                                v-model="score.typ"
+                                v-model="score.ruch"
                                 solo>
                         </v-text-field>
                     </td>

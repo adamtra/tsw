@@ -28,7 +28,7 @@
                     <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Oceń</v-btn>
                 </td>
                 <td v-else-if="cols.value === 'oceniono'">
-                    <i :class="props.item.wynik.oceniono ? 'fa-2x fas fa-check primary' : 'fa-2x fas fa-times error'"></i>
+                    <i :class="props.item.wynik.oceniono ? 'fa-2x fas fa-check' : 'fa-2x fas fa-times'"></i>
                 </td>
                 <td v-else>
                     {{ props.item[cols.value] }}

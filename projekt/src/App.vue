@@ -84,6 +84,18 @@
         }
     }
 
+    .gold {
+        background-color: gold!important;
+        color: black!important;
+    }
+
+    .silver {
+        background-color: silver!important;
+    }
+
+    .bronze {
+        background-color: #CD7F32!important;
+    }
 
 </style>
 
