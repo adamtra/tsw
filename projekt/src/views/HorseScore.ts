@@ -1,16 +1,22 @@
 import {Component, Vue} from 'vue-property-decorator';
 import UiLoader from '@/components/UiLoader';
 import {ClassService} from '@/services/class-service';
+import ScoreInput from '@/components/ScoreInput';
+import Class from '@/types/class';
+import {HorseService} from '@/services/horse-service';
+import router from '@/router';
 
 @Component({
     components: {
         UiLoader,
+        ScoreInput,
     },
 })
 export default class HorseScore extends Vue {
     public loading = false;
-    public scoreData = [];
-    private width = 6;
+    public scoreData: Class = {} as Class;
+    public saving = false;
+    public errors: number[] = [];
     public created() {
         this.getData();
     }
@@ -19,57 +25,58 @@ export default class HorseScore extends Vue {
         this.loading = true;
         ClassService.getHorseScore(Number(this.$route.params.id), Number(this.$route.params.hid)).then((res) => {
             this.scoreData = res.data;
+            if (this.scoreData.horse) {
+                for (const i of this.scoreData.horse.wynik.noty) {
+                    for (let j = 0; j < 5; j++) {
+                        this.errors.push(0);
+                    }
+                }
+            }
             this.loading = false;
         });
     }
 
-    public nextRow(row: number, col: number, event: KeyboardEvent) {
-        if (event.key === 'Tab' && event.shiftKey) {
-            event.preventDefault();
-            const cells = document.querySelectorAll('td');
-            const rows = cells.length / this.width;
-            if (row === 0) {
-                if (col === 0) {
-                    col = this.width - 2;
-                } else {
-                    col--;
-                }
-                row = rows - 1;
+    public updateValue(row: number, col: string, value: number) {
+        if (this.scoreData.horse) {
+            let colIndex = 0;
+            switch (col) {
+                case 'typ':
+                    colIndex = 0;
+                    break;
+                case 'glowa':
+                    colIndex = 1;
+                    break;
+                case 'kloda':
+                    colIndex = 2;
+                    break;
+                case 'nogi':
+                    colIndex = 3;
+                    break;
+                case 'ruch':
+                    colIndex = 4;
+                    break;
+            }
+            if (value < 0 || value > 20) {
+                this.errors[row * colIndex] = 1;
+            } else if (value * 10 % 5 !== 0) {
+                this.errors[row * colIndex] = 1;
             } else {
-                row--;
+                this.errors[row * colIndex] = 0;
             }
-            const key = this.width * row + col;
-            let input = cells[key];
-            for (let i = 0; i < 5; i++) {
-                if (input.firstElementChild) {
-                    // @ts-ignore
-                    input = input.firstElementChild;
-                }
-            }
-            input.focus();
-        } else if (event.key === 'Tab') {
-            event.preventDefault();
-            const cells = document.querySelectorAll('td');
-            const rows = cells.length / this.width;
-            if (row + 1 === rows) {
-                if (col + 1 === this.width - 1) {
-                    col = 0;
-                } else {
-                    col++;
-                }
-                row = 0;
-            } else {
-                row++;
-            }
-            const key = this.width * row + col;
-            let input = cells[key];
-            for (let i = 0; i < 5; i++) {
-                if (input.firstElementChild) {
-                    // @ts-ignore
-                    input = input.firstElementChild;
-                }
-            }
-            input.focus();
+            Vue.set(this.scoreData.horse.wynik.noty[row], col, value);
+        }
+    }
+
+    public saveScore() {
+        if (this.scoreData.horse) {
+            this.saving = true;
+            this.scoreData.horse.wynik.oceniono = true;
+            HorseService.edit(this.scoreData.horse).then(() => {
+                this.saving = false;
+                router.push(`/classes/${this.$route.params.id}`);
+            }, () => {
+                this.saving = false;
+            });
         }
     }
 }

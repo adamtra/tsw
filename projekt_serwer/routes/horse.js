@@ -32,6 +32,7 @@ router.route('/').post((req, res) => {
     if (validation) {
         const newElement = {};
         Object.assign(newElement, req.body);
+        newElement.wynik.oceniono = false;
         newElement.id = db_operations.getId('horses');
         db.get('horses').push(newElement).write();
         return res.json('OK');
