@@ -16,7 +16,7 @@ const validations = {
         numer: {required, numeric},
         kat: {required},
         komisja: {required},
-        czempionat: {required},
+        // czempionat: {required},
     },
 };
 @Component({

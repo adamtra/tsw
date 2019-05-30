@@ -19,10 +19,10 @@
                     <v-tab>
                         Dane główne
                     </v-tab>
-                    <v-tab>
+                    <v-tab v-if="!isNew">
                         Konie
                     </v-tab>
-                    <v-tab>
+                    <v-tab v-if="!isNew">
                         Wyniki
                     </v-tab>
 
@@ -78,7 +78,7 @@
                             </v-container>
                         </form>
                     </v-tab-item>
-                    <v-tab-item>
+                    <v-tab-item v-if="!isNew">
                         <DataTable
                                 :url="'classes/' + classData.id"
                                 title="Konie w klasie"
@@ -86,7 +86,7 @@
                                 :headers="headers">
                         </DataTable>
                     </v-tab-item>
-                    <v-tab-item>
+                    <v-tab-item v-if="!isNew">
                         <ClassScore :horses="classData.horses"></ClassScore>
                     </v-tab-item>
                 </v-tabs>
