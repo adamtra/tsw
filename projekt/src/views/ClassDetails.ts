@@ -46,14 +46,22 @@ export default class ClassDetails extends Vue {
     ];
     public judges: Judge[] = [];
     public classes: Class[] = [];
+    public valid = false;
+    public emptyRules = [
+        (v: any) => !!v || 'Pole nie może być puste',
+    ];
+    public numberRules = [
+        (v: any) => !!v || 'Pole nie może być puste',
+        (v: any) => Number.isInteger(v) || 'Pole musi być liczbą',
+    ];
 
     public created() {
         this.getDetails();
         JudgeService.getAll().then((res) => {
-           this.judges = res.data;
+            this.judges = res.data;
         });
         ClassService.getOpenedChampion().then((res) => {
-           this.classes = res.data;
+            this.classes = res.data;
         });
     }
 
@@ -69,22 +77,20 @@ export default class ClassDetails extends Vue {
     }
 
     public save() {
-        if (this.$v.classData) {
-            if (!this.$v.classData.$invalid) {
-                this.saving = true;
-                if (this.isNew) {
-                    ClassService.add(this.classData).then(() => {
-                        router.push('/classes');
-                    }, () => {
-                        this.saving = false;
-                    });
-                } else {
-                    ClassService.edit(this.classData).then(() => {
-                        router.push('/classes');
-                    }, () => {
-                        this.saving = false;
-                    });
-                }
+        if (this.valid) {
+            this.saving = true;
+            if (this.isNew) {
+                ClassService.add(this.classData).then(() => {
+                    router.push('/classes');
+                }, () => {
+                    this.saving = false;
+                });
+            } else {
+                ClassService.edit(this.classData).then(() => {
+                    router.push('/classes');
+                }, () => {
+                    this.saving = false;
+                });
             }
         }
     }
@@ -96,26 +102,5 @@ export default class ClassDetails extends Vue {
         }, () => {
             this.deleting = false;
         });
-    }
-
-    private checkError(field: string) {
-        const errors: string[] = [];
-        // @ts-ignore
-        if (this.$v.classData && this.$v.classData[field]) {
-            // @ts-ignore
-            if (!this.$v.classData[field].$invalid) {
-                return errors;
-            } else {
-                // @ts-ignore
-                if (this.$v.classData[field].hasOwnProperty('numeric') && !this.$v.classData[field].numeric) {
-                    errors.push('Pole musi być liczbą');
-                }
-                // @ts-ignore
-                if (this.$v.classData[field].hasOwnProperty('required') && !this.$v.classData[field].required) {
-                    errors.push('Pole nie może być puste');
-                }
-            }
-        }
-        return errors;
     }
 }

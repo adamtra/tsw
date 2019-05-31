@@ -27,25 +27,21 @@
                     </v-tab>
 
                     <v-tab-item>
-                        <form>
+                        <v-form v-model="valid">
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Kategoria*"
                                                 v-model="classData.kat"
-                                                :error-messages="checkError('kat')"
-                                                @input="$v.classData.kat.$touch()"
-                                                @blur="$v.classData.kat.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Numer*"
-                                                v-model="classData.numer"
-                                                :error-messages="checkError('numer')"
-                                                @input="$v.classData.numer.$touch()"
-                                                @blur="$v.classData.numer.$touch()"
+                                                v-model.number="classData.numer"
+                                                :rules="numberRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
@@ -57,9 +53,7 @@
                                                 item-value="id"
                                                 multiple
                                                 chips
-                                                :error-messages="checkError('komisja')"
-                                                @input="$v.classData.komisja.$touch()"
-                                                @blur="$v.classData.komisja.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-autocomplete>
                                     </v-flex>
                                     <v-flex xs12 v-if="classData.czempionat">
@@ -69,14 +63,12 @@
                                                 :items="classes"
                                                 item-text="option"
                                                 item-value="id"
-                                                :error-messages="checkError('czempionat')"
-                                                @input="$v.classData.czempionat.$touch()"
-                                                @blur="$v.classData.czempionat.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-autocomplete>
                                     </v-flex>
                                 </v-layout>
                             </v-container>
-                        </form>
+                        </v-form>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew">
                         <DataTable
@@ -97,7 +89,7 @@
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || $v.classData.$invalid">
+                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || !valid">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
