@@ -15,30 +15,26 @@
                     <a class="disabled" v-if="isNew">Nowy</a>
                     <a class="disabled" v-else>Szczegóły</a>
                 </div>
-                <form>
+                <v-form v-model="valid">
                     <v-container grid-list-md>
                         <v-layout wrap>
                             <v-flex xs12>
                                 <v-text-field
                                         label="Imię i nazwisko*"
                                         v-model="judgeData.sedzia"
-                                        :error-messages="sedziaErrors"
-                                        @input="$v.judgeData.sedzia.$touch()"
-                                        @blur="$v.judgeData.sedzia.$touch()"
+                                        :rules="emptyRules"
                                         required></v-text-field>
                             </v-flex>
                             <v-flex xs12>
                                 <v-text-field
                                         label="Kraj*"
                                         v-model="judgeData.kraj"
-                                        :error-messages="krajErrors"
-                                        @input="$v.judgeData.kraj.$touch()"
-                                        @blur="$v.judgeData.kraj.$touch()"
+                                        :rules="emptyRules"
                                         required></v-text-field>
                             </v-flex>
                         </v-layout>
                     </v-container>
-                </form>
+                </v-form>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
@@ -46,7 +42,7 @@
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || $v.judgeData.$invalid">
+                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || !valid">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
