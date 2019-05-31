@@ -4,51 +4,13 @@ import UiLoader from '@/components/UiLoader';
 import {HorseService} from '@/services/horse-service';
 import Horse from '@/types/horse';
 import router from '@/router';
-import {validationMixin} from 'vuelidate';
-import {numeric, required} from 'vuelidate/lib/validators';
 import Class from '@/types/class';
 import {ClassService} from '@/services/class-service';
 
-const validations = {
-    horseData: {
-        kraj: {required},
-        masc: {required},
-        nazwa: {required},
-        numer: {required, numeric},
-        plec: {required},
-        rocznik: {required, numeric},
-        klasa: {required, numeric},
-        hodowca: {
-            nazwa: {required},
-            kraj: {required},
-        },
-        rodowod: {
-            m: {
-                nazwa: {required},
-                kraj: {required},
-            },
-            o: {
-                nazwa: {required},
-                kraj: {required},
-            },
-            om: {
-                nazwa: {required},
-                kraj: {required},
-            },
-        },
-        wlasciciel: {
-            nazwa: {required},
-            kraj: {required},
-        },
-    },
-};
-
 @Component({
     components: {
-      UiLoader,
+        UiLoader,
     },
-    mixins: [validationMixin],
-    validations,
 })
 export default class HorseDetails extends Vue {
     public $route!: Route;
@@ -58,10 +20,19 @@ export default class HorseDetails extends Vue {
     public saving = false;
     public deleting = false;
     public isNew = true;
+    public valid = false;
+    public emptyRules = [
+        (v: any) => !!v || 'Pole nie może być puste',
+    ];
+    public numberRules = [
+        (v: any) => !!v || 'Pole nie może być puste',
+        (v: any) => Number.isInteger(v) || 'Pole musi być liczbą',
+    ];
+
     public created() {
         this.getDetails();
         ClassService.getOpened().then((res) => {
-           this.classes = res.data;
+            this.classes = res.data;
         });
     }
 
@@ -87,22 +58,20 @@ export default class HorseDetails extends Vue {
     }
 
     public save() {
-        if (this.$v.horseData) {
-            if (!this.$v.horseData.$invalid) {
-                this.saving = true;
-                if (this.isNew) {
-                    HorseService.add(this.horseData).then(() => {
-                        router.push('/horses');
-                    }, () => {
-                        this.saving = false;
-                    });
-                } else {
-                    HorseService.edit(this.horseData).then(() => {
-                        router.push('/horses');
-                    }, () => {
-                        this.saving = false;
-                    });
-                }
+        if (this.valid) {
+            this.saving = true;
+            if (this.isNew) {
+                HorseService.add(this.horseData).then(() => {
+                    router.push('/horses');
+                }, () => {
+                    this.saving = false;
+                });
+            } else {
+                HorseService.edit(this.horseData).then(() => {
+                    router.push('/horses');
+                }, () => {
+                    this.saving = false;
+                });
             }
         }
     }
@@ -114,68 +83,5 @@ export default class HorseDetails extends Vue {
         }, () => {
             this.deleting = false;
         });
-    }
-
-    private checkError(field: string) {
-        const errors: string[] = [];
-        // @ts-ignore
-        if (this.$v.horseData && this.$v.horseData[field]) {
-            // @ts-ignore
-            if (!this.$v.horseData[field].$invalid) {
-                return errors;
-            } else {
-                // @ts-ignore
-                if (this.$v.horseData[field].hasOwnProperty('numeric') && !this.$v.horseData[field].numeric) {
-                    errors.push('Pole musi być liczbą');
-                }
-                // @ts-ignore
-                if (this.$v.horseData[field].hasOwnProperty('required') && !this.$v.horseData[field].required) {
-                    errors.push('Pole nie może być puste');
-                }
-            }
-        }
-        return errors;
-    }
-
-    private checkError2Level(field: string, field2: string) {
-        const errors: string[] = [];
-        // @ts-ignore
-        if (this.$v.horseData && this.$v.horseData[field][field2]) {
-            // @ts-ignore
-            if (!this.$v.horseData[field][field2].$invalid) {
-                return errors;
-            } else {
-                // @ts-ignore
-                if (this.$v.horseData[field][field2].hasOwnProperty('numeric') && !this.$v.horseData[field][field2].numeric) {
-                    errors.push('Pole musi być liczbą');
-                }
-                // @ts-ignore
-                if (this.$v.horseData[field][field2].hasOwnProperty('required') && !this.$v.horseData[field][field2].required) {
-                    errors.push('Pole nie może być puste');
-                }
-            }
-        }
-        return errors;
-    }
-
-    private checkError3Level(field: string, field2: string, field3: string) {
-        const errors: string[] = [];
-        // @ts-ignore
-        if (this.$v.horseData && this.$v.horseData[field][field2][field3]) {
-            // @ts-ignore
-            if (!this.$v.horseData[field][field2][field3].$invalid) {
-                return errors;
-            } else {
-                // @ts-ignore
-                if (this.$v.horseData[field][field2][field3].hasOwnProperty('numeric') && !this.$v.horseData[field][field2][field3].numeric) {
-                    errors.push('Pole musi być liczbą');
-                }
-                // @ts-ignore
-                if (this.$v.horseData[field][field2][field3].hasOwnProperty('required') && !this.$v.horseData[field][field2][field3].required) {
-                    errors.push('Pole nie może być puste');
-                }
-            }
-        }
-        return errors;
     }
 }

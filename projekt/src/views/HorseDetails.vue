@@ -30,61 +30,49 @@
                     </v-tab>
 
                     <v-tab-item>
-                        <form>
+                        <v-form v-model="valid">
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Nazwa*"
                                                 v-model="horseData.nazwa"
-                                                :error-messages="checkError('nazwa')"
-                                                @input="$v.horseData.nazwa.$touch()"
-                                                @blur="$v.horseData.nazwa.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Maść*"
                                                 v-model="horseData.masc"
-                                                :error-messages="checkError('masc')"
-                                                @input="$v.horseData.masc.$touch()"
-                                                @blur="$v.horseData.masc.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs3>
                                         <v-text-field
                                                 label="Numer*"
-                                                v-model="horseData.numer"
-                                                :error-messages="checkError('numer')"
-                                                @input="$v.horseData.numer.$touch()"
-                                                @blur="$v.horseData.numer.$touch()"
+                                                v-model.number="horseData.numer"
+                                                :rules="numberRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs3>
                                         <v-text-field
                                                 label="Płeć*"
                                                 v-model="horseData.plec"
-                                                :error-messages="checkError('plec')"
-                                                @input="$v.horseData.plec.$touch()"
-                                                @blur="$v.horseData.plec.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs3>
                                         <v-text-field
                                                 label="Rocznik*"
-                                                v-model="horseData.rocznik"
-                                                :error-messages="checkError('rocznik')"
-                                                @input="$v.horseData.rocznik.$touch()"
-                                                @blur="$v.horseData.rocznik.$touch()"
+                                                v-model.number="horseData.rocznik"
+                                                :rules="numberRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs3>
                                         <v-text-field
                                                 label="Kraj*"
                                                 v-model="horseData.kraj"
-                                                :error-messages="checkError('kraj')"
-                                                @input="$v.horseData.kraj.$touch()"
-                                                @blur="$v.horseData.kraj.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
@@ -94,14 +82,12 @@
                                                 :items="classes"
                                                 item-text="option"
                                                 item-value="id"
-                                                :error-messages="checkError('klasa')"
-                                                @input="$v.horseData.klasa.$touch()"
-                                                @blur="$v.horseData.klasa.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-autocomplete>
                                     </v-flex>
                                 </v-layout>
                             </v-container>
-                        </form>
+                        </v-form>
                     </v-tab-item>
 
                     <v-tab-item>
@@ -112,18 +98,14 @@
                                     <v-text-field
                                             label="Nazwa*"
                                             v-model="horseData.hodowca.nazwa"
-                                            :error-messages="checkError2Level('hodowca', 'nazwa')"
-                                            @input="$v.horseData.hodowca.nazwa.$touch()"
-                                            @blur="$v.horseData.hodowca.nazwa.$touch()"
+                                            :rules="emptyRules"
                                             required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Kraj*"
                                                 v-model="horseData.hodowca.kraj"
-                                                :error-messages="checkError2Level('hodowca', 'kraj')"
-                                                @input="$v.horseData.hodowca.kraj.$touch()"
-                                                @blur="$v.horseData.hodowca.kraj.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                 </v-layout>
@@ -140,18 +122,14 @@
                                         <v-text-field
                                                 label="Nazwa*"
                                                 v-model="horseData.rodowod.m.nazwa"
-                                                :error-messages="checkError3Level('rodowod', 'm', 'nazwa')"
-                                                @input="$v.horseData.rodowod.m.nazwa.$touch()"
-                                                @blur="$v.horseData.rodowod.m.nazwa.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Kraj*"
                                                 v-model="horseData.rodowod.m.kraj"
-                                                :error-messages="checkError3Level('rodowod', 'm', 'kraj')"
-                                                @input="$v.horseData.rodowod.m.kraj.$touch()"
-                                                @blur="$v.horseData.rodowod.m.kraj.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <h1>Ojciec</h1>
@@ -159,18 +137,14 @@
                                         <v-text-field
                                                 label="Nazwa*"
                                                 v-model="horseData.rodowod.o.nazwa"
-                                                :error-messages="checkError3Level('rodowod', 'o', 'nazwa')"
-                                                @input="$v.horseData.rodowod.o.nazwa.$touch()"
-                                                @blur="$v.horseData.rodowod.o.nazwa.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Kraj*"
                                                 v-model="horseData.rodowod.o.kraj"
-                                                :error-messages="checkError3Level('rodowod', 'o', 'kraj')"
-                                                @input="$v.horseData.rodowod.o.kraj.$touch()"
-                                                @blur="$v.horseData.rodowod.o.kraj.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <h1>Ojciec matki</h1>
@@ -178,18 +152,14 @@
                                         <v-text-field
                                                 label="Nazwa*"
                                                 v-model="horseData.rodowod.om.nazwa"
-                                                :error-messages="checkError3Level('rodowod', 'om', 'nazwa')"
-                                                @input="$v.horseData.rodowod.om.nazwa.$touch()"
-                                                @blur="$v.horseData.rodowod.om.nazwa.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Kraj*"
                                                 v-model="horseData.rodowod.om.kraj"
-                                                :error-messages="checkError3Level('rodowod', 'om', 'kraj')"
-                                                @input="$v.horseData.rodowod.om.kraj.$touch()"
-                                                @blur="$v.horseData.rodowod.om.kraj.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                 </v-layout>
@@ -205,18 +175,14 @@
                                         <v-text-field
                                                 label="Nazwa*"
                                                 v-model="horseData.wlasciciel.nazwa"
-                                                :error-messages="checkError2Level('wlasciciel', 'nazwa')"
-                                                @input="$v.horseData.wlasciciel.nazwa.$touch()"
-                                                @blur="$v.horseData.wlasciciel.nazwa.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
                                                 label="Kraj*"
                                                 v-model="horseData.wlasciciel.kraj"
-                                                :error-messages="checkError2Level('wlasciciel', 'kraj')"
-                                                @input="$v.horseData.wlasciciel.kraj.$touch()"
-                                                @blur="$v.horseData.wlasciciel.kraj.$touch()"
+                                                :rules="emptyRules"
                                                 required></v-text-field>
                                     </v-flex>
                                 </v-layout>
@@ -231,7 +197,7 @@
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || $v.horseData.$invalid">
+                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || !valid">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
