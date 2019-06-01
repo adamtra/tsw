@@ -17,6 +17,9 @@ interface Horse {
     };
     wynik: {
         rozjemca?: number;
+        suma?: number;
+        ruchSuma?: number;
+        typSuma?: number;
         noty: Note[];
         oceniono: boolean;
     };

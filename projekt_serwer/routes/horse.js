@@ -30,9 +30,26 @@ router.route('/').post((req, res) => {
     v.addSchema(schemas.note, '/Note');
     const validation = v.validate(req.body, schemas.horse).errors.length === 0;
     if (validation) {
+        const classEl = db.get('classes').find({
+            id: req.body.klasa,
+        }).value();
+        const score = [];
+        const emptyScore = {
+            typ: 0,
+            glowa: 0,
+            kloda: 0,
+            nogi: 0,
+            ruch: 0
+        };
+        classEl.komisja.forEach((judge) => {
+           score.push(emptyScore);
+        });
         const newElement = {};
         Object.assign(newElement, req.body);
-        newElement.wynik.oceniono = false;
+        newElement.wynik = {
+            oceniono: false,
+            noty: score,
+        };
         newElement.id = db_operations.getId('horses');
         db.get('horses').push(newElement).write();
         return res.json('OK');

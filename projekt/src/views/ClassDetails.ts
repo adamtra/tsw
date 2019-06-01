@@ -33,17 +33,10 @@ export default class ClassDetails extends Vue {
     public classData = {} as Class;
     public loading = false;
     public saving = false;
+    public closing = false;
     public deleting = false;
     public isNew = true;
-    public headers = [
-        {text: 'Numer', value: 'numer'},
-        {text: 'Nazwa', value: 'nazwa'},
-        {text: 'Maść', value: 'masc'},
-        {text: 'Kraj', value: 'kraj'},
-        {text: 'Rocznik', value: 'rocznik'},
-        {text: 'Oceniono', value: 'oceniono'},
-        {text: 'Ocena', value: 'ocena'},
-    ];
+    public headers: any = [];
     public judges: Judge[] = [];
     public classes: Class[] = [];
     public valid = false;
@@ -71,6 +64,25 @@ export default class ClassDetails extends Vue {
             this.loading = true;
             ClassService.get(Number(this.$route.params.id)).then((res) => {
                 this.classData = res.data;
+                if (this.classData.zamknieta) {
+                    this.headers = [
+                        {text: 'Numer', value: 'numer'},
+                        {text: 'Nazwa', value: 'nazwa'},
+                        {text: 'Maść', value: 'masc'},
+                        {text: 'Kraj', value: 'kraj'},
+                        {text: 'Rocznik', value: 'rocznik'},
+                    ];
+                } else {
+                    this.headers = [
+                        {text: 'Numer', value: 'numer'},
+                        {text: 'Nazwa', value: 'nazwa'},
+                        {text: 'Maść', value: 'masc'},
+                        {text: 'Kraj', value: 'kraj'},
+                        {text: 'Rocznik', value: 'rocznik'},
+                        {text: 'Oceniono', value: 'oceniono'},
+                        {text: 'Ocena', value: 'ocena'},
+                    ];
+                }
                 this.loading = false;
             });
         }
@@ -102,5 +114,17 @@ export default class ClassDetails extends Vue {
         }, () => {
             this.deleting = false;
         });
+    }
+
+    public closeClass() {
+        if (this.valid) {
+            this.closing = true;
+            this.classData.zamknieta = true;
+            ClassService.edit(this.classData).then(() => {
+                router.push('/classes');
+            }, () => {
+                this.closing = false;
+            });
+        }
     }
 }

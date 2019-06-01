@@ -66,6 +66,9 @@ router.route('/:id/horse/:hid').get((req, res) => {
     const classEl = db.get('classes').find({
         id: id,
     }).value();
+    if (classEl.zamknieta) {
+        return res.status(400).json('Klasa jest zamknięta');
+    }
     const horse = db.get('horses').find({
        id: Number(req.params.hid),
        klasa: id,

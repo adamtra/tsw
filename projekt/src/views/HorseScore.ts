@@ -33,6 +33,8 @@ export default class HorseScore extends Vue {
                 }
             }
             this.loading = false;
+        }, () => {
+            router.push(`/classes/${this.$route.params.id}`);
         });
     }
 
