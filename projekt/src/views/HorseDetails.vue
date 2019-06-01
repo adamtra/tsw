@@ -15,22 +15,22 @@
                     <a class="disabled" v-if="isNew">Nowy</a>
                     <a class="disabled" v-else>Szczegóły</a>
                 </div>
-                <v-tabs slider-color="primary">
-                    <v-tab>
-                        Dane główne
-                    </v-tab>
-                    <v-tab>
-                        Hodowca
-                    </v-tab>
-                    <v-tab>
-                        Rodowód
-                    </v-tab>
-                    <v-tab>
-                        Właściciel
-                    </v-tab>
+                <v-form v-model="valid">
+                    <v-tabs slider-color="primary">
+                        <v-tab>
+                            Dane główne
+                        </v-tab>
+                        <v-tab>
+                            Hodowca
+                        </v-tab>
+                        <v-tab>
+                            Rodowód
+                        </v-tab>
+                        <v-tab>
+                            Właściciel
+                        </v-tab>
 
-                    <v-tab-item>
-                        <v-form v-model="valid">
+                        <v-tab-item>
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
@@ -87,19 +87,17 @@
                                     </v-flex>
                                 </v-layout>
                             </v-container>
-                        </v-form>
-                    </v-tab-item>
+                        </v-tab-item>
 
-                    <v-tab-item>
-                        <form>
+                        <v-tab-item>
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
-                                    <v-text-field
-                                            label="Nazwa*"
-                                            v-model="horseData.hodowca.nazwa"
-                                            :rules="emptyRules"
-                                            required></v-text-field>
+                                        <v-text-field
+                                                label="Nazwa*"
+                                                v-model="horseData.hodowca.nazwa"
+                                                :rules="emptyRules"
+                                                required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field
@@ -110,11 +108,9 @@
                                     </v-flex>
                                 </v-layout>
                             </v-container>
-                        </form>
-                    </v-tab-item>
+                        </v-tab-item>
 
-                    <v-tab-item>
-                        <form>
+                        <v-tab-item>
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <h1>Matka</h1>
@@ -164,11 +160,9 @@
                                     </v-flex>
                                 </v-layout>
                             </v-container>
-                        </form>
-                    </v-tab-item>
+                        </v-tab-item>
 
-                    <v-tab-item>
-                        <form>
+                        <v-tab-item>
                             <v-container grid-list-md>
                                 <v-layout wrap>
                                     <v-flex xs12>
@@ -187,9 +181,9 @@
                                     </v-flex>
                                 </v-layout>
                             </v-container>
-                        </form>
-                    </v-tab-item>
-                </v-tabs>
+                        </v-tab-item>
+                    </v-tabs>
+                </v-form>
             </v-card-text>
             <v-card-actions>
                 <v-spacer></v-spacer>
