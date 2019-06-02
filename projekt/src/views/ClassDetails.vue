@@ -46,6 +46,36 @@
                                                 :disabled="classData.zamknieta"
                                                 required></v-text-field>
                                     </v-flex>
+                                    <v-flex xs12 v-if="classData.czempionat && !isNew">
+                                        <v-autocomplete
+                                                label="Czempionat*"
+                                                v-model="classData.czempionat"
+                                                :items="classes"
+                                                item-text="option"
+                                                item-value="id"
+                                                :rules="emptyRules"
+                                                :disabled="classData.zamknieta"
+                                                required></v-autocomplete>
+                                    </v-flex>
+                                    <v-flex xs12 v-if="isNew">
+                                        <v-checkbox
+                                                color="primary"
+                                                v-model="isChampion"
+                                                @change="changeType"
+                                                label="Klasa czempionatowa"
+                                        ></v-checkbox>
+                                    </v-flex>
+                                    <v-flex xs12 v-if="isNew && !isChampion">
+                                        <v-autocomplete
+                                                label="Czempionat*"
+                                                v-model="classData.czempionat"
+                                                :items="classes"
+                                                item-text="option"
+                                                item-value="id"
+                                                :rules="isChampion ? [] : emptyRules"
+                                                :disabled="isChampion"
+                                                required></v-autocomplete>
+                                    </v-flex>
                                     <v-flex xs12>
                                         <v-autocomplete
                                                 label="Komisja*"
@@ -55,18 +85,7 @@
                                                 item-value="id"
                                                 multiple
                                                 chips
-                                                :rules="emptyRules"
-                                                :disabled="classData.zamknieta"
-                                                required></v-autocomplete>
-                                    </v-flex>
-                                    <v-flex xs12 v-if="classData.czempionat">
-                                        <v-autocomplete
-                                                label="Czempionat*"
-                                                v-model="classData.czempionat"
-                                                :items="classes"
-                                                item-text="option"
-                                                item-value="id"
-                                                :rules="emptyRules"
+                                                :rules="emptyArrayRules"
                                                 :disabled="classData.zamknieta"
                                                 required></v-autocomplete>
                                     </v-flex>
@@ -93,7 +112,7 @@
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="secondary darken-1" raised @click="closeClass()" :disabled="closing || !valid || classData.horses.filter(x => !x.wynik.oceniono).length > 0">
+                <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()" :disabled="closing || !valid || classData.horses.filter(x => !x.wynik.oceniono).length > 0">
                     <span v-if="!closing">Zamknij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>

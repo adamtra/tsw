@@ -5,28 +5,16 @@ import Class from '@/types/class';
 import {ClassService} from '@/services/class-service';
 import DataTable from '@/components/DataTable';
 import router from '@/router';
-import {validationMixin} from 'vuelidate';
-import {required, numeric} from 'vuelidate/lib/validators';
 import Judge from '@/types/judge';
 import {JudgeService} from '@/services/judge-service';
 import ClassScore from '@/components/ClassScore';
 
-const validations = {
-    classData: {
-        numer: {required, numeric},
-        kat: {required},
-        komisja: {required},
-        // czempionat: {required},
-    },
-};
 @Component({
     components: {
         UiLoader,
         DataTable,
         ClassScore,
     },
-    mixins: [validationMixin],
-    validations,
 })
 export default class ClassDetails extends Vue {
     public $route!: Route;
@@ -47,6 +35,10 @@ export default class ClassDetails extends Vue {
         (v: any) => !!v || 'Pole nie może być puste',
         (v: any) => Number.isInteger(v) || 'Pole musi być liczbą',
     ];
+    public emptyArrayRules = [
+        (v: any) => v.length > 0 || 'Lista nie może być pusta',
+    ];
+    public isChampion = false;
 
     public created() {
         this.getDetails();
@@ -92,6 +84,7 @@ export default class ClassDetails extends Vue {
         if (this.valid) {
             this.saving = true;
             if (this.isNew) {
+                this.classData.zamknieta = false;
                 ClassService.add(this.classData).then(() => {
                     router.push('/classes');
                 }, () => {
@@ -124,6 +117,16 @@ export default class ClassDetails extends Vue {
                 router.push('/classes');
             }, () => {
                 this.closing = false;
+            });
+        }
+    }
+
+    public changeType() {
+        if (this.isChampion) {
+            delete this.classData.czempionat;
+            this.classData.komisja = [];
+            this.judges.forEach((judge) => {
+                this.classData.komisja.push(judge.id);
             });
         }
     }
