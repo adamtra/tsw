@@ -24,6 +24,10 @@
                     <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Szczegóły</v-btn>
                     <v-btn class="error" @click="remove(props.item.id)">Usuń</v-btn>
                 </td>
+                <td v-else-if="cols.value === 'opcje_klasa'">
+                    <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Szczegóły</v-btn>
+                    <v-btn class="error" v-if="!props.item.zamknieta" @click="remove(props.item.id)">Usuń</v-btn>
+                </td>
                 <td v-else-if="cols.value === 'ocena'">
                     <v-btn class="primary" :to="'/' + url + '/' + props.item.id.toString()">Oceń</v-btn>
                 </td>

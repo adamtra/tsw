@@ -110,6 +110,9 @@ router.route('/:id').put((req, res) => {
         id: id,
     }).value();
     if (classEl) {
+        if (classEl.zamknieta) {
+            return res.status(400).json('Nie można edytować zamkniętej klasy');
+        }
         const v = new Validator();
         const validation = v.validate(req.body, schemas.class).errors.length === 0;
         if (validation) {
@@ -133,6 +136,9 @@ router.route('/:id').delete((req, res) => {
         id: id,
     }).value();
     if (classEl) {
+        if (classEl.zamknieta) {
+            return res.status(400).json('Nie można usunąć zamkniętej klasy');
+        }
         db.get('classes').remove({
             id: id,
         }).write();

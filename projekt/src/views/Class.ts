@@ -14,7 +14,7 @@ export default class Class extends Vue {
     public headers = [
         { text: 'Numer', value: 'numer' },
         { text: 'Kategoria', value: 'kat' },
-        { text: 'Opcje', value: 'opcje' },
+        { text: 'Opcje', value: 'opcje_klasa' },
     ];
     public title = 'Klasy';
     public classes: Class[] = [];

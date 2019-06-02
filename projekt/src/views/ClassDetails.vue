@@ -35,6 +35,7 @@
                                                 label="Kategoria*"
                                                 v-model="classData.kat"
                                                 :rules="emptyRules"
+                                                :disabled="classData.zamknieta"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
@@ -42,6 +43,7 @@
                                                 label="Numer*"
                                                 v-model.number="classData.numer"
                                                 :rules="numberRules"
+                                                :disabled="classData.zamknieta"
                                                 required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
@@ -54,6 +56,7 @@
                                                 multiple
                                                 chips
                                                 :rules="emptyRules"
+                                                :disabled="classData.zamknieta"
                                                 required></v-autocomplete>
                                     </v-flex>
                                     <v-flex xs12 v-if="classData.czempionat">
@@ -64,6 +67,7 @@
                                                 item-text="option"
                                                 item-value="id"
                                                 :rules="emptyRules"
+                                                :disabled="classData.zamknieta"
                                                 required></v-autocomplete>
                                     </v-flex>
                                 </v-layout>
