@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../lib/db');
+const connections = require('../lib/connection');
 const db_operations = require('../lib/db_operations');
 const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
@@ -146,6 +147,22 @@ router.route('/:id').delete((req, res) => {
     } else {
         return res.status(404).json('Nie znaleziono');
     }
+});
+
+connections.io.on('connection', socket => {
+    socket.on('results', () => {
+        const classes = db.get('classes').value();
+        const response = [];
+        classes.forEach((classEl) => {
+            const element = {};
+            Object.assign(element, classEl);
+            element.horses = db.get('horses').filter({
+                klasa: classEl.id,
+            }).value();
+            response.push(element);
+        });
+        socket.emit('scores', response);
+    });
 });
 
 module.exports = router;

@@ -1,9 +1,10 @@
 //jshint node: true, esversion: 6
 'use strict';
 
-const express = require('express');
-var cors = require('cors');
-const app = express();
+const connections = require('./lib/connection');
+
+const cors = require('cors');
+const app = connections.app;
 
 const port = 4000;
 
@@ -14,12 +15,6 @@ const bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
-
-const httpServer = require('http').createServer(app);
-
-const socketio = require('socket.io');
-const io = socketio.listen(httpServer);
 
 const db = require('./lib/db');
 
@@ -43,6 +38,6 @@ app.use('/user', userRoute);
 app.use('/import', importRoute);
 app.use(defaultRoute);
 
-app.listen(port, () => {
+connections.httpServer.listen(port, () => {
     console.log('serwer uruchomiony na porcie: ' + port);
 });

@@ -8,10 +8,14 @@ import 'vuetify/dist/vuetify.min.css';
 import {token, errors} from '@/helpers/interceptors';
 import VueSweetalert2 from 'vue-sweetalert2';
 import pl from 'vuetify/src/locale/pl';
+// @ts-ignore
+import VueSocketIO from 'vue-socket.io';
 
 token();
 errors();
-
+Vue.use(new VueSocketIO({
+    connection: process.env.VUE_APP_API_URL,
+}));
 Vue.use(VueSweetalert2);
 Vue.use(Vuetify, {
     theme: {

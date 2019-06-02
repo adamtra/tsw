@@ -1,5 +1,24 @@
 <template>
-    <h1>Tu będzie panel kibica</h1>
+    <div>
+        <h1>Wyniki:</h1>
+        <v-expansion-panel>
+            <v-expansion-panel-content
+                    v-for="(classData, i) in results"
+                    :key="i">
+                <template v-slot:header>
+                    <div>
+                        {{classData.numer}} - {{classData.kat}}
+                        <span v-if="classData.zamknieta">(Zakończono)</span>
+                    </div>
+                </template>
+                <v-card>
+                    <v-card-text>
+                        <ClassScore :horses="classData.horses"></ClassScore>
+                    </v-card-text>
+                </v-card>
+            </v-expansion-panel-content>
+        </v-expansion-panel>
+    </div>
 </template>
 
 <script lang="ts" src="./FanPanel.ts"></script>
