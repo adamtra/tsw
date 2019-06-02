@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Wyniki:</h1>
-        <v-expansion-panel :popout="true">
+        <v-expansion-panel :popout="true" v-model="selected">
             <v-expansion-panel-content class="secondary"
                     v-for="(classData, i) in results"
                     :key="i">
