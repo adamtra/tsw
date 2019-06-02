@@ -4,10 +4,8 @@ import Note from '@/types/note';
 @Component
 export default class ClassScore extends Vue {
     @Prop() public horses: any;
-    public created() {
-        this.calculateScore();
-    }
     get rankedHorses() {
+        this.calculateScore();
         return this.horses.filter((horse: any) => {
             return horse.wynik.oceniono;
         });

@@ -140,6 +140,14 @@ router.route('/:id').delete((req, res) => {
         if (classEl.zamknieta) {
             return res.status(400).json('Nie można usunąć zamkniętej klasy');
         }
+        if (!classEl.hasOwnProperty('czempionat')) {
+            const classes = db.get('classes').filter({
+                czempionat: classEl.id,
+            }).value();
+            if (classes.length > 0) {
+                return res.status(400).json('Nie można usunąć klasy czempionatowej z przypisanymi klasami');
+            }
+        }
         db.get('classes').remove({
             id: id,
         }).write();

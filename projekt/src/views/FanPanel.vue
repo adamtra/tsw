@@ -13,7 +13,7 @@
                 </template>
                 <v-card>
                     <v-card-text>
-                        <ClassScore :horses="classData.horses" :key="componentKey"></ClassScore>
+                        <ClassScore :horses="classData.horses"></ClassScore>
                     </v-card-text>
                 </v-card>
             </v-expansion-panel-content>
