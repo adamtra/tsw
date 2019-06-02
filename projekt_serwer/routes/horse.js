@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../lib/db');
+const connections = require('../lib/connection');
 const db_operations = require('../lib/db_operations');
 const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
@@ -72,6 +73,7 @@ router.route('/:id').put((req, res) => {
             db.get('horses').find({
                 id: id,
             }).assign(req.body).value();
+            connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');
         } else {
             return res.status(400).json('Złe dane');

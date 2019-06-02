@@ -1,8 +1,8 @@
 <template>
     <div>
         <h1>Wyniki:</h1>
-        <v-expansion-panel>
-            <v-expansion-panel-content
+        <v-expansion-panel :popout="true">
+            <v-expansion-panel-content class="secondary"
                     v-for="(classData, i) in results"
                     :key="i">
                 <template v-slot:header>
@@ -13,7 +13,7 @@
                 </template>
                 <v-card>
                     <v-card-text>
-                        <ClassScore :horses="classData.horses"></ClassScore>
+                        <ClassScore :horses="classData.horses" :key="componentKey"></ClassScore>
                     </v-card-text>
                 </v-card>
             </v-expansion-panel-content>

@@ -9,6 +9,20 @@ const getId = (table) => {
     }
     return 1;
 };
+const getAllResults = () => {
+    const classes = db.get('classes').value();
+    const response = [];
+    classes.forEach((classEl) => {
+        const element = {};
+        Object.assign(element, classEl);
+        element.horses = db.get('horses').filter({
+            klasa: classEl.id,
+        }).value();
+        response.push(element);
+    });
+    return response;
+};
 module.exports = {
     getId: getId,
+    getAllResults: getAllResults,
 };

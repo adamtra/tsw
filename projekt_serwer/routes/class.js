@@ -151,17 +151,7 @@ router.route('/:id').delete((req, res) => {
 
 connections.io.on('connection', socket => {
     socket.on('results', () => {
-        const classes = db.get('classes').value();
-        const response = [];
-        classes.forEach((classEl) => {
-            const element = {};
-            Object.assign(element, classEl);
-            element.horses = db.get('horses').filter({
-                klasa: classEl.id,
-            }).value();
-            response.push(element);
-        });
-        socket.emit('scores', response);
+        socket.emit('scores', db_operations.getAllResults());
     });
 });
 
