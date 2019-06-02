@@ -98,6 +98,7 @@ router.route('/').post((req, res) => {
         const newElement = {};
         Object.assign(newElement, req.body);
         newElement.id = db_operations.getId('classes');
+        newElement.aktualizacja = (new Date()).getTime();
         db.get('classes').push(newElement).write();
         return res.json('OK');
     } else {
@@ -119,9 +120,9 @@ router.route('/:id').put((req, res) => {
         if (validation) {
             delete req.body.horses;
             req.body.komisja.sort();
-            db.get('classes').find({
-                id: id,
-            }).assign(req.body).value();
+            Object.assign(classEl, req.body);
+            classEl.aktualizacja = (new Date()).getTime();
+            connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');
         } else {
             return res.status(400).json('Złe dane');

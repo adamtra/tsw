@@ -47,9 +47,7 @@ router.route('/:id').put((req, res) => {
         const v = new Validator();
         const validation = v.validate(req.body, schemas.judge).errors.length === 0;
         if (validation) {
-            db.get('judges').find({
-                id: id,
-            }).assign(req.body).value();
+            Object.assign(judge, req.body);
             return res.json('OK');
         } else {
             return res.status(400).json('Złe dane');

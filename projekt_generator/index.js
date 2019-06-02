@@ -112,6 +112,7 @@ module.exports = () => {
                 numer: nr + 1,
                 kat: `${klasy[nr].pl} ${klasy[nr].kat}`,
                 zamknieta: false,
+                aktualizacja: (new Date()).getTime(),
             };
             if (klasy[nr].czempionat) {
                 kl.czempionat = klasy[nr].czempionat;

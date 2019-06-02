@@ -10,7 +10,7 @@ const getId = (table) => {
     return 1;
 };
 const getAllResults = () => {
-    const classes = db.get('classes').value();
+    const classes = db.get('classes').orderBy('aktualizacja', 'desc').value();
     const response = [];
     classes.forEach((classEl) => {
         const element = {};

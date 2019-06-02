@@ -70,9 +70,11 @@ router.route('/:id').put((req, res) => {
         v.addSchema(schemas.note, '/Note');
         const validation = v.validate(req.body, schemas.horse).errors.length === 0;
         if (validation) {
-            db.get('horses').find({
-                id: id,
-            }).assign(req.body).value();
+            Object.assign(horse, req.body);
+            const classEl = db.get('classes').find({
+                id: horse.klasa,
+            }).value();
+            classEl.aktualizacja = (new Date()).getTime();
             connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');
         } else {
