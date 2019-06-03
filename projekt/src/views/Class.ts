@@ -3,11 +3,13 @@ import {ClassService} from '@/services/class-service';
 import DataTable from '@/components/DataTable';
 import UiLoader from '@/components/UiLoader';
 import ImportButton from '@/components/ImportButton';
+import NewShowButton from '@/components/NewShowButton';
 @Component({
     components: {
         DataTable,
         UiLoader,
         ImportButton,
+        NewShowButton,
     },
 })
 export default class Class extends Vue {
@@ -34,9 +36,5 @@ export default class Class extends Vue {
         ClassService.delete(id).then(() => {
            this.getClasses();
         });
-    }
-
-    public imported() {
-        this.getClasses();
     }
 }

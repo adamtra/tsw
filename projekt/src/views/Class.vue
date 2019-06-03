@@ -5,7 +5,8 @@
             <v-icon left>add</v-icon>
             Dodaj
         </v-btn>
-        <ImportButton @imported="imported()"></ImportButton>
+        <ImportButton @imported="getClasses()"></ImportButton>
+        <NewShowButton @imported="getClasses()"></NewShowButton>
         <DataTable
             @remove="remove"
             url="classes"

@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../lib/db');
+const connections = require('../lib/connection');
+const db_operations = require('../lib/db_operations');
 const axios = require('axios');
 const externalApi = 'http://localhost:3000';
 const isAuthenticated = require('../lib/authMiddleware');
@@ -14,6 +16,7 @@ router.route('/').get((_req, response) => {
         db.set('judges', res.data).write();
         finished++;
         if (finished === requests) {
+            connections.io.emit('scores', db_operations.getAllResults());
             return response.json('imported');
         }
     }, () => {
@@ -23,6 +26,7 @@ router.route('/').get((_req, response) => {
         db.set('horses', res.data).write();
         finished++;
         if (finished === requests) {
+            connections.io.emit('scores', db_operations.getAllResults());
             return response.json('imported');
         }
     }, () => {
@@ -36,6 +40,7 @@ router.route('/').get((_req, response) => {
         db.set('classes', classes).write();
         finished++;
         if (finished === requests) {
+            connections.io.emit('scores', db_operations.getAllResults());
             return response.json('imported');
         }
     }, () => {

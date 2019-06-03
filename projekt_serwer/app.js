@@ -30,12 +30,14 @@ const horseRoute = require('./routes/horse');
 const classRoute = require('./routes/class');
 const userRoute = require('./routes/user');
 const importRoute = require('./routes/import');
+const newRoute = require('./routes/new');
 const defaultRoute = require('./routes/default');
 app.use('/judge', judgeRoute);
 app.use('/horse', horseRoute);
 app.use('/class', classRoute);
 app.use('/user', userRoute);
 app.use('/import', importRoute);
+app.use('/new', newRoute);
 app.use(defaultRoute);
 
 connections.httpServer.listen(port, () => {
