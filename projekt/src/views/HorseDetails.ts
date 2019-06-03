@@ -31,9 +31,6 @@ export default class HorseDetails extends Vue {
 
     public created() {
         this.getDetails();
-        ClassService.getOpened().then((res) => {
-            this.classes = res.data;
-        });
     }
 
     public getDetails() {
@@ -43,8 +40,20 @@ export default class HorseDetails extends Vue {
             HorseService.get(Number(this.$route.params.id)).then((res) => {
                 this.horseData = res.data;
                 this.loading = false;
+                if (this.horseData.wynik.oceniono) {
+                    ClassService.getAll().then((res) => {
+                        this.classes = res.data;
+                    });
+                } else {
+                    ClassService.getOpened().then((res) => {
+                        this.classes = res.data;
+                    });
+                }
             });
         } else {
+            ClassService.getOpened().then((res) => {
+                this.classes = res.data;
+            });
             Object.assign(this.horseData, {
                 hodowca: {},
                 rodowod: {
@@ -53,6 +62,9 @@ export default class HorseDetails extends Vue {
                     om: {},
                 },
                 wlasciciel: {},
+                wynik: {
+                    oceniono: false,
+                },
             });
         }
     }

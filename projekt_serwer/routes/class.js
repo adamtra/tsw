@@ -11,7 +11,14 @@ router.use(isAuthenticated);
 
 router.route('/').get((_r, res) => {
     const classes = db.get('classes').value();
-    return res.json(classes);
+    const response = [];
+    classes.forEach(el => {
+        const newEl = {};
+        Object.assign(newEl, el);
+        newEl.option = `${el.numer} - ${el.kat}`;
+        response.push(newEl);
+    });
+    return res.json(response);
 });
 
 router.route('/opened').get((_r, res) => {
