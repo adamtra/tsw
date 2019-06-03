@@ -102,7 +102,7 @@
                         </DataTable>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew">
-                        <ClassScore :horses="classData.horses"></ClassScore>
+                        <ClassScore :horses="classData.horses" :editable="true"></ClassScore>
                     </v-tab-item>
                 </v-tabs>
             </v-card-text>
@@ -112,7 +112,8 @@
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()" :disabled="closing || !valid || classData.horses.filter(x => !x.wynik.oceniono).length > 0">
+                <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()"
+                       :disabled="closing || !valid || classData.horses.filter(x => !x.wynik.oceniono).length > 0 || classData.horses.filter((x) => x.wynik.draw).length > 0">
                     <span v-if="!closing">Zamknij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
