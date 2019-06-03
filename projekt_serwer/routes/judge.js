@@ -63,6 +63,12 @@ router.route('/:id').delete((req, res) => {
         id: id,
     }).value();
     if (judge) {
+        const classes = db.get('classes').filter({
+            komisja: [judge.id]
+        }).value();
+        if (classes.length > 0) {
+            return res.status(400).json('Nie można usunąć sędziego, który jest przypisany do komisji');
+        }
         db.get('judges').remove({
             id: id,
         }).write();

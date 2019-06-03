@@ -86,7 +86,7 @@
                                                 multiple
                                                 chips
                                                 :rules="emptyArrayRules"
-                                                :disabled="classData.zamknieta"
+                                                :disabled="classData.zamknieta || classData.horses.filter((x) => x.wynik.oceniono).length > 0"
                                                 required></v-autocomplete>
                                     </v-flex>
                                 </v-layout>

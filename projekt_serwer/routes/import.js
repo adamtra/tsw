@@ -29,7 +29,11 @@ router.route('/').get((_req, response) => {
         return response.status(500).json('NOK');
     });
     axios.get(`${externalApi}/klasy`).then((res) => {
-        db.set('classes', res.data).write();
+        const classes = res.data;
+        classes.forEach((classEl) => {
+           classEl.komisja.sort();
+        });
+        db.set('classes', classes).write();
         finished++;
         if (finished === requests) {
             return response.json('imported');
