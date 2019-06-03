@@ -34,26 +34,28 @@ export default class ClassScore extends Vue {
             } else if (x.wynik.suma > y.wynik.suma) {
                 return -1;
             } else {
-                if (x.wynik.typSuma < y.wynik.suma.typSuma) {
+                if (x.wynik.typSuma < y.wynik.typSuma) {
                     return 1;
-                } else if (x.wynik.typSuma > y.wynik.suma.typSuma) {
+                } else if (x.wynik.typSuma > y.wynik.typSuma) {
                     return -1;
                 } else {
-                    if (x.wynik.ruchSuma < y.wynik.suma.ruchSuma) {
+                    if (x.wynik.ruchSuma < y.wynik.ruchSuma) {
                         return 1;
-                    } else if (x.wynik.ruchSuma > y.wynik.suma.ruchSuma) {
+                    } else if (x.wynik.ruchSuma > y.wynik.ruchSuma) {
                         return -1;
                     } else {
                         if (x.wynik.hasOwnProperty('rozjemca') && y.wynik.hasOwnProperty('rozjemca')) {
-                            if (x.wynik.rozjemca < y.wynik.suma.rozjemca) {
+                            if (x.wynik.rozjemca < y.wynik.rozjemca) {
                                 return 1;
-                            } else if (x.wynik.rozjemca > y.wynik.suma.rozjemca) {
+                            } else if (x.wynik.rozjemca > y.wynik.rozjemca) {
                                 return -1;
                             }
                         }
                     }
                 }
             }
+            x.wynik.draw = true;
+            y.wynik.draw = true;
             return 0;
         });
     }
