@@ -129,7 +129,7 @@ module.exports = () => {
         konie: _.times(liczebnoscKlas.total, (n) => {
             let klasa = numerKlasy(n + 1);
             let plec = klasy[klasa - 1].pl;
-            let conf = {min: klasy[klasa - 1].min, max: klasy[klasa - 1].max};
+            let conf = {min: 0, max: 20};
             let rocznikInc = faker.random.number(conf);
             return {
                 "id": n + 1,

@@ -52,6 +52,15 @@ router.route('/').post((req, res) => {
             noty: score,
         };
         newElement.id = db_operations.getId('horses');
+        const sameNumber = db.get('horses').filter(horse => req.body.numer <= horse.numer).orderBy('numer', 'asc').value();
+        let currentHighest = req.body.numer;
+        for (let i = 0; i < sameNumber.length; i++) {
+            if (sameNumber[i].numer - currentHighest > 0) {
+                break;
+            }
+            sameNumber[i].numer++;
+            currentHighest = sameNumber[i].numer;
+        }
         db.get('horses').push(newElement).write();
         return res.json('OK');
     } else {
@@ -70,11 +79,23 @@ router.route('/:id').put((req, res) => {
         v.addSchema(schemas.note, '/Note');
         const validation = v.validate(req.body, schemas.horse).errors.length === 0;
         if (validation) {
+            if (horse.numer !== req.body.numer) {
+                const sameNumber = db.get('horses').filter(horse => req.body.numer <= horse.numer).orderBy('numer', 'asc').value();
+                let currentHighest = req.body.numer;
+                for (let i = 0; i < sameNumber.length; i++) {
+                    if (sameNumber[i].numer - currentHighest > 0) {
+                        break;
+                    }
+                    sameNumber[i].numer++;
+                    currentHighest = sameNumber[i].numer;
+                }
+            }
             Object.assign(horse, req.body);
             const classEl = db.get('classes').find({
                 id: horse.klasa,
             }).value();
             classEl.aktualizacja = (new Date()).getTime();
+            db.write();
             connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');
         } else {

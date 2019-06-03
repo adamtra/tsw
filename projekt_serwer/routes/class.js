@@ -129,6 +129,7 @@ router.route('/:id').put((req, res) => {
             req.body.komisja.sort();
             Object.assign(classEl, req.body);
             classEl.aktualizacja = (new Date()).getTime();
+            db.write();
             connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');
         } else {

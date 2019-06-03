@@ -55,7 +55,8 @@ const horseSchema = {
                     items: {'$ref': '/Note'},
                 },
             },
-            required: ['noty'],
+            oceniono: {type: 'boolean'},
+            required: ['oceniono'],
         }
     },
     required: ['numer', 'nazwa', 'kraj', 'rocznik', 'masc', 'plec', 'hodowca', 'rodowod'],
