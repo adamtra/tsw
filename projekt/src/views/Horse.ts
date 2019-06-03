@@ -17,7 +17,7 @@ export default class Horse extends Vue {
         { text: 'Maść', value: 'masc' },
         { text: 'Kraj', value: 'kraj' },
         { text: 'Rocznik', value: 'rocznik' },
-        { text: 'Opcje', value: 'opcje' },
+        { text: 'Opcje', value: 'opcje_kon' },
     ];
     public title = 'Konie';
     public horses: Horse[] = [];

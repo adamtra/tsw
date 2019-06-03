@@ -91,6 +91,9 @@ router.route('/:id').delete((req, res) => {
         id: id,
     }).value();
     if (horse) {
+        if (horse.wynik.oceniono) {
+            return res.status(400).json('Nie można usunąć ocenionego konia.');
+        }
         db.get('horses').remove({
             id: id,
         }).write();
