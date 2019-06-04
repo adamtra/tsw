@@ -12,13 +12,21 @@
             </v-card>
         </div>
         <div v-else>
-            <div v-for="horseGroup of drawHorses" class="horseGroup">
-                <v-card v-for="horse of horseGroup" :key="horse.data.id">
-                    <v-card-title primary-title>
-                        {{horse.position + 1}}. {{horse.data.nazwa}}
-                    </v-card-title>
-                </v-card>
+            <div v-for="(horseGroup, key) of drawHorses" class="horseGroup">
+                <h3>Walka o pozycje: {{horseGroup[0].position + 1}} - {{horseGroup[horseGroup.length - 1].position + 1}}</h3>
+                <draggable :list="horseGroup" @end="endDrag(key)">
+                    <v-card v-for="horse of horseGroup" :key="horse.data.id"
+                            :class="horse.data.wynik.rozjemca === 0 ? 'gold' : horse.data.wynik.rozjemca === 1 ? 'silver' : horse.data.wynik.rozjemca === 2 ? 'bronze' : ''">
+                        <v-card-title primary-title>
+                            {{horse.data.nazwa}}
+                        </v-card-title>
+                    </v-card>
+                </draggable>
             </div>
+            <v-btn color="secondary darken-1" raised @click="closeClass" :disabled="closing">
+                <span v-if="!closing">Zamknij klasę</span>
+                <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
+            </v-btn>
         </div>
     </div>
 </template>
