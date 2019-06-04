@@ -17,6 +17,7 @@
     "vue-socket.io": "^3.0.7",
     "vue-sweetalert2": "^2.0.5",
     "vue-template-loader": "^1.0.0",
+    "vuedraggable": "^2.21.0",
     "vuelidate": "latest",
     "vuetify": "^1.5.14",
     "vuex": "^3.0.1",

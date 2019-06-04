@@ -9,13 +9,42 @@ export default class ClassScore extends Vue {
             return horse.wynik.oceniono;
         });
     }
+    get hasDraw() {
+        return this.rankedHorses.filter((x: any) => x.wynik.draw).length > 0;
+    }
     @Prop() public horses: any;
     @Prop({
         default: false,
     }) public editable: any;
+    public showDraws = false;
+    public drawHorses: any = [];
 
     public arbitrator() {
-        this.calculateScore();
+        this.$emit('block');
+        this.showDraws = true;
+        const drawGroups = [];
+        let drawGroup = [];
+        for (let i = 0; i < this.rankedHorses.length; i++) {
+            if (this.rankedHorses[i].wynik.draw) {
+                if (drawGroup.length === 0 || i - drawGroup[drawGroup.length - 1].position === 1) {
+                    drawGroup.push({
+                        position: i,
+                        data: this.rankedHorses[i],
+                    });
+                } else {
+                    drawGroups.push(drawGroup);
+                    drawGroup = [];
+                    drawGroup.push({
+                        position: i,
+                        data: this.rankedHorses[i],
+                    });
+                }
+            }
+        }
+        if (drawGroup.length > 0) {
+            drawGroups.push(drawGroup);
+        }
+        this.drawHorses = drawGroups;
     }
     private calculateScore() {
         this.horses.forEach((horse: any) => {

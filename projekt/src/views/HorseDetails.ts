@@ -41,12 +41,12 @@ export default class HorseDetails extends Vue {
                 this.horseData = res.data;
                 this.loading = false;
                 if (this.horseData.wynik.oceniono) {
-                    ClassService.getAll().then((res) => {
-                        this.classes = res.data;
+                    ClassService.getAll().then((res2) => {
+                        this.classes = res2.data;
                     });
                 } else {
-                    ClassService.getOpened().then((res) => {
-                        this.classes = res.data;
+                    ClassService.getOpened().then((res2) => {
+                        this.classes = res2.data;
                     });
                 }
             });

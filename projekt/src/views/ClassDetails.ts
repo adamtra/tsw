@@ -39,6 +39,7 @@ export default class ClassDetails extends Vue {
         (v: any) => v.length > 0 || 'Lista nie może być pusta',
     ];
     public isChampion = false;
+    public blocked = false;
 
     public created() {
         this.getDetails();
@@ -129,5 +130,9 @@ export default class ClassDetails extends Vue {
                 this.classData.komisja.push(judge.id);
             });
         }
+    }
+
+    public blockButtons() {
+        this.blocked = true;
     }
 }

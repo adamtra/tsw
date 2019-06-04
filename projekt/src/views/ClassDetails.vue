@@ -102,13 +102,13 @@
                         </DataTable>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew">
-                        <ClassScore :horses="classData.horses" :editable="true"></ClassScore>
+                        <ClassScore @block="blockButtons" :horses="classData.horses" :editable="true"></ClassScore>
                     </v-tab-item>
                 </v-tabs>
             </v-card-text>
             <v-card-actions v-if="!classData.zamknieta">
                 <v-spacer></v-spacer>
-                <v-btn color="error darken-1" raised v-if="!isNew" @click="remove()" :disabled="deleting">
+                <v-btn color="error darken-1" raised v-if="!isNew && !blocked" @click="remove()" :disabled="deleting">
                     <span v-if="!deleting">Usuń</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
@@ -117,7 +117,7 @@
                     <span v-if="!closing">Zamknij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="primary darken-1" raised @click="save()" :disabled="saving || !valid">
+                <v-btn color="primary darken-1" raised v-if="!blocked" @click="save()" :disabled="saving || !valid">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
