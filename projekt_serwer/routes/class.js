@@ -160,6 +160,9 @@ router.route('/:id').delete((req, res) => {
         db.get('classes').remove({
             id: id,
         }).write();
+        db.get('horses').remove({
+            klasa: id,
+        }).write();
         return res.json('OK');
     } else {
         return res.status(404).json('Nie znaleziono');
