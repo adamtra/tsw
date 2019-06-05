@@ -121,6 +121,9 @@ module.exports = () => {
                     return (s + nr) % (liczebnoscKomisji + 1) + 1;
                 })
             } else {
+                if (klasy[nr].hasOwnProperty('min')) {
+                    kl.czempionat = -1;
+                }
                 kl.komisja = _.times(sedziowie.length, (s) => {
                     return s + 1;
                 })

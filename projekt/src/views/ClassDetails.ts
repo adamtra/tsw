@@ -26,7 +26,7 @@ export default class ClassDetails extends Vue {
     public isNew = true;
     public headers: any = [];
     public judges: Judge[] = [];
-    public classes: Class[] = [];
+    public classes: any[] = [];
     public valid = false;
     public emptyRules = [
         (v: any) => !!v || 'Pole nie może być puste',
@@ -40,6 +40,10 @@ export default class ClassDetails extends Vue {
     ];
     public isChampion = false;
     public blocked = false;
+    private emptyClass = {
+        id: -1,
+        option: 'Brak',
+    };
 
     public created() {
         this.getDetails();
@@ -48,6 +52,7 @@ export default class ClassDetails extends Vue {
         });
         ClassService.getOpenedChampion().then((res) => {
             this.classes = res.data;
+            this.classes.unshift(this.emptyClass);
         });
     }
 
