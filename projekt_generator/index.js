@@ -79,7 +79,8 @@ module.exports = () => {
             total: 0,
             breaks: []
         };
-        let tot = klasy.length - (czempRocznych ? 3 : 2);
+        const classCount = 4;
+        let tot = klasy.length - (czempRocznych ? classCount + 2 : classCount);
         for (let cno = 1; cno <= tot; cno += 1) {
             let n = faker.random.number({min: 7, max: 17});
             info.total += n;
