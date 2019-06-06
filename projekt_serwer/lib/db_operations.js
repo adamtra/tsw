@@ -15,10 +15,20 @@ const getAllResults = () => {
     classes.forEach((classEl) => {
         const element = {};
         Object.assign(element, classEl);
-        element.horses = db.get('horses').filter({
+        const horses = db.get('horses').filter({
             klasa: classEl.id,
         }).value();
-        response.push(element);
+        let add = false;
+        for (let i = 0; i < horses.length; i++) {
+            if (horses[i].wynik.oceniono) {
+                add = true;
+                break;
+            }
+        }
+        element.horses = horses;
+        if (add) {
+            response.push(element);
+        }
     });
     return response;
 };
