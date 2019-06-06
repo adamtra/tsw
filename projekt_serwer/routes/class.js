@@ -27,7 +27,7 @@ router.route('/opened').get((_r, res) => {
     }).value();
     const response = [];
     classes.forEach(el => {
-        if (el.hasOwnProperty('czempionat') && el.czempionat !== -1) {
+        if (el.hasOwnProperty('czempionat')) {
             const newEl = {};
             Object.assign(newEl, el);
             newEl.option = `${el.numer} - ${el.kat}`;
