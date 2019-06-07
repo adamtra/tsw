@@ -72,7 +72,14 @@ router.route('/:id').put((req, res) => {
             const classEl = db.get('classes').find({
                 id: horse.klasa,
             }).value();
-            classEl.aktualizacja = (new Date()).getTime();
+            if (horse.hasOwnProperty('czempionat')) {
+                const classChampionship = db.get('classes').find({
+                    id: horse.czempionat.klasa,
+                }).value();
+                classChampionship.aktualizacja = (new Date()).getTime();
+            } else {
+                classEl.aktualizacja = (new Date()).getTime();
+            }
             db.write();
             connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');

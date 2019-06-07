@@ -113,7 +113,14 @@ const moveHorsesToChampionship = (classEl) => {
             const horseData = db.get('horses').find({
                 id: horses[i].id,
             }).value();
-            horseData.czempionat = classEl.czempionat;
+            horseData.czempionat = {
+                id: classEl.czempionat,
+                wyniki: {
+                    zloto: [],
+                    srebro: [],
+                    braz: [],
+                },
+            };
         }
     }
     db.write();
