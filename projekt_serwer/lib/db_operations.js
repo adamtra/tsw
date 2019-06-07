@@ -32,7 +32,34 @@ const getAllResults = () => {
     });
     return response;
 };
+const getEmptyScore = (judges) => {
+    const score = [];
+    const emptyScore = {
+        typ: 0,
+        glowa: 0,
+        kloda: 0,
+        nogi: 0,
+        ruch: 0
+    };
+    judges.forEach(() => {
+        score.push(emptyScore);
+    });
+    return score;
+};
+const changeHorseNumbers = (horseData) => {
+    const sameNumber = db.get('horses').filter(horse => horseData.numer <= horse.numer).orderBy('numer', 'asc').value();
+    let currentHighest = horseData.numer;
+    for (let i = 0; i < sameNumber.length; i++) {
+        if (sameNumber[i].numer - currentHighest > 0) {
+            break;
+        }
+        sameNumber[i].numer++;
+        currentHighest = sameNumber[i].numer;
+    }
+};
 module.exports = {
     getId: getId,
     getAllResults: getAllResults,
+    getEmptyScore: getEmptyScore,
+    changeHorseNumbers: changeHorseNumbers,
 };

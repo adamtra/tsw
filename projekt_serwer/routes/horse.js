@@ -34,17 +34,7 @@ router.route('/').post((req, res) => {
         const classEl = db.get('classes').find({
             id: req.body.klasa,
         }).value();
-        const score = [];
-        const emptyScore = {
-            typ: 0,
-            glowa: 0,
-            kloda: 0,
-            nogi: 0,
-            ruch: 0
-        };
-        classEl.komisja.forEach((judge) => {
-           score.push(emptyScore);
-        });
+        const score = db_operations.getEmptyScore(classEl.komisja);
         const newElement = {};
         Object.assign(newElement, req.body);
         newElement.wynik = {
@@ -52,15 +42,7 @@ router.route('/').post((req, res) => {
             noty: score,
         };
         newElement.id = db_operations.getId('horses');
-        const sameNumber = db.get('horses').filter(horse => req.body.numer <= horse.numer).orderBy('numer', 'asc').value();
-        let currentHighest = req.body.numer;
-        for (let i = 0; i < sameNumber.length; i++) {
-            if (sameNumber[i].numer - currentHighest > 0) {
-                break;
-            }
-            sameNumber[i].numer++;
-            currentHighest = sameNumber[i].numer;
-        }
+        db_operations.changeHorseNumbers(req.body);
         db.get('horses').push(newElement).write();
         return res.json('OK');
     } else {
@@ -79,16 +61,18 @@ router.route('/:id').put((req, res) => {
         v.addSchema(schemas.note, '/Note');
         const validation = v.validate(req.body, schemas.horse).errors.length === 0;
         if (validation) {
-            if (horse.numer !== req.body.numer) {
-                const sameNumber = db.get('horses').filter(horse => req.body.numer <= horse.numer).orderBy('numer', 'asc').value();
-                let currentHighest = req.body.numer;
-                for (let i = 0; i < sameNumber.length; i++) {
-                    if (sameNumber[i].numer - currentHighest > 0) {
-                        break;
-                    }
-                    sameNumber[i].numer++;
-                    currentHighest = sameNumber[i].numer;
+            if (horse.klasa !== req.body.klasa) {
+                if (horse.oceniono) {
+                    return res.status(400).json('Nie można zmienić klasy ocenionego konia');
+                } else {
+                    const newClassEl = db.get('classes').find({
+                        id: req.body.klasa,
+                    }).value();
+                    req.body.wynik.noty = db_operations.getEmptyScore(newClassEl.komisja);
                 }
+            }
+            if (horse.numer !== req.body.numer) {
+                db_operations.changeHorseNumbers(req.body);
             }
             Object.assign(horse, req.body);
             const classEl = db.get('classes').find({
