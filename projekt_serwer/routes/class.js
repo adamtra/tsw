@@ -60,9 +60,17 @@ router.route('/:id').get((req, res) => {
     if (classEl) {
         const response = {};
         Object.assign(response, classEl);
-        response.horses = db.get('horses').filter({
-            klasa: classEl.id,
-        }).value();
+        if (classEl.hasOwnProperty('czempionat')) {
+            response.horses = db.get('horses').filter({
+                klasa: classEl.id,
+            }).value();
+        } else {
+            response.horses = db.get('horses').filter({
+                czempionat: {
+                    id: classEl.id,
+                },
+            }).value();
+        }
         return res.json(response);
     } else {
         return res.status(404).json('Nie znaleziono');
