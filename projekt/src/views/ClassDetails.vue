@@ -19,8 +19,11 @@
                     <v-tab>
                         Dane główne
                     </v-tab>
-                    <v-tab v-if="!isNew">
+                    <v-tab v-if="!isNew && classData.czempionat">
                         Konie
+                    </v-tab>
+                    <v-tab v-if="!isNew && !classData.czempionat">
+                        Oceny
                     </v-tab>
                     <v-tab v-if="!isNew">
                         Wyniki
@@ -93,13 +96,16 @@
                             </v-container>
                         </v-form>
                     </v-tab-item>
-                    <v-tab-item v-if="!isNew">
+                    <v-tab-item v-if="!isNew && classData.czempionat">
                         <DataTable
                                 :url="'classes/' + classData.id"
                                 title="Konie w klasie"
                                 :items="classData.horses"
                                 :headers="headers">
                         </DataTable>
+                    </v-tab-item>
+                    <v-tab-item v-if="!isNew && !classData.czempionat">
+                        <ChampionshipScore :data="classData"></ChampionshipScore>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew">
                         <ClassScore @block="blockButtons" @closed="closeClass" :horses="classData.horses" :editable="true"></ClassScore>

@@ -8,12 +8,14 @@ import router from '@/router';
 import Judge from '@/types/judge';
 import {JudgeService} from '@/services/judge-service';
 import ClassScore from '@/components/ClassScore';
+import ChampionshipScore from '@/components/ChampionshipScore';
 
 @Component({
     components: {
         UiLoader,
         DataTable,
         ClassScore,
+        ChampionshipScore,
     },
 })
 export default class ClassDetails extends Vue {
