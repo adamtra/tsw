@@ -31,10 +31,7 @@ router.route('/').post((req, res) => {
     v.addSchema(schemas.note, '/Note');
     const validation = v.validate(req.body, schemas.horse).errors.length === 0;
     if (validation) {
-        const classEl = db.get('classes').find({
-            id: req.body.klasa,
-        }).value();
-        const score = db_operations.getEmptyScore(classEl.komisja);
+        const score = db_operations.getEmptyScore(req.body.klasa);
         const newElement = {};
         Object.assign(newElement, req.body);
         newElement.wynik = {
@@ -65,10 +62,7 @@ router.route('/:id').put((req, res) => {
                 if (horse.oceniono) {
                     return res.status(400).json('Nie można zmienić klasy ocenionego konia');
                 } else {
-                    const newClassEl = db.get('classes').find({
-                        id: req.body.klasa,
-                    }).value();
-                    req.body.wynik.noty = db_operations.getEmptyScore(newClassEl.komisja);
+                    req.body.wynik.noty = db_operations.getEmptyScore(req.body.klasa);
                 }
             }
             if (horse.numer !== req.body.numer) {

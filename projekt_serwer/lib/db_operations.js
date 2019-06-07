@@ -32,7 +32,10 @@ const getAllResults = () => {
     });
     return response;
 };
-const getEmptyScore = (judges) => {
+const getEmptyScore = (id) => {
+    const classEl = db.get('classes').find({
+        id: id,
+    }).value();
     const score = [];
     const emptyScore = {
         typ: 0,
@@ -41,7 +44,7 @@ const getEmptyScore = (judges) => {
         nogi: 0,
         ruch: 0
     };
-    judges.forEach(() => {
+    classEl.komisja.forEach(() => {
         score.push(emptyScore);
     });
     return score;
