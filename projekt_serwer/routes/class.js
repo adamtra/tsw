@@ -129,6 +129,11 @@ router.route('/:id').put((req, res) => {
             req.body.komisja.sort();
             Object.assign(classEl, req.body);
             classEl.aktualizacja = (new Date()).getTime();
+            if (classEl.zamknieta) {
+                if (classEl.hasOwnProperty('czempionat') && classEl.czempionat !== -1) {
+                    db_operations.moveHorsesToChampionship(classEl);
+                }
+            }
             db.write();
             connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');

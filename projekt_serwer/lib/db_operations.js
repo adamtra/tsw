@@ -60,9 +60,68 @@ const changeHorseNumbers = (horseData) => {
         currentHighest = sameNumber[i].numer;
     }
 };
+const moveHorsesToChampionship = (classEl) => {
+    const dbHorses = db.get('horses').filter(horse => horse.klasa === classEl.id).value();
+    const horses = JSON.parse(JSON.stringify(dbHorses));
+    horses.forEach((horse) => {
+        let score = 0;
+        let typSum = 0;
+        let ruchSum = 0;
+        horse.wynik.noty.forEach((wynik) => {
+            score += wynik.typ;
+            score += wynik.glowa;
+            score += wynik.kloda;
+            score += wynik.nogi;
+            score += wynik.ruch;
+            typSum += wynik.typ;
+            ruchSum += wynik.ruch;
+        });
+        horse.wynik.suma = score;
+        horse.wynik.typSuma = typSum;
+        horse.wynik.ruchSuma = ruchSum;
+    });
+    horses.sort((x, y) => {
+        if (x.wynik.suma < y.wynik.suma) {
+            return 1;
+        } else if (x.wynik.suma > y.wynik.suma) {
+            return -1;
+        } else {
+            if (x.wynik.typSuma < y.wynik.typSuma) {
+                return 1;
+            } else if (x.wynik.typSuma > y.wynik.typSuma) {
+                return -1;
+            } else {
+                if (x.wynik.ruchSuma < y.wynik.ruchSuma) {
+                    return 1;
+                } else if (x.wynik.ruchSuma > y.wynik.ruchSuma) {
+                    return -1;
+                } else {
+                    if (x.wynik.hasOwnProperty('rozjemca') && y.wynik.hasOwnProperty('rozjemca')) {
+                        if (x.wynik.rozjemca < y.wynik.rozjemca) {
+                            return -1;
+                        } else if (x.wynik.rozjemca > y.wynik.rozjemca) {
+                            return 1;
+                        }
+                    }
+                }
+            }
+        }
+        return 0;
+    });
+    for (let i = 0; i < 3; i++) {
+        if (horses[i]) {
+            const horseData = db.get('horses').find({
+                id: horses[i].id,
+            }).value();
+            horseData.czempionat = classEl.czempionat;
+        }
+    }
+    db.write();
+};
 module.exports = {
     getId: getId,
     getAllResults: getAllResults,
     getEmptyScore: getEmptyScore,
     changeHorseNumbers: changeHorseNumbers,
+    moveHorsesToChampionship: moveHorsesToChampionship,
 };
