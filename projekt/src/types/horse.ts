@@ -23,6 +23,14 @@ interface Horse {
         noty: Note[];
         oceniono: boolean;
     };
+    czempionat?: {
+        id: number;
+        wyniki: {
+            zloto: number[];
+            srebro: number[];
+            braz: number[];
+        }
+    };
 }
 
 export default Horse;

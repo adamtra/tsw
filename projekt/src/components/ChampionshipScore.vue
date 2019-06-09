@@ -1,24 +1,31 @@
 <template>
     <div>
         <v-layout row wrap>
-            <v-flex xs12 v-for="judge of judges">
+            <v-flex xs12 v-for="judge of judges" :key="judge.data.id">
                 <v-card>
                     <v-card-title class="primary">
-                        <span class="headline">{{judge.sedzia}}</span>
+                        <span class="headline">{{judge.data.sedzia}}</span>
                     </v-card-title>
                     <v-card-text>
                         <v-layout row wrap>
                             <v-flex xs6>
-                                <v-card v-for="horse of data.horses">
-                                    <v-card-title primary-title>
-                                        {{horse.nazwa}}
-                                    </v-card-title>
-                                </v-card>
+                                <draggable :move="onMove" :list="judge.horses" :group="'horses_' + judge.data.id">
+                                    <v-card v-for="horse of judge.horses" :key="horse.id">
+                                        <v-card-title primary-title>
+                                            {{horse.nazwa}}
+                                        </v-card-title>
+                                    </v-card>
+                                </draggable>
                             </v-flex>
                             <v-flex xs5 offset-xs1>
-                                <v-card v-for="i in 3">
-                                    <v-card-title primary-title :class="i === 1 ? 'gold' : i === 2 ? 'silver' : i === 3 ? 'bronze' : ''"></v-card-title>
-                                </v-card>
+                                <draggable :list="judge.rewarded" :group="'horses_' + judge.data.id">
+                                    <v-card v-for="(horse, key) of judge.rewarded" :key="horse.id">
+                                        <v-card-title primary-title
+                                                      :class="key === 0 ? 'gold' : key === 1 ? 'silver' : key === 2 ? 'bronze' : ''">
+                                            {{horse.nazwa}}
+                                        </v-card-title>
+                                    </v-card>
+                                </draggable>
                             </v-flex>
                         </v-layout>
                     </v-card-text>
