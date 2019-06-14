@@ -9,7 +9,11 @@
                     <v-card-text>
                         <v-layout row wrap>
                             <v-flex xs6>
-                                <draggable :move="onMove" :list="judge.horses" :group="'horses_' + judge.data.id">
+                                <draggable
+                                        @end="scoreHorses(judge.data.id)"
+                                        :move="onMove"
+                                        :list="judge.horses"
+                                        :group="'horses_' + judge.data.id">
                                     <v-card v-for="horse of judge.horses" :key="horse.id">
                                         <v-card-title primary-title>
                                             {{horse.nazwa}}
@@ -18,7 +22,10 @@
                                 </draggable>
                             </v-flex>
                             <v-flex xs5 offset-xs1>
-                                <draggable :list="judge.rewarded" :group="'horses_' + judge.data.id">
+                                <draggable
+                                        @end="scoreHorses(judge.data.id)"
+                                        :list="judge.rewarded"
+                                        :group="'horses_' + judge.data.id">
                                     <v-card v-for="(horse, key) of judge.rewarded" :key="horse.id">
                                         <v-card-title primary-title
                                                       :class="key === 0 ? 'gold' : key === 1 ? 'silver' : key === 2 ? 'bronze' : ''">
