@@ -16,12 +16,22 @@ export default class ClassScore extends Vue {
         });
     }
     get hasDraw() {
-        return this.rankedHorses.filter((x: any) => x.wynik.draw).length > 0;
+        if (!this.championship) {
+            return this.rankedHorses.filter((x: any) => x.wynik.draw).length > 0;
+        } else {
+            return this.rankedHorses.filter((x: any) => x.czempionat.draw).length > 0;
+        }
+    }
+    get isChampionship() {
+        return this.championship;
     }
     @Prop() public horses: any;
     @Prop({
         default: false,
     }) public editable: any;
+    @Prop({
+        default: false,
+    }) public championship: any;
     public showDraws = false;
     public closing = false;
     public drawHorses: any = [];
@@ -74,7 +84,7 @@ export default class ClassScore extends Vue {
         });
         this.$emit('closed');
     }
-    private calculateScore() {
+    private calculateStandard() {
         this.horses.forEach((horse: any) => {
             let score = 0;
             let typSum = 0;
@@ -122,5 +132,31 @@ export default class ClassScore extends Vue {
             y.wynik.draw = true;
             return 0;
         });
+    }
+    private calculateChampionship() {
+        this.horses.forEach((horse: any) => {
+            let score = 0;
+            score += horse.czempionat.wyniki.zloto.length * 4;
+            score += horse.czempionat.wyniki.srebro.length * 2;
+            score += horse.czempionat.wyniki.braz.length;
+            horse.czempionat.suma = score;
+        });
+        this.horses.sort((x: any, y: any) => {
+            if (x.czempionat.suma < y.czempionat.suma) {
+                return 1;
+            } else if (x.czempionat.suma > y.czempionat.suma) {
+                return -1;
+            }
+            x.czempionat.draw = true;
+            y.czempionat.draw = true;
+            return 0;
+        });
+    }
+    private calculateScore() {
+        if (!this.championship) {
+            this.calculateStandard();
+        } else {
+            this.calculateChampionship();
+        }
     }
 }

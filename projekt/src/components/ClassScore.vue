@@ -7,7 +7,14 @@
         <div v-if="!showDraws">
             <v-card v-for="(horse, key) of rankedHorses" :key="horse.id" :class="key === 0 ? 'gold' : key === 1 ? 'silver' : key === 2 ? 'bronze' : ''">
                 <v-card-title primary-title>
-                    <v-icon left v-if="horse.wynik.draw">warning</v-icon>{{key + 1}}. {{horse.nazwa}} - {{horse.wynik.suma}}
+                    <div v-if="!isChampionship">
+                        <v-icon left v-if="horse.wynik.draw">warning</v-icon>
+                        <span>{{key + 1}}. {{horse.nazwa}} - {{horse.wynik.suma}}</span>
+                    </div>
+                    <div v-else>
+                        <v-icon left v-if="horse.czempionat.draw">warning</v-icon>
+                        <span>{{key + 1}}. {{horse.nazwa}} - {{horse.czempionat.suma}}</span>
+                    </div>
                 </v-card-title>
             </v-card>
         </div>

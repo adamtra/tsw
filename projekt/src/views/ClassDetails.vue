@@ -108,7 +108,12 @@
                         <ChampionshipScore :data="classData"></ChampionshipScore>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew">
-                        <ClassScore @block="blockButtons" @closed="closeClass" :horses="classData.horses" :editable="true"></ClassScore>
+                        <ClassScore
+                                @block="blockButtons"
+                                @closed="closeClass"
+                                :horses="classData.horses"
+                                :championship="!classData.czempionat"
+                                :editable="true"></ClassScore>
                     </v-tab-item>
                 </v-tabs>
             </v-card-text>
