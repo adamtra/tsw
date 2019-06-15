@@ -22,6 +22,18 @@ export default class ClassScore extends Vue {
             return this.rankedHorses.filter((x: any) => x.czempionat.draw).length > 0;
         }
     }
+    get judgeScores() {
+        if (this.championship) {
+            let sum = 0;
+            this.horses.forEach((horse: any) => {
+                sum += horse.czempionat.wyniki.zloto.length;
+                sum += horse.czempionat.wyniki.srebro.length;
+                sum += horse.czempionat.wyniki.braz.length;
+            });
+            return sum === this.horses.length * 3;
+        }
+        return false;
+    }
     get isChampionship() {
         return this.championship;
     }
@@ -101,6 +113,7 @@ export default class ClassScore extends Vue {
             horse.wynik.suma = score;
             horse.wynik.typSuma = typSum;
             horse.wynik.ruchSuma = ruchSum;
+            delete horse.wynik.draw;
         });
         this.horses.sort((x: any, y: any) => {
             if (x.wynik.suma < y.wynik.suma) {
@@ -140,6 +153,7 @@ export default class ClassScore extends Vue {
             score += horse.czempionat.wyniki.srebro.length * 2;
             score += horse.czempionat.wyniki.braz.length;
             horse.czempionat.suma = score;
+            delete horse.czempionat.draw;
         });
         this.horses.sort((x: any, y: any) => {
             if (x.czempionat.suma < y.czempionat.suma) {

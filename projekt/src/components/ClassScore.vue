@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-btn v-if="!showDraws && editable && hasDraw"
-               :disabled="horses.length !== rankedHorses.length"
+               :disabled="(!isChampionship && horses.length !== rankedHorses.length) || (isChampionship && !judgeScores)"
                @click="arbitrator()"
                class="primary">Wprowadź rozjemcę i zaknij klasę</v-btn>
         <div v-if="!showDraws">

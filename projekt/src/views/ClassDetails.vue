@@ -124,7 +124,7 @@
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
                 <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()"
-                       :disabled="closing || !valid || classData.horses.filter(x => !x.wynik.oceniono).length > 0 || classData.horses.filter((x) => x.wynik.draw).length > 0">
+                       :disabled="canClose">
                     <span v-if="!closing">Zamknij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>

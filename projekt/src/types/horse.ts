@@ -22,6 +22,7 @@ interface Horse {
         typSuma?: number;
         noty: Note[];
         oceniono: boolean;
+        draw?: boolean;
     };
     czempionat?: {
         id: number;
@@ -30,6 +31,7 @@ interface Horse {
             srebro: number[];
             braz: number[];
         }
+        draw?: boolean;
     };
 }
 

@@ -19,6 +19,42 @@ import ChampionshipScore from '@/components/ChampionshipScore';
     },
 })
 export default class ClassDetails extends Vue {
+    get unRankedHorses() {
+        if (this.classData.horses) {
+            if (this.classData.czempionat) {
+                return this.classData.horses.filter((x: any) => !x.wynik.oceniono).length > 0;
+            } else {
+                let sum = 0;
+                this.classData.horses.forEach((horse: any) => {
+                    sum += horse.czempionat.wyniki.zloto.length;
+                    sum += horse.czempionat.wyniki.srebro.length;
+                    sum += horse.czempionat.wyniki.braz.length;
+                });
+                return sum !== this.classData.horses.length * 3;
+            }
+        }
+        return false;
+    }
+
+    get hasDraw() {
+        if (this.classData.horses) {
+            if (this.classData.czempionat) {
+                return this.classData.horses.filter((x) => x.wynik.draw).length > 0;
+            } else {
+                return this.classData.horses.filter((x) => {
+                    if (x.czempionat) {
+                        return x.czempionat.draw;
+                    }
+                }).length > 0;
+            }
+        }
+        return false;
+    }
+
+    get canClose() {
+        return this.closing || !this.valid || this.unRankedHorses || this.hasDraw;
+    }
+
     public $route!: Route;
     public classData = {} as Class;
     public loading = false;

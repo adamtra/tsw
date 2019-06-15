@@ -3,7 +3,7 @@ import draggable from 'vuedraggable';
 import {JudgeService} from '@/services/judge-service';
 import Class from '@/types/class';
 import Horse from '@/types/horse';
-import {HorseService} from "@/services/horse-service";
+import {HorseService} from '@/services/horse-service';
 
 @Component({
     components: {
