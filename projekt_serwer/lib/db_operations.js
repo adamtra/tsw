@@ -15,14 +15,31 @@ const getAllResults = () => {
     classes.forEach((classEl) => {
         const element = {};
         Object.assign(element, classEl);
-        const horses = db.get('horses').filter({
-            klasa: classEl.id,
-        }).value();
+        let horses;
         let add = false;
-        for (let i = 0; i < horses.length; i++) {
-            if (horses[i].wynik.oceniono) {
-                add = true;
-                break;
+        if (classEl.hasOwnProperty('czempionat')) {
+            horses = db.get('horses').filter({
+                klasa: classEl.id,
+            }).value();
+            for (let i = 0; i < horses.length; i++) {
+                if (horses[i].wynik.oceniono) {
+                    add = true;
+                    break;
+                }
+            }
+        } else {
+            horses = db.get('horses').filter({
+                czempionat: {
+                    id: classEl.id,
+                },
+            }).value();
+            for (let i = 0; i < horses.length; i++) {
+                if (horses[i].czempionat.wyniki.zloto.length > 0 ||
+                    horses[i].czempionat.wyniki.srebro.length > 0 ||
+                    horses[i].czempionat.wyniki.braz.length > 0) {
+                    add = true;
+                    break;
+                }
             }
         }
         element.horses = horses;

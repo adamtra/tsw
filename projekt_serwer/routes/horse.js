@@ -58,6 +58,9 @@ router.route('/:id').put((req, res) => {
         v.addSchema(schemas.note, '/Note');
         const validation = v.validate(req.body, schemas.horse).errors.length === 0;
         if (validation) {
+            if (req.body.hasOwnProperty('czempionat')) {
+                delete req.body.czempionat.suma;
+            }
             if (horse.klasa !== req.body.klasa) {
                 if (horse.oceniono) {
                     return res.status(400).json('Nie można zmienić klasy ocenionego konia');

@@ -13,7 +13,7 @@
                 </template>
                 <v-card>
                     <v-card-text>
-                        <ClassScore :horses="classData.horses"></ClassScore>
+                        <ClassScore :horses="classData.horses" :championship="!classData.czempionat"></ClassScore>
                     </v-card-text>
                 </v-card>
             </v-expansion-panel-content>
