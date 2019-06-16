@@ -15,6 +15,9 @@ export default class ChampionshipScore extends Vue {
         default: [],
     }) public data!: Class;
     private judges: any = [];
+    @Prop({
+        default: false,
+    }) public editable: any;
     public created() {
         this.getData();
     }

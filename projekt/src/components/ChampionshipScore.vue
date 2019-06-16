@@ -13,6 +13,7 @@
                                         @end="scoreHorses(judge.data.id)"
                                         :move="onMove"
                                         :list="judge.horses"
+                                        :disabled="!editable"
                                         :group="'horses_' + judge.data.id">
                                     <v-card v-for="horse of judge.horses" :key="horse.id">
                                         <v-card-title primary-title>
@@ -25,6 +26,7 @@
                                 <draggable
                                         @end="scoreHorses(judge.data.id)"
                                         :list="judge.rewarded"
+                                        :disabled="!editable"
                                         :group="'horses_' + judge.data.id">
                                     <v-card v-for="(horse, key) of judge.rewarded" :key="horse.id">
                                         <v-card-title primary-title

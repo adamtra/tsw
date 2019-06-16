@@ -105,7 +105,7 @@
                         </DataTable>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew && !classData.czempionat">
-                        <ChampionshipScore :data="classData"></ChampionshipScore>
+                        <ChampionshipScore :data="classData" :editable="!classData.zamknieta && !blocked"></ChampionshipScore>
                     </v-tab-item>
                     <v-tab-item v-if="!isNew">
                         <ClassScore
