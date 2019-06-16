@@ -58,7 +58,11 @@ export default class ClassScore extends Vue {
         this.drawHorses[index].forEach((item: any, key: number) => {
             const newPosition = start + key;
             item.position = newPosition;
-            item.data.wynik.rozjemca = newPosition;
+            if (this.isChampionship) {
+                item.data.czempionat.rozjemca = newPosition;
+            } else {
+                item.data.wynik.rozjemca = newPosition;
+            }
         });
     }
 
@@ -68,17 +72,32 @@ export default class ClassScore extends Vue {
         const drawGroups = [];
         let drawGroup = [];
         for (let i = 0; i < this.rankedHorses.length; i++) {
-            if (this.rankedHorses[i].wynik.draw) {
-                if (!(drawGroup.length === 0 || i - drawGroup[drawGroup.length - 1].position === 1)) {
-                    drawGroups.push(drawGroup);
-                    drawGroup = [];
+            if (this.isChampionship) {
+                if (this.rankedHorses[i].czempionat.draw) {
+                    if (!(drawGroup.length === 0 || i - drawGroup[drawGroup.length - 1].position === 1)) {
+                        drawGroups.push(drawGroup);
+                        drawGroup = [];
+                    }
+                    drawGroup.push({
+                        position: i,
+                        data: this.rankedHorses[i],
+                    });
+                    delete this.horses[i].czempionat.draw;
+                    this.horses[i].czempionat.rozjemca = i;
                 }
-                drawGroup.push({
-                    position: i,
-                    data: this.rankedHorses[i],
-                });
-                delete this.horses[i].wynik.draw;
-                this.horses[i].wynik.rozjemca = i;
+            } else {
+                if (this.rankedHorses[i].wynik.draw) {
+                    if (!(drawGroup.length === 0 || i - drawGroup[drawGroup.length - 1].position === 1)) {
+                        drawGroups.push(drawGroup);
+                        drawGroup = [];
+                    }
+                    drawGroup.push({
+                        position: i,
+                        data: this.rankedHorses[i],
+                    });
+                    delete this.horses[i].wynik.draw;
+                    this.horses[i].wynik.rozjemca = i;
+                }
             }
         }
         if (drawGroup.length > 0) {
@@ -160,6 +179,14 @@ export default class ClassScore extends Vue {
                 return 1;
             } else if (x.czempionat.suma > y.czempionat.suma) {
                 return -1;
+            } else {
+                if (x.czempionat.hasOwnProperty('rozjemca') && y.czempionat.hasOwnProperty('rozjemca')) {
+                    if (x.czempionat.rozjemca < y.czempionat.rozjemca) {
+                        return -1;
+                    } else if (x.czempionat.rozjemca > y.czempionat.rozjemca) {
+                        return 1;
+                    }
+                }
             }
             x.czempionat.draw = true;
             y.czempionat.draw = true;

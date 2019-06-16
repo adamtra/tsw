@@ -32,6 +32,7 @@ interface Horse {
             braz: number[];
         }
         draw?: boolean;
+        rozjemca?: number;
     };
 }
 

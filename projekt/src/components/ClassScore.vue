@@ -22,8 +22,10 @@
             <div v-for="(horseGroup, key) of drawHorses" class="horseGroup">
                 <h3>Walka o pozycje: {{horseGroup[0].position + 1}} - {{horseGroup[horseGroup.length - 1].position + 1}}</h3>
                 <draggable :list="horseGroup" @end="endDrag(key)">
-                    <v-card v-for="horse of horseGroup" :key="horse.data.id"
-                            :class="horse.data.wynik.rozjemca === 0 ? 'gold' : horse.data.wynik.rozjemca === 1 ? 'silver' : horse.data.wynik.rozjemca === 2 ? 'bronze' : ''">
+                    <v-card v-for="horse of horseGroup"
+                            :key="horse.data.id"
+                            :class="!isChampionship ? (horse.data.wynik.rozjemca === 0 ? 'gold' : horse.data.wynik.rozjemca === 1 ? 'silver' : horse.data.wynik.rozjemca === 2 ? 'bronze' : '') :
+                                                    (horse.data.czempionat.rozjemca === 0 ? 'gold' : horse.data.czempionat.rozjemca === 1 ? 'silver' : horse.data.czempionat.rozjemca === 2 ? 'bronze' : '')">
                         <v-card-title primary-title>
                             {{horse.data.nazwa}}
                         </v-card-title>
