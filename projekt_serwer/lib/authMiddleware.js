@@ -17,6 +17,7 @@ const isAuthenticated = (req, res, next) => {
                 }).assign({
                     expiration: newExpiration.getTime(),
                 }).value();
+                db.write();
                 req.token = token;
                 return next();
             } else {
