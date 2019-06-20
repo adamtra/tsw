@@ -38,8 +38,8 @@ router.route('/').post((req, res) => {
             oceniono: false,
             noty: score,
         };
-        newElement.id = db_operations.getId('horses');
         db_operations.changeHorseNumbers(req.body);
+        newElement.id = db_operations.getId('horses');
         db.get('horses').push(newElement).write();
         return res.json('OK');
     } else {
@@ -103,6 +103,7 @@ router.route('/:id').delete((req, res) => {
         if (horse.wynik.oceniono) {
             return res.status(400).json('Nie można usunąć ocenionego konia.');
         }
+        db_operations.changeHorseNumbers(horse, 1);
         db.get('horses').remove({
             id: id,
         }).write();

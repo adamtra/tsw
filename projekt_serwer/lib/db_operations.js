@@ -66,15 +66,43 @@ const getEmptyScore = (id) => {
     });
     return score;
 };
-const changeHorseNumbers = (horseData) => {
-    const sameNumber = db.get('horses').filter(horse => horseData.numer <= horse.numer).orderBy('numer', 'asc').value();
-    let currentHighest = horseData.numer;
-    for (let i = 0; i < sameNumber.length; i++) {
-        if (sameNumber[i].numer - currentHighest > 0) {
-            break;
+const changeHorseNumbers = (horseData, deleted = 0) => {
+    if (deleted === 1) {
+        const higher = db.get('horses').filter(horse => horseData.numer <= horse.numer).orderBy('numer', 'asc').value();
+        higher.forEach((horse) => {
+           horse.numer--;
+        });
+        db.write();
+    } else {
+        const horses = db.get('horses').orderBy('numer', 'asc').value();
+        if (horses.length < horseData.numer) {
+            horseData.numer = horses.length + 1;
         }
-        sameNumber[i].numer++;
-        currentHighest = sameNumber[i].numer;
+        if (horseData.hasOwnProperty('id')) {
+            const old = db.get('horses').find({
+                id: horseData.id
+            }).value();
+            let start, end, add;
+            if (old.numer > horseData.numer) {
+                start = horseData.numer - 1;
+                end = old.numer;
+                add = 2;
+            } else {
+                start = old.numer;
+                end = horseData.numer;
+                add = 0;
+            }
+            for (let i = start; i < end; i++) {
+                horses[i].numer = i + add;
+            }
+        } else {
+            horses.forEach((horse) => {
+                if (horse.numer >= horseData.numer) {
+                    horse.numer++;
+                }
+            });
+        }
+        db.write();
     }
 };
 const moveHorsesToChampionship = (classEl) => {
