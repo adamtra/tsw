@@ -1,10 +1,11 @@
 import axios from 'axios';
+import {apiUrl} from '@/variables';
 
 export class ImportService {
     public static importData() {
-        return axios.get(`${process.env.VUE_APP_API_URL}/import`);
+        return axios.get(`${apiUrl}/import`);
     }
     public static newShow() {
-        return axios.get(`${process.env.VUE_APP_API_URL}/new`);
+        return axios.get(`${apiUrl}/new`);
     }
 }

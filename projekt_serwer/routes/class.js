@@ -176,6 +176,7 @@ router.route('/:id').delete((req, res) => {
         db.get('horses').remove({
             klasa: id,
         }).write();
+        connections.io.emit('scores', db_operations.getAllResults());
         return res.json('OK');
     } else {
         return res.status(404).json('Nie znaleziono');

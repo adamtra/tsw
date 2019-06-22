@@ -1,29 +1,30 @@
 import axios from 'axios';
 import Class from '@/types/class';
+import {apiUrl} from '@/variables';
 
 export class ClassService {
     public static get(id: number) {
-        return axios.get(`${process.env.VUE_APP_API_URL}/class/${id}`);
+        return axios.get(`${apiUrl}/class/${id}`);
     }
     public static getOpened() {
-        return axios.get(`${process.env.VUE_APP_API_URL}/class/opened`);
+        return axios.get(`${apiUrl}/class/opened`);
     }
     public static getOpenedChampion() {
-        return axios.get(`${process.env.VUE_APP_API_URL}/class/opened/champion`);
+        return axios.get(`${apiUrl}/class/opened/champion`);
     }
     public static getAll() {
-        return axios.get(`${process.env.VUE_APP_API_URL}/class`);
+        return axios.get(`${apiUrl}/class`);
     }
     public static getHorseScore(id: number, hid: number) {
-        return axios.get(`${process.env.VUE_APP_API_URL}/class/${id}/horse/${hid}`);
+        return axios.get(`${apiUrl}/class/${id}/horse/${hid}`);
     }
     public static add(data: Class) {
-        return axios.post(`${process.env.VUE_APP_API_URL}/class/`, data);
+        return axios.post(`${apiUrl}/class/`, data);
     }
     public static edit(data: Class) {
-        return axios.put(`${process.env.VUE_APP_API_URL}/class/${data.id}`, data);
+        return axios.put(`${apiUrl}/class/${data.id}`, data);
     }
     public static delete(id: number) {
-        return axios.delete(`${process.env.VUE_APP_API_URL}/class/${id}`);
+        return axios.delete(`${apiUrl}/class/${id}`);
     }
 }

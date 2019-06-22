@@ -10,11 +10,12 @@ import VueSweetalert2 from 'vue-sweetalert2';
 import pl from 'vuetify/src/locale/pl';
 // @ts-ignore
 import VueSocketIO from 'vue-socket.io';
+import {apiUrl} from '@/variables';
 
 token();
 errors();
 Vue.use(new VueSocketIO({
-    connection: process.env.VUE_APP_API_URL,
+    connection: apiUrl,
 }));
 Vue.use(VueSweetalert2);
 Vue.use(Vuetify, {

@@ -1,20 +1,22 @@
 import axios from 'axios';
 import Horse from '@/types/horse';
+import {apiUrl} from '@/variables';
+
 
 export class HorseService {
     public static get(id: number) {
-        return axios.get(`${process.env.VUE_APP_API_URL}/horse/${id}`);
+        return axios.get(`${apiUrl}/horse/${id}`);
     }
     public static getAll() {
-        return axios.get(`${process.env.VUE_APP_API_URL}/horse`);
+        return axios.get(`${apiUrl}/horse`);
     }
     public static add(data: Horse) {
-        return axios.post(`${process.env.VUE_APP_API_URL}/horse/`, data);
+        return axios.post(`${apiUrl}/horse/`, data);
     }
     public static edit(data: Horse) {
-        return axios.put(`${process.env.VUE_APP_API_URL}/horse/${data.id}`, data);
+        return axios.put(`${apiUrl}/horse/${data.id}`, data);
     }
     public static delete(id: number) {
-        return axios.delete(`${process.env.VUE_APP_API_URL}/horse/${id}`);
+        return axios.delete(`${apiUrl}/horse/${id}`);
     }
 }
