@@ -60,6 +60,7 @@ export default class ClassDetails extends Vue {
     public loading = false;
     public saving = false;
     public closing = false;
+    public starting = false;
     public deleting = false;
     public isNew = true;
     public headers: any = [];
@@ -88,16 +89,16 @@ export default class ClassDetails extends Vue {
         JudgeService.getAll().then((res) => {
             this.judges = res.data;
         });
-        ClassService.getOpenedChampion().then((res) => {
-            this.classes = res.data;
-            this.classes.unshift(this.emptyClass);
-        });
     }
 
     public getDetails() {
         if (this.$route.params.id !== 'new') {
             this.isNew = false;
             this.loading = true;
+            ClassService.getAll().then((res) => {
+                this.classes = res.data;
+                this.classes.unshift(this.emptyClass);
+            });
             ClassService.get(Number(this.$route.params.id)).then((res) => {
                 this.classData = res.data;
                 if (this.classData.zamknieta) {
@@ -120,6 +121,11 @@ export default class ClassDetails extends Vue {
                     ];
                 }
                 this.loading = false;
+            });
+        } else {
+            ClassService.getOpenedChampion().then((res) => {
+                this.classes = res.data;
+                this.classes.unshift(this.emptyClass);
             });
         }
     }
@@ -161,6 +167,19 @@ export default class ClassDetails extends Vue {
                 router.push('/classes');
             }, () => {
                 this.closing = false;
+            });
+        }
+    }
+
+    public startClass() {
+        if (this.valid) {
+            this.starting = true;
+            this.classData.rozpoczeto = true;
+            ClassService.edit(this.classData).then(() => {
+                this.starting = false;
+            }, () => {
+                this.classData.rozpoczeto = false;
+                this.starting = false;
             });
         }
     }

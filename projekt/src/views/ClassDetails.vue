@@ -22,7 +22,7 @@
                     <v-tab v-if="!isNew && classData.czempionat">
                         Konie
                     </v-tab>
-                    <v-tab v-if="!isNew && !classData.czempionat">
+                    <v-tab v-if="!isNew && !classData.czempionat" :disabled="!classData.rozpoczeto">
                         Oceny
                     </v-tab>
                     <v-tab v-if="!isNew">
@@ -121,6 +121,10 @@
                 <v-spacer></v-spacer>
                 <v-btn color="error darken-1" raised v-if="!isNew " @click="remove()" :disabled="deleting">
                     <span v-if="!deleting">Usuń</span>
+                    <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
+                </v-btn>
+                <v-btn color="secondary darken-1" raised v-if="!isNew && !classData.czempionat && !classData.rozpoczeto" @click="startClass()">
+                    <span v-if="!starting">Rozpocznij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
                 <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()"

@@ -40,6 +40,7 @@ router.route('/opened').get((_r, res) => {
 router.route('/opened/champion').get((_r, res) => {
     const classes = db.get('classes').filter({
         zamknieta: false,
+        rozpoczeto: false,
     }).value();
     const response = [];
     classes.forEach(el => {
@@ -133,6 +134,21 @@ router.route('/:id').put((req, res) => {
         const v = new Validator();
         const validation = v.validate(req.body, schemas.class).errors.length === 0;
         if (validation) {
+            if (req.body.hasOwnProperty('rozpoczeto')) {
+                if (req.body.rozpoczeto !== classEl.rozpoczeto) {
+                    const connectedClasses = db.get('classes').filter({
+                        czempionat: classEl.id,
+                        zamknieta: false,
+                    }).value();
+                    if (connectedClasses.length > 0) {
+                        let response = 'Najpierw zamknij powiązane klasy:\n';
+                        connectedClasses.forEach((el) => {
+                           response += `${el.numer} - ${el.kat}\n`;
+                        });
+                        return res.status(400).json(response);
+                    }
+                }
+            }
             delete req.body.horses;
             req.body.komisja.sort();
             Object.assign(classEl, req.body);

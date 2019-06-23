@@ -28,19 +28,22 @@ const getAllResults = () => {
                 }
             }
         } else {
-            horses = db.get('horses').filter({
-                czempionat: {
-                    id: classEl.id,
-                },
-            }).value();
-            for (let i = 0; i < horses.length; i++) {
-                if (horses[i].czempionat.wyniki.zloto.length > 0 ||
-                    horses[i].czempionat.wyniki.srebro.length > 0 ||
-                    horses[i].czempionat.wyniki.braz.length > 0) {
-                    add = true;
-                    break;
-                }
+            add = classEl.rozpoczeto;
+            if (add) {
+                horses = db.get('horses').filter({
+                    czempionat: {
+                        id: classEl.id,
+                    },
+                }).value();
             }
+            // for (let i = 0; i < horses.length; i++) {
+            //     if (horses[i].czempionat.wyniki.zloto.length > 0 ||
+            //         horses[i].czempionat.wyniki.srebro.length > 0 ||
+            //         horses[i].czempionat.wyniki.braz.length > 0) {
+            //         add = true;
+            //         break;
+            //     }
+            // }
         }
         element.horses = horses;
         if (add) {
