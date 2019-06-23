@@ -123,6 +123,8 @@ module.exports = () => {
             } else {
                 if (klasy[nr].hasOwnProperty('min')) {
                     kl.czempionat = -1;
+                } else {
+                    kl.rozpoczeto = false;
                 }
                 kl.komisja = _.times(sedziowie.length, (s) => {
                     return s + 1;

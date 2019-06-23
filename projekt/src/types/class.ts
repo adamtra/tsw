@@ -7,6 +7,7 @@ interface Class {
     czempionat?: number;
     komisja: number[];
     zamknieta: boolean;
+    rozpoczeto?: boolean;
     horse?: Horse;
     horses?: Horse[];
 }
