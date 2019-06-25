@@ -159,7 +159,7 @@ router.route('/:id').put((req, res) => {
                 }
             }
             db.write();
-            connections.io.emit('scores', db_operations.getAllResults());
+            connections.io.emit('classes', db_operations.getAllClasses());
             return res.json('OK');
         } else {
             return res.status(400).json('Złe dane');
@@ -192,7 +192,7 @@ router.route('/:id').delete((req, res) => {
         db.get('horses').remove({
             klasa: id,
         }).write();
-        connections.io.emit('scores', db_operations.getAllResults());
+        connections.io.emit('classes', db_operations.getAllClasses());
         return res.json('OK');
     } else {
         return res.status(404).json('Nie znaleziono');
@@ -200,8 +200,21 @@ router.route('/:id').delete((req, res) => {
 });
 
 connections.io.on('connection', socket => {
+    let previousId;
+    const changeRoom = (currentId) => {
+        if (currentId !== previousId) {
+            socket.leave(previousId);
+            socket.join(currentId);
+            previousId = currentId;
+        }
+    };
+
     socket.on('results', () => {
-        socket.emit('scores', db_operations.getAllResults());
+        socket.emit('classes', db_operations.getAllClasses());
+    });
+    socket.on('change-class', (id) => {
+        changeRoom(id);
+        socket.emit('scores', db_operations.getClassResults(id));
     });
 });
 

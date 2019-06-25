@@ -9,7 +9,7 @@ const getId = (table) => {
     }
     return 1;
 };
-const getAllResults = () => {
+const getAllClasses = () => {
     const classes = db.get('classes').orderBy('aktualizacja', 'desc').value();
     const response = [];
     classes.forEach((classEl) => {
@@ -29,23 +29,7 @@ const getAllResults = () => {
             }
         } else {
             add = classEl.rozpoczeto;
-            if (add) {
-                horses = db.get('horses').filter({
-                    czempionat: {
-                        id: classEl.id,
-                    },
-                }).value();
-            }
-            // for (let i = 0; i < horses.length; i++) {
-            //     if (horses[i].czempionat.wyniki.zloto.length > 0 ||
-            //         horses[i].czempionat.wyniki.srebro.length > 0 ||
-            //         horses[i].czempionat.wyniki.braz.length > 0) {
-            //         add = true;
-            //         break;
-            //     }
-            // }
         }
-        element.horses = horses;
         if (add) {
             response.push(element);
         }
@@ -173,10 +157,44 @@ const moveHorsesToChampionship = (classEl) => {
     }
     db.write();
 };
+getClassResults = (id) => {
+    const classEl = db.get('classes').find({
+        id: id,
+    }).value();
+    if (classEl) {
+        let add = false;
+        let horses = [];
+        if (classEl.hasOwnProperty('czempionat')) {
+            horses = db.get('horses').filter({
+                klasa: classEl.id,
+            }).value();
+            for (let i = 0; i < horses.length; i++) {
+                if (horses[i].wynik.oceniono) {
+                    add = true;
+                    break;
+                }
+            }
+        } else {
+            add = classEl.rozpoczeto;
+            if (add) {
+                horses = db.get('horses').filter({
+                    czempionat: {
+                        id: classEl.id,
+                    },
+                }).value();
+            }
+        }
+        if (add) {
+            return horses;
+        }
+    }
+    return [];
+};
 module.exports = {
     getId: getId,
-    getAllResults: getAllResults,
+    getAllClasses: getAllClasses,
     getEmptyScore: getEmptyScore,
     changeHorseNumbers: changeHorseNumbers,
     moveHorsesToChampionship: moveHorsesToChampionship,
+    getClassResults: getClassResults,
 };

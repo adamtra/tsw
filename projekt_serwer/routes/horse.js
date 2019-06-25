@@ -80,11 +80,13 @@ router.route('/:id').put((req, res) => {
                     id: horse.czempionat.id,
                 }).value();
                 classChampionship.aktualizacja = (new Date()).getTime();
+                connections.io.to(classChampionship.id).emit('scores', db_operations.getClassResults(classChampionship.id));
             } else {
                 classEl.aktualizacja = (new Date()).getTime();
+                connections.io.to(classEl.id).emit('scores', db_operations.getClassResults(classEl.id));
             }
+            connections.io.emit('classes', db_operations.getAllClasses());
             db.write();
-            connections.io.emit('scores', db_operations.getAllResults());
             return res.json('OK');
         } else {
             return res.status(400).json('Złe dane');

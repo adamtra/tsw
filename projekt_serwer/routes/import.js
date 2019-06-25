@@ -16,7 +16,7 @@ router.route('/').get((_req, response) => {
         db.set('judges', res.data).write();
         finished++;
         if (finished === requests) {
-            connections.io.emit('scores', db_operations.getAllResults());
+            connections.io.emit('classes', db_operations.getAllClasses());
             return response.json('imported');
         }
     }, () => {
@@ -26,7 +26,7 @@ router.route('/').get((_req, response) => {
         db.set('horses', res.data).write();
         finished++;
         if (finished === requests) {
-            connections.io.emit('scores', db_operations.getAllResults());
+            connections.io.emit('classes', db_operations.getAllClasses());
             return response.json('imported');
         }
     }, () => {
@@ -40,7 +40,7 @@ router.route('/').get((_req, response) => {
         db.set('classes', classes).write();
         finished++;
         if (finished === requests) {
-            connections.io.emit('scores', db_operations.getAllResults());
+            connections.io.emit('classes', db_operations.getAllClasses());
             return response.json('imported');
         }
     }, () => {

@@ -11,7 +11,7 @@ router.route('/').get((_req, response) => {
     db.set('judges', []).write();
     db.set('classes', []).write();
     db.set('horses', []).write();
-    connections.io.emit('scores', db_operations.getAllResults());
+    connections.io.emit('classes', db_operations.getAllClasses());
     return response.json('OK');
 });
 
