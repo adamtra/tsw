@@ -95,10 +95,6 @@ export default class ClassDetails extends Vue {
         if (this.$route.params.id !== 'new') {
             this.isNew = false;
             this.loading = true;
-            ClassService.getAll().then((res) => {
-                this.classes = res.data;
-                this.classes.unshift(this.emptyClass);
-            });
             ClassService.get(Number(this.$route.params.id)).then((res) => {
                 this.classData = res.data;
                 if (this.classData.zamknieta) {
@@ -109,6 +105,10 @@ export default class ClassDetails extends Vue {
                         {text: 'Kraj', value: 'kraj'},
                         {text: 'Rocznik', value: 'rocznik'},
                     ];
+                    ClassService.getAll().then((res2) => {
+                        this.classes = res2.data;
+                        this.classes.unshift(this.emptyClass);
+                    });
                 } else {
                     this.headers = [
                         {text: 'Numer', value: 'numer'},
@@ -120,6 +120,10 @@ export default class ClassDetails extends Vue {
                         {text: 'Ocena', value: 'ocena'},
                     ];
                 }
+                ClassService.getOpenedChampion().then((res2) => {
+                    this.classes = res2.data;
+                    this.classes.unshift(this.emptyClass);
+                });
                 this.loading = false;
             });
         } else {
