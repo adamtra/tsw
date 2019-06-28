@@ -155,11 +155,24 @@ export default class ClassDetails extends Vue {
     }
 
     public remove() {
-        this.deleting = true;
-        ClassService.delete(this.classData.id).then(() => {
-            router.push('/classes');
-        }, () => {
-            this.deleting = false;
+        this.$swal({
+            title: 'Czy napewno chcesz usunąć klasę?',
+            text: 'Ta operacja usunie powiązane konie.',
+            type: 'warning',
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Anuluj',
+            confirmButtonText: 'Yes, usuń',
+            showCancelButton: true,
+        }).then((confirm: any) => {
+            if (confirm.value) {
+                this.deleting = true;
+                ClassService.delete(this.classData.id).then(() => {
+                    router.push('/classes');
+                }, () => {
+                    this.deleting = false;
+                });
+            }
         });
     }
 
