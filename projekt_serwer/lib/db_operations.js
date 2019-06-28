@@ -153,31 +153,19 @@ getClassResults = (id) => {
         id: id,
     }).value();
     if (classEl) {
-        let add = false;
         let horses = [];
         if (classEl.hasOwnProperty('czempionat')) {
             horses = db.get('horses').filter({
                 klasa: classEl.id,
             }).value();
-            for (let i = 0; i < horses.length; i++) {
-                if (horses[i].wynik.oceniono) {
-                    add = true;
-                    break;
-                }
-            }
         } else {
-            add = classEl.rozpoczeto;
-            if (add) {
-                horses = db.get('horses').filter({
-                    czempionat: {
-                        id: classEl.id,
-                    },
-                }).value();
-            }
+            horses = db.get('horses').filter({
+                czempionat: {
+                    id: classEl.id,
+                },
+            }).value();
         }
-        if (add) {
-            return horses;
-        }
+        return horses;
     }
     return [];
 };

@@ -9,7 +9,7 @@
                 <v-card-title primary-title>
                     <div v-if="!isChampionship">
                         <v-icon left v-if="horse.wynik.draw">warning</v-icon>
-                        <span>{{key + 1}}. {{horse.nazwa}} - {{horse.wynik.suma}}</span>
+                        <span>{{key + 1}}. {{horse.nazwa}} - {{horse.wynik.oceniono ? horse.wynik.suma : 'Dyskwalifikacja'}}</span>
                     </div>
                     <div v-else>
                         <v-icon left v-if="horse.czempionat.draw">warning</v-icon>

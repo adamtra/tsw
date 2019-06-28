@@ -127,8 +127,7 @@
                     <span v-if="!starting">Rozpocznij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>
-                <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()"
-                       :disabled="canClose">
+                <v-btn color="secondary darken-1" raised v-if="!isNew" @click="closeClass()">
                     <span v-if="!closing">Zamknij klasę</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
                 </v-btn>

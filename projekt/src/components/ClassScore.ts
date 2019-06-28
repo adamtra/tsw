@@ -11,9 +11,10 @@ import {HorseService} from '@/services/horse-service';
 export default class ClassScore extends Vue {
     get rankedHorses() {
         this.calculateScore();
-        return this.horses.filter((horse: any) => {
-            return horse.wynik.oceniono;
-        });
+        return this.horses;
+        // return this.horses.filter((horse: any) => {
+        //     return horse.wynik.oceniono;
+        // });
     }
     get hasDraw() {
         if (!this.championship) {
@@ -118,7 +119,7 @@ export default class ClassScore extends Vue {
     }
 
     public showResults(id: string) {
-        if (!this.editable) {
+        if (!this.editable && !this.championship) {
             this.$router.push({path: '/classes/' + this.id + '/' + id});
         }
     }
@@ -167,8 +168,10 @@ export default class ClassScore extends Vue {
                     }
                 }
             }
-            x.wynik.draw = true;
-            y.wynik.draw = true;
+            if (x.wynik.oceniono && y.wynik.oceniono) {
+                x.wynik.draw = true;
+                y.wynik.draw = true;
+            }
             return 0;
         });
     }
