@@ -44,6 +44,7 @@ export default class ClassScore extends Vue {
     @Prop({
         default: false,
     }) public championship: any;
+    @Prop() public id: any;
     public showDraws = false;
     public closing = false;
     public drawHorses: any = [];
@@ -114,6 +115,12 @@ export default class ClassScore extends Vue {
            });
         });
         this.$emit('closed');
+    }
+
+    public showResults(id: string) {
+        if (!this.editable) {
+            this.$router.push({path: '/classes/' + this.id + '/' + id});
+        }
     }
     private calculateStandard() {
         this.horses.forEach((horse: any) => {

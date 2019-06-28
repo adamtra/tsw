@@ -1,5 +1,6 @@
 <template>
     <v-text-field
+            :disabled="disabled"
             :error-messages="error"
             max="20"
             min="0"

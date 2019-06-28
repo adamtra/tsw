@@ -7,9 +7,7 @@ const schemas = require('../lib/schemas');
 const Validator = require('jsonschema').Validator;
 const isAuthenticated = require('../lib/authMiddleware');
 
-router.use(isAuthenticated);
-
-router.route('/').get((_r, res) => {
+router.route('/').get(isAuthenticated, (_r, res) => {
     const classes = db.get('classes').value();
     const response = [];
     classes.forEach(el => {
@@ -21,7 +19,7 @@ router.route('/').get((_r, res) => {
     return res.json(response);
 });
 
-router.route('/opened').get((_r, res) => {
+router.route('/opened').get(isAuthenticated, (_r, res) => {
     const classes = db.get('classes').filter({
         zamknieta: false,
     }).value();
@@ -37,7 +35,7 @@ router.route('/opened').get((_r, res) => {
     return res.json(response);
 });
 
-router.route('/opened/champion').get((_r, res) => {
+router.route('/opened/champion').get(isAuthenticated, (_r, res) => {
     const classes = db.get('classes').filter({
         zamknieta: false,
         rozpoczeto: false,
@@ -54,7 +52,7 @@ router.route('/opened/champion').get((_r, res) => {
     return res.json(response);
 });
 
-router.route('/:id').get((req, res) => {
+router.route('/:id').get(isAuthenticated, (req, res) => {
     const classEl = db.get('classes').find({
         id: Number(req.params.id),
     }).value();
@@ -83,9 +81,6 @@ router.route('/:id/horse/:hid').get((req, res) => {
     const classEl = db.get('classes').find({
         id: id,
     }).value();
-    if (classEl.zamknieta) {
-        return res.status(400).json('Klasa jest zamknięta');
-    }
     const horse = db.get('horses').find({
        id: Number(req.params.hid),
        klasa: id,
@@ -107,7 +102,7 @@ router.route('/:id/horse/:hid').get((req, res) => {
     }
 });
 
-router.route('/').post((req, res) => {
+router.route('/').post(isAuthenticated,(req, res) => {
     const v = new Validator();
     const validation = v.validate(req.body, schemas.class).errors.length === 0;
     if (validation) {
@@ -122,7 +117,7 @@ router.route('/').post((req, res) => {
     }
 });
 
-router.route('/:id').put((req, res) => {
+router.route('/:id').put(isAuthenticated, (req, res) => {
     const id = Number(req.params.id);
     const classEl = db.get('classes').find({
         id: id,
@@ -169,7 +164,7 @@ router.route('/:id').put((req, res) => {
     }
 });
 
-router.route('/:id').delete((req, res) => {
+router.route('/:id').delete(isAuthenticated, (req, res) => {
     const id = Number(req.params.id);
     const classEl = db.get('classes').find({
         id: id,

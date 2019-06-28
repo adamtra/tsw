@@ -5,7 +5,7 @@
                @click="arbitrator()"
                class="primary">Wprowadź rozjemcę i zaknij klasę</v-btn>
         <div v-if="!showDraws">
-            <v-card v-for="(horse, key) of rankedHorses" :key="horse.id" :class="key === 0 ? 'gold' : key === 1 ? 'silver' : key === 2 ? 'bronze' : ''">
+            <v-card @click="showResults(horse.id)" v-for="(horse, key) of rankedHorses" :key="horse.id" :class="key === 0 ? 'gold' : key === 1 ? 'silver' : key === 2 ? 'bronze' : ''">
                 <v-card-title primary-title>
                     <div v-if="!isChampionship">
                         <v-icon left v-if="horse.wynik.draw">warning</v-icon>
@@ -23,7 +23,8 @@
                 <h3>Walka o pozycje: {{horseGroup[0].position + 1}} - {{horseGroup[horseGroup.length - 1].position + 1}}</h3>
                 <draggable :list="horseGroup" @end="endDrag(key)">
                     <v-card v-for="horse of horseGroup"
-                            :key="horse.data.id"
+                            :key="horse.id"
+                            @click="showResults(horse.data.id)"
                             :class="!isChampionship ? (horse.data.wynik.rozjemca === 0 ? 'gold' : horse.data.wynik.rozjemca === 1 ? 'silver' : horse.data.wynik.rozjemca === 2 ? 'bronze' : '') :
                                                     (horse.data.czempionat.rozjemca === 0 ? 'gold' : horse.data.czempionat.rozjemca === 1 ? 'silver' : horse.data.czempionat.rozjemca === 2 ? 'bronze' : '')">
                         <v-card-title primary-title>

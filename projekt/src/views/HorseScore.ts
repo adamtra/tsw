@@ -5,6 +5,7 @@ import ScoreInput from '@/components/ScoreInput';
 import Class from '@/types/class';
 import {HorseService} from '@/services/horse-service';
 import router from '@/router';
+import {Getter} from 'vuex-class';
 
 @Component({
     components: {
@@ -17,8 +18,16 @@ export default class HorseScore extends Vue {
     public scoreData: Class = {} as Class;
     public saving = false;
     public errors: number[] = [];
+    @Getter('token') public token: any;
     public created() {
         this.getData();
+    }
+    get canEdit() {
+        return !(this.token === null || this.scoreData.zamknieta);
+    }
+
+    public goToFanPanel() {
+        this.$router.push('/');
     }
 
     public getData() {

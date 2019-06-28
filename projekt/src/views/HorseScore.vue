@@ -6,7 +6,7 @@
                 <span class="headline">Ocena konia: {{scoreData.horse.nazwa}}</span>
             </v-card-title>
             <v-card-text>
-                <div class="breadcrumb">
+                <div class="breadcrumb" v-if="canEdit">
                     <router-link :to="'/classes'">
                         <a>Klasy</a>
                     </router-link>
@@ -28,19 +28,19 @@
                     </tr>
                     <tr v-for="(score, key) of scoreData.horse.wynik.noty">
                         <td>
-                            <ScoreInput :score="score.typ" :row="key" :column="0" @input="updateValue(key, 'typ', $event)"></ScoreInput>
+                            <ScoreInput :disabled="!canEdit" :score="score.typ" :row="key" :column="0" @input="updateValue(key, 'typ', $event)"></ScoreInput>
                         </td>
                         <td>
-                            <ScoreInput :score="score.glowa" :row="key"  :column="1" @input="updateValue(key, 'glowa', $event)"></ScoreInput>
+                            <ScoreInput :disabled="!canEdit" :score="score.glowa" :row="key"  :column="1" @input="updateValue(key, 'glowa', $event)"></ScoreInput>
                         </td>
                         <td>
-                            <ScoreInput :score="score.kloda" :row="key"  :column="2" @input="updateValue(key, 'kloda', $event)"></ScoreInput>
+                            <ScoreInput :disabled="!canEdit" :score="score.kloda" :row="key"  :column="2" @input="updateValue(key, 'kloda', $event)"></ScoreInput>
                         </td>
                         <td>
-                            <ScoreInput :score="score.nogi" :row="key"  :column="3" @input="updateValue(key, 'nogi', $event)"></ScoreInput>
+                            <ScoreInput :disabled="!canEdit" :score="score.nogi" :row="key"  :column="3" @input="updateValue(key, 'nogi', $event)"></ScoreInput>
                         </td>
                         <td>
-                            <ScoreInput :score="score.ruch" :row="key"  :column="4" @input="updateValue(key, 'ruch', $event)"></ScoreInput>
+                            <ScoreInput :disabled="!canEdit" :score="score.ruch" :row="key"  :column="4" @input="updateValue(key, 'ruch', $event)"></ScoreInput>
                         </td>
                         <td>{{scoreData.komisja[key].sedzia}}</td>
                     </tr>
@@ -49,9 +49,12 @@
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary darken-1" raised @click="saveScore()" :disabled="saving || errors.filter(x => x === 1).length > 0">
+                <v-btn v-if="canEdit" color="primary darken-1" raised @click="saveScore()" :disabled="saving || errors.filter(x => x === 1).length > 0">
                     <span v-if="!saving">Zapisz</span>
                     <v-progress-circular indeterminate color="accent" v-else></v-progress-circular>
+                </v-btn>
+                <v-btn v-else color="primary darken-1" raised @click="goToFanPanel()">
+                    <span>Powrót</span>
                 </v-btn>
             </v-card-actions>
         </v-card>

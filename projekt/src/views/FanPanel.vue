@@ -13,7 +13,7 @@
                 </template>
                 <v-card v-if="selected === i">
                     <v-card-text v-if="horses.length > 0">
-                        <ClassScore :horses="horses" :championship="!classData.czempionat"></ClassScore>
+                        <ClassScore :id="classData.id" :horses="horses" :championship="!classData.czempionat"></ClassScore>
                     </v-card-text>
                 </v-card>
             </v-expansion-panel-content>

@@ -5,6 +5,9 @@ export default class ScoreInput extends Vue {
     @Prop() public score: any;
     @Prop() public row: any;
     @Prop() public column: any;
+    @Prop({
+        default: false,
+    }) public disabled: any;
     public error: string[] = [];
     private width = 6;
     public nextRow(row: number, col: number, event: KeyboardEvent) {
