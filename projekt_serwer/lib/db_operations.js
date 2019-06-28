@@ -12,26 +12,17 @@ const getId = (table) => {
 const getAllClasses = () => {
     const classes = db.get('classes').orderBy('aktualizacja', 'desc').value();
     const response = [];
+    let addedActive = false;
     classes.forEach((classEl) => {
         const element = {};
         Object.assign(element, classEl);
-        let horses;
-        let add = false;
-        if (classEl.hasOwnProperty('czempionat')) {
-            horses = db.get('horses').filter({
-                klasa: classEl.id,
-            }).value();
-            for (let i = 0; i < horses.length; i++) {
-                if (horses[i].wynik.oceniono) {
-                    add = true;
-                    break;
-                }
-            }
-        } else {
-            add = classEl.rozpoczeto;
-        }
-        if (add) {
+        if (classEl.zamknieta) {
             response.push(element);
+        } else {
+            if (!addedActive) {
+                addedActive = true;
+                response.unshift(element);
+            }
         }
     });
     return response;
